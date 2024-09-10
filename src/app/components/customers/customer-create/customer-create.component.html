@@ -21,6 +21,7 @@
               <mat-label>Phone</mat-label>
               <input type="text" formControlName="phone" matInput>
               <mat-error *ngIf="formValidate?.phone?.errors?.required">This field is required.</mat-error>
+              <mat-error *ngIf="customerForm.get('phone').errors?.pattern">Phone number must be 10 digits.</mat-error>
               <mat-error *ngIf="formValidate?.phone?.errors?.serverError">The Phone number is already Exists </mat-error>
           </mat-form-field>
 

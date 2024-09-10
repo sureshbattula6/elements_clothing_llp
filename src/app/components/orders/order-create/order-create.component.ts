@@ -8,6 +8,7 @@ import { CommonService } from 'src/app/services/common.service';
 import { FormControl } from '@angular/forms';
 import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
 import { ItemStatusViewComponent } from '../item-status-view/item-status-view.component';
+// import { CancelOrderComponent } from './components/cancel-order/cancel-order.component';
 import { MeasurementStyleComponent } from '../../../shared/components/cart/measurement-style/measurement-style.component';
 import { SuitStyleComponent } from '../../../shared/components/cart/suit-style/suit-style.component';
 import { ShirtStyleComponent } from '../../../shared/components/cart/shirt-style/shirt-style.component';
@@ -26,6 +27,10 @@ import { AuthenticationService } from '../../../auth/services/authentication.ser
 import { MeasurmentService } from 'src/app/services/measurment.service';
 import { HttpParams } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CancelOrderComponent } from '../../cancel-order/cancel-order.component';
+import { CompleteOrderComponent } from '../../complete-order/complete-order.component';
+import { UpdateRemarksDialogComponent } from 'src/app/update-remarks-dialog/update-remarks-dialog.component';
+
 
 
 const dialogConfig = new MatDialogConfig();
@@ -48,6 +53,7 @@ export class OrderCreateComponent implements OnInit {
   public total: number = 0;
   public self = this;
   public showCancelOrderButton: boolean = true;
+  public showCompleteOrderButton: boolean = true;
   isPaymentUpdated: boolean = false;
 
   selectedTailorIds: any[] = [];
@@ -88,6 +94,9 @@ export class OrderCreateComponent implements OnInit {
   public checkOrderCreatePermission : boolean = false;
   public orginalOrderStatus: number = 0;
   public recentPayment: any;
+  public sendMessageStatus = 1;
+  public invoiceGenerated: boolean = false;
+
   constructor(private productService: ProductService,
     private router: ActivatedRoute,
     private _snackBar: MatSnackBar,
@@ -106,7 +115,7 @@ export class OrderCreateComponent implements OnInit {
 
     this.orderId = +this.router.snapshot.paramMap.get('orderId');
     this.getData();
-
+    //this.checkInvoiceStatus();
     this.getTailorsList();
     this.getSalesEmployeeList();
     this.checkOrderCreatePermission = this.checkOrderCreatePermissionfn();
@@ -116,7 +125,7 @@ export class OrderCreateComponent implements OnInit {
   getData() {
     this.productService.showOrder(this.orderId).subscribe(
       (res) => {
-        console.log(res);
+        //console.log(res);
         this.customer = res.data.order.customer;
         this.orderItems = res.data.order.orderitems;
         this.measurementId = res.data.order.orderitems[0].measurements_id;
@@ -125,14 +134,19 @@ export class OrderCreateComponent implements OnInit {
         this.orginalOrderStatus = res.data.order.order_status;
         this.orderPayments = res.data.order.orderpayments;
         let paidAmount = 0;
-        let totalAmont = this.order.amount;
-        this.recentPayment = this.orderPayments[this.orderPayments.length-1];
+        let totalAmont = this.order.total_amount;
         this.order.orderpayments.forEach(payment => {
           paidAmount += +(payment.paid_amount)
         });
 
         this.paidAmount = paidAmount;
         this.balanceAmount = Math.round(totalAmont - paidAmount);
+
+        if (res.success && res.data && res.data.order) {
+          this.invoiceGenerated = res.data.order.invoice_number !== null;
+        } else {
+          console.error('Invalid response structure', res);
+        }
 
         this.getMeasurementList(this.customer.id);
         this.newCustomerId = this.customer.id;
@@ -142,6 +156,7 @@ export class OrderCreateComponent implements OnInit {
         }
       }
     )
+   
   }
 
   getTailorsList() {
@@ -200,9 +215,8 @@ export class OrderCreateComponent implements OnInit {
       product_category_id: product_category_id,
       page: 'order',
       id: 'id'
-
     }
-    console.log(product_category_id, 'productcategory_id');
+    //console.log(product_category_id, 'productcategory_id');
     if (product_category_id == 1) {
       this.dialog.open(SuitStyleComponent, dialogConfig);
     } else if (product_category_id == 4) {
@@ -302,8 +316,50 @@ export class OrderCreateComponent implements OnInit {
     this.location.back();
   }
 
+
+  UpdateRemarks() {
+    const dialogRef = this.dialog.open(UpdateRemarksDialogComponent, {
+      width: '450px',
+      data: { 
+        remarks: '',
+        orderId: this.orderId // Pass the correct orderId here
+      }
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== undefined) {
+        const params = { remarks: result };
+        this.productService.UpdateInvioceRemarks(this.orderId, params).subscribe(
+          res => {
+            console.log('Remarks updated', res);
+            this.generateInvoice();
+          },
+          err => console.error(err)
+        );
+      } else {
+        this.generateInvoice();
+      }
+    });
+  }
+ 
+  //checkInvoiceStatus(){
+  //  this.productService.showOrder(this.orderId).subscribe(
+  //    (res) => {
+  //      if (res.success && res.data && res.data.order) {
+  //        this.invoiceGenerated = res.data.order.invoice_number !== null;
+  //      } else {
+  //        console.error('Invalid response structure', res);
+  //      }
+  //    },
+  //    (err) => {
+  //      console.error('Error fetching order details', err);
+  //    }
+  //  );
+  //}
+  
   generateInvoice() {
-    this.productService.generateSalesInvoice(this.orderId).subscribe(
+
+    this.productService.generateSalesInvoice(this.orderId, this.sendMessageStatus).subscribe(
       (res: any) => {
         console.log('sales Invoice', res.sales_invoice_pdf);
         console.log('sales order', res.order);
@@ -315,19 +371,19 @@ export class OrderCreateComponent implements OnInit {
           //     newWindow.print();
           //   };
           // }
+          window.location.reload();
         }
-
       },
       (err) => err
     );
-
   }
 
-  generateSaleOrderCopyOnly() {
-    this.productService.generateSaleOrderCopyOnly(this.orderId).subscribe(
+  
+  generateSalesOrder() {
+    this.productService.generateSalesOrder(this.orderId, this.sendMessageStatus).subscribe(
       (res: any) => {
-        console.log('sales order copy', res.sales_order_copy_pdf);
-        console.log('sales order', res.order);
+        // console.log('sales order copy', res.sales_order_copy_pdf);
+        // console.log('sales order', res.order);
         if (res.sales_order_copy_pdf) {
           const pdfUrl = res.sales_order_copy_pdf;
           const newWindow = window.open(pdfUrl, '_blank');
@@ -350,19 +406,58 @@ export class OrderCreateComponent implements OnInit {
 
   cancelorder(orderId: number): void {
 
-    if (!confirm('Are you sure want to Cancel Order'))
-      return;
+    const dialogRef = this.dialog.open(CancelOrderComponent, {
+      width: '70%',
+      data: {
+        orderID :orderId,
+        message: 'Are you sure you want to cancel this order? Please provide a reason:'
+      }
+    });
 
-    this.productService.cancelOrder(orderId).subscribe(
-      (res) => {
-        if(res.success == true) {
-          this.commonService.openAlert(res.message);
-        }
-        this._router.navigate(['/orders']);
-    },
-    (err) => this.commonService.openAlert(err.message));
 
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) { // User confirmed
+        // Proceed with cancellation
+        this.productService.cancelOrder(orderId).subscribe(
+          (res) => {
+            if (res.success) {
+              this.commonService.openAlert(res.message);
+            }
+            this._router.navigate(['/orders']);
+          },
+          (err) => this.commonService.openAlert(err.message)
+        );
+      }
+    });
   }
+
+  completeorder(orderId: number): void {
+
+    const dialogRef = this.dialog.open(CompleteOrderComponent, {
+      width: '70%',
+      data: {
+        orderID :orderId,
+        message: 'Are you sure you want to Complete this order:'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) { // User confirmed
+        // Proceed with cancellation
+        this.productService.cancelOrder(orderId).subscribe(
+          (res) => {
+            if (res.success) {
+              this.commonService.openAlert(res.message);
+            }
+          },
+          (err) => this.commonService.openAlert(err.message)
+        );
+      }
+    });
+  }
+
+
+
 
 
   setBalanceAmount(amount : any)
@@ -387,7 +482,7 @@ export class OrderCreateComponent implements OnInit {
 
     this.productService.getSaleEmployees().subscribe(
       (res) => {
-        console.log(res)
+        //console.log(res)
         this.salesEmployeeList = res;
         this.searchSelectedEmployees = this.salesEmployeeList;
         this.filteredSalesEmployeeList = this.salesEmployeeList.slice(); // Initial copy

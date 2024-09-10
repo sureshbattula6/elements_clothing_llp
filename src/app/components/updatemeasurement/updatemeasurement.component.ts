@@ -31,6 +31,7 @@ export class UpdatemeasurementComponent implements OnInit {
   sideMeasurementImgStatus : any = 'keepitsame';
   customerId: string;
   cartId: any;
+  measurementId:any;
   form: any = {
     customer_id: null,
     backshape: null,
@@ -72,7 +73,9 @@ export class UpdatemeasurementComponent implements OnInit {
     shirt_st: null,
     shirt_n: null,
     trouser_uround: null,
-    remark: null
+    remark: null,
+    master_name: null,
+    meas_taken_by: null
   };
 
   constructor(
@@ -90,33 +93,161 @@ export class UpdatemeasurementComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.cartId = this.route.snapshot.paramMap.get('cartId');
+    this.measurementId = this.route.snapshot.paramMap.get('id');
     // alert(this.cartId);
     this.customerId = this.authenticationService.getCustomerId();
     this.getCustomerMeasurement();
 
   }
 
-  onSubmit(): void {
-    const {title, remark, suit_fl, suit_bl, suit_suitl, suit_knl, suit_wl, suit_sh, suit_nsh, suit_sl, suit_st, suit_h, suit_cf, suit_cb, suit_bicep, suit_hb, suit_hf, suit_n, shirt_l, shirt_kl, shirt_sl, shirt_arm, shirt_farm, shirt_cuff, trouser_l, trouser_w, trouser_h, trouser_fth, trouser_kn, trouser_b, trouser_hl, trouser_bal,  backshape, stomach, shoulder, button, lapel, vent, pocket, jodhpuri, type, pleat, pocket_type, back_pocket, shape, cut_way, collar_type, placket, cuff_type, other, shape_type, fit_type, trouser_calf_round, trouser_crotch_length, suit_sl_left, suit_sl_right, suit_upper_ch, suit_lower_ch, shirt_sl_left, shirt_sl_right, shirt_upper_ch, shirt_lower_ch, suit_left_cuff, suit_right_cuff, shirt_left_cuff, shirt_right_cuff, shirt_hp, shirt_st, shirt_n,trouser_uround} = this.form;
+  //onSubmit(): void {
+  //  const {title, remark, suit_fl, suit_bl, suit_suitl, suit_knl, suit_wl, suit_sh, suit_nsh, suit_sl, suit_st, suit_h, suit_cf, suit_cb, suit_bicep, suit_hb, suit_hf, suit_n, shirt_l, shirt_kl, shirt_sl, shirt_arm, shirt_farm, shirt_cuff, trouser_l, trouser_w, trouser_h, trouser_fth, trouser_kn, trouser_b, trouser_hl, trouser_bal,  backshape, stomach, shoulder, button, lapel, vent, pocket, jodhpuri, type, pleat, pocket_type, back_pocket, shape, cut_way, collar_type, placket, cuff_type, other, shape_type, fit_type, trouser_calf_round, trouser_crotch_length, suit_sl_left, suit_sl_right, suit_upper_ch, suit_lower_ch, shirt_sl_left, shirt_sl_right, shirt_upper_ch, shirt_lower_ch, suit_left_cuff, suit_right_cuff, shirt_left_cuff, shirt_right_cuff, shirt_hp, shirt_st, shirt_n,trouser_uround, master_name, meas_taken_by} = this.form;
 
-    this.measurmentService.updatestoremeasurement(this.customerId,this.cartId, title, remark, suit_fl, suit_bl, suit_suitl, suit_knl, suit_wl, suit_sh, suit_nsh, suit_sl, suit_st, suit_h, suit_cf, suit_cb, suit_bicep, suit_hb, suit_hf, suit_n, shirt_l, shirt_kl, shirt_sl, shirt_arm, shirt_farm, shirt_cuff, trouser_l, trouser_w, trouser_h, trouser_fth, trouser_kn, trouser_b, trouser_hl, trouser_bal, backshape, stomach, shoulder, button, lapel, vent, pocket, jodhpuri, type, pleat, pocket_type, back_pocket, shape, cut_way, collar_type, placket, cuff_type, other, shape_type, fit_type, trouser_calf_round, trouser_crotch_length, suit_sl_left, suit_sl_right, suit_upper_ch, suit_lower_ch, shirt_sl_left, shirt_sl_right, shirt_upper_ch, shirt_lower_ch, suit_left_cuff, suit_right_cuff, shirt_left_cuff, shirt_right_cuff, shirt_hp, shirt_st, shirt_n,trouser_uround,  this.frontMeasurementImgBase64, this.frontMeasurementImgStatus,this.backMeasurementImgBase64, this.backMeasurementImgStatus, this.sideMeasurementImgBase64, this.sideMeasurementImgStatus).subscribe({
+  //  this.measurmentService.updatestoremeasurement(this.customerId,this.cartId, title, remark, suit_fl, suit_bl, suit_suitl, suit_knl, suit_wl, suit_sh, suit_nsh, suit_sl, suit_st, suit_h, suit_cf, suit_cb, suit_bicep, suit_hb, suit_hf, suit_n, shirt_l, shirt_kl, shirt_sl, shirt_arm, shirt_farm, shirt_cuff, trouser_l, trouser_w, trouser_h, trouser_fth, trouser_kn, trouser_b, trouser_hl, trouser_bal, backshape, stomach, shoulder, button, lapel, vent, pocket, jodhpuri, type, pleat, pocket_type, back_pocket, shape, cut_way, collar_type, placket, cuff_type, other, shape_type, fit_type, trouser_calf_round, trouser_crotch_length, suit_sl_left, suit_sl_right, suit_upper_ch, suit_lower_ch, shirt_sl_left, shirt_sl_right, shirt_upper_ch, shirt_lower_ch, suit_left_cuff, suit_right_cuff, shirt_left_cuff, shirt_right_cuff, shirt_hp, shirt_st, shirt_n,trouser_uround, master_name, meas_taken_by, this.frontMeasurementImgBase64, this.frontMeasurementImgStatus,this.backMeasurementImgBase64, this.backMeasurementImgStatus, this.sideMeasurementImgBase64, this.sideMeasurementImgStatus).subscribe({
+  //    next: data => {
+  //      console.log('FORM SUBMISSION', data)  ;
+  //      if(data.success == false){
+  //        this.commonService.openAlert(data.message);
+  //      }  else{
+  //        this.commonService.openAlert(data.message);
+  //        this.router.navigate(['/cart']);
+  //      }
+  //    },
+  //    error: err => {
+
+  //    }
+
+  //  });
+
+  //}
+
+
+  onSubmit(): void {
+    if (this.measurementId) {
+      this.updateMeasurement('cart');
+    } else {
+      this.createMeasurement();
+    }
+  }
+
+  //createMeasurement(): void {
+  //  const {
+  //    title, remark, suit_fl, suit_bl, suit_suitl, suit_knl, suit_wl, suit_sh, suit_nsh, suit_sl, suit_st,
+  //    suit_h, suit_cf, suit_cb, suit_bicep, suit_hb, suit_hf, suit_n, shirt_l, shirt_kl, shirt_sl, shirt_arm,
+  //    shirt_farm, shirt_cuff, trouser_l, trouser_w, trouser_h, trouser_fth, trouser_kn, trouser_b, trouser_hl,
+  //    trouser_bal, backshape, stomach, shoulder, button, lapel, vent, pocket, jodhpuri, type, pleat, pocket_type,
+  //    back_pocket, shape, cut_way, collar_type, placket, cuff_type, other, shape_type, fit_type, trouser_calf_round,
+  //    trouser_crotch_length, suit_sl_left, suit_sl_right, suit_upper_ch, suit_lower_ch, shirt_sl_left, shirt_sl_right,
+  //    shirt_upper_ch, shirt_lower_ch, suit_left_cuff, suit_right_cuff, shirt_left_cuff, shirt_right_cuff, shirt_hp,
+  //    shirt_st, shirt_n,trouser_uround, master_name, meas_taken_by
+  //  } = this.form;
+
+  //  this.measurmentService.storeMeasurment(
+  //    this.customerId, this.cartId, title, remark, suit_fl, suit_bl, suit_suitl, suit_knl, suit_wl, suit_sh,
+  //    suit_nsh, suit_sl, suit_st, suit_h, suit_cf, suit_cb, suit_bicep, suit_hb, suit_hf, suit_n, shirt_l, shirt_kl,
+  //    shirt_sl, shirt_arm, shirt_farm, shirt_cuff, trouser_l, trouser_w, trouser_h, trouser_fth, trouser_kn,
+  //    trouser_b, trouser_hl, trouser_bal, backshape, stomach, shoulder, button, lapel, vent, pocket, jodhpuri, type,
+  //    pleat, pocket_type, back_pocket, shape, cut_way, collar_type, placket, cuff_type, other, shape_type, fit_type,
+  //    trouser_calf_round, trouser_crotch_length, suit_sl_left, suit_sl_right, suit_upper_ch, suit_lower_ch, shirt_sl_left,
+  //    shirt_sl_right, shirt_upper_ch, shirt_lower_ch, suit_left_cuff, suit_right_cuff, shirt_left_cuff, shirt_right_cuff,
+  //    shirt_hp, shirt_st, shirt_n,trouser_uround, master_name, meas_taken_by, this.frontMeasurementImgBase64, 
+  //    this.backMeasurementImgBase64,  this.sideMeasurementImgBase64, 
+  //  ).subscribe({
+  //    next: data => {
+  //      console.log('FORM SUBMISSION', data);
+  //      if(data.success == false){
+  //        this.commonService.openAlert(data.message);
+  //      }  else{
+  //        this.commonService.openAlert(data.message);
+  //        this.router.navigate(['/cart']);
+  //      }
+  //    },
+  //    error: err => {
+  //      console.error('Error in form submission:', err);
+  //    }
+  //  });
+  //}
+
+  createMeasurement(): void {
+    const {
+      title, remark, suit_fl, suit_bl, suit_suitl, suit_knl, suit_wl, suit_sh, suit_nsh, suit_sl, suit_st,
+      suit_h, suit_cf, suit_cb, suit_bicep, suit_hb, suit_hf, suit_n, shirt_l, shirt_kl, shirt_sl, shirt_arm,
+      shirt_farm, shirt_cuff, trouser_l, trouser_w, trouser_h, trouser_fth, trouser_kn, trouser_b, trouser_hl,
+      trouser_bal, backshape, stomach, shoulder, button, lapel, vent, pocket, jodhpuri, type, pleat, pocket_type,
+      back_pocket, shape, cut_way, collar_type, placket, cuff_type, other, shape_type, fit_type, trouser_calf_round,
+      trouser_crotch_length, suit_sl_left, suit_sl_right, suit_upper_ch, suit_lower_ch, shirt_sl_left, shirt_sl_right,
+      shirt_upper_ch, shirt_lower_ch, suit_left_cuff, suit_right_cuff, shirt_left_cuff, shirt_right_cuff, shirt_hp,
+      shirt_st, shirt_n, trouser_uround, master_name, meas_taken_by
+    } = this.form;
+
+    this.measurmentService.storeMeasurment(
+      this.customerId, this.cartId, title, remark, suit_fl, suit_bl, suit_suitl, suit_knl, suit_wl, suit_sh,
+      suit_nsh, suit_sl, suit_st, suit_h, suit_cf, suit_cb, suit_bicep, suit_hb, suit_hf, suit_n, shirt_l, shirt_kl,
+      shirt_sl, shirt_arm, shirt_farm, shirt_cuff, trouser_l, trouser_w, trouser_h, trouser_fth, trouser_kn,
+      trouser_b, trouser_hl, trouser_bal, backshape, stomach, shoulder, button, lapel, vent, pocket, jodhpuri, type,
+      pleat, pocket_type, back_pocket, shape, cut_way, collar_type, placket, cuff_type, other, shape_type, fit_type,
+      trouser_calf_round, trouser_crotch_length, suit_sl_left, suit_sl_right, suit_upper_ch, suit_lower_ch, shirt_sl_left,
+      shirt_sl_right, shirt_upper_ch, shirt_lower_ch, suit_left_cuff, suit_right_cuff, shirt_left_cuff, shirt_right_cuff,
+      shirt_hp, shirt_st, shirt_n, trouser_uround, master_name, meas_taken_by, this.frontMeasurementImgBase64,
+      this.backMeasurementImgBase64, this.sideMeasurementImgBase64
+    ).subscribe({
       next: data => {
-        console.log('FORM SUBMISSION', data)  ;
-        if(data.success == false){
+        //console.log('FORM SUBMISSION', data);
+        if (data.success == false) {
           this.commonService.openAlert(data.message);
-        }  else{
+        } else {
           this.commonService.openAlert(data.message);
           this.router.navigate(['/cart']);
         }
       },
       error: err => {
-
+        console.error('Error in form submission:', err);
       }
-
     });
-
   }
+
+  updateMeasurement(redirectTo: string): void {
+    const {
+        title, remark, suit_fl, suit_bl, suit_suitl, suit_knl, suit_wl, suit_sh, suit_nsh, suit_sl, suit_st,
+        suit_h, suit_cf, suit_cb, suit_bicep, suit_hb, suit_hf, suit_n, shirt_l, shirt_kl, shirt_sl, shirt_arm,
+        shirt_farm, shirt_cuff, trouser_l, trouser_w, trouser_h, trouser_fth, trouser_kn, trouser_b, trouser_hl,
+        trouser_bal, backshape, stomach, shoulder, button, lapel, vent, pocket, jodhpuri, type, pleat, pocket_type,
+        back_pocket, shape, cut_way, collar_type, placket, cuff_type, other, shape_type, fit_type, trouser_calf_round,
+        trouser_crotch_length, suit_sl_left, suit_sl_right, suit_upper_ch, suit_lower_ch, shirt_sl_left, shirt_sl_right,
+        shirt_upper_ch, shirt_lower_ch, suit_left_cuff, suit_right_cuff, shirt_left_cuff, shirt_right_cuff, shirt_hp,
+        shirt_st, shirt_n, trouser_uround, master_name, meas_taken_by
+    } = this.form;
+
+    this.measurmentService.updateMeasurements(
+        this.measurementId, this.customerId, this.cartId, title, remark, suit_fl, suit_bl, suit_suitl, suit_knl, suit_wl, suit_sh,
+        suit_nsh, suit_sl, suit_st, suit_h, suit_cf, suit_cb, suit_bicep, suit_hb, suit_hf, suit_n, shirt_l, shirt_kl,
+        shirt_sl, shirt_arm, shirt_farm, shirt_cuff, trouser_l, trouser_w, trouser_h, trouser_fth, trouser_kn,
+        trouser_b, trouser_hl, trouser_bal, backshape, stomach, shoulder, button, lapel, vent, pocket, jodhpuri, type,
+        pleat, pocket_type, back_pocket, shape, cut_way, collar_type, placket, cuff_type, other, shape_type, fit_type,
+        trouser_calf_round, trouser_crotch_length, suit_sl_left, suit_sl_right, suit_upper_ch, suit_lower_ch, shirt_sl_left,
+        shirt_sl_right, shirt_upper_ch, shirt_lower_ch, suit_left_cuff, suit_right_cuff, shirt_left_cuff, shirt_right_cuff,
+        shirt_hp, shirt_st, shirt_n, trouser_uround, master_name, meas_taken_by, this.frontMeasurementImgStatus,
+        this.frontMeasurementImgBase64, this.backMeasurementImgStatus, this.backMeasurementImgBase64, this.sideMeasurementImgStatus, this.sideMeasurementImgBase64
+    ).subscribe({
+        next: data => {
+            //console.log('FORM SUBMISSION', data);
+            if (data.success == false) {
+                this.commonService.openAlert(data.message);
+            } else {
+                this.commonService.openAlert(data.message);
+                if (redirectTo === 'cart') {
+                    this.router.navigate(['/cart']);
+                } else if (redirectTo === 'customers') {
+                    //this.router.navigate(['/customers']);
+                    this.router.navigate([`/customer/${this.customerId}/measurements`]);
+                }
+            }
+        },
+        error: err => {
+            console.error('Error in form submission:', err);
+        }
+    });
+}
 
 
   getCustomerMeasurement() {
@@ -174,18 +305,19 @@ export class UpdatemeasurementComponent implements OnInit {
         this.form.shirt_st = measurements.shirt_st;
         this.form.shirt_n = measurements.shirt_n;
         this.form.trouser_uround = measurements.trouser_uround;
+        this.form.master_name = measurements.master_name;
+        this.form.meas_taken_by = measurements.meas_taken_by;
         this.form.title    = measurements.title;
         this.form.remark    = measurements.remark;
         this.form.backshape = measurements.backshape;
         this.form.stomach = measurements.stomach;
         this.form.shoulder = measurements.shoulder;
+        this.form.fit_type = measurements.fit_type;
         this.form.front_captured_img = measurements.front_captured_img;
         this.form.back_captured_img = measurements.back_captured_img;
         this.form.side_captured_img = measurements.side_captured_img;
         this.form.storage_path = res.storage_path;
-        this.frontMeasurementImgBase64 = measurements.front_captured_img;
-        this.backMeasurementImgBase64 = measurements.back_captured_img;
-        this.sideMeasurementImgBase64 = measurements.side_captured_img;
+        
         // this.form.button = measurements.button;
         // this.form.lapel = measurements.lapel;
         // this.form.vent = measurements.vent;

@@ -5,20 +5,31 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <h1>Order Details</h1>
                             </div>
 
-                            <div class="justify-content-end" >
-                                <button mat-raised-button (click)="generateSaleOrderCopyOnly()" color="primary">Sales Order Copy</button>
-                                <!-- <a mat-raised-button [href]="generatePdfLink()" target="_blank" color="primary">Sales Order Copy</a> -->
-                            </div>
+                            <div class="col-md-6">
+                                <input [checked]="sendMessageStatus === 1" type="checkbox" id="sendMessage"
+                                    (change)="sendMessageStatus = $event.target.checked ? 1 : 0">&nbsp;&nbsp;<label
+                                    for="sendMessage"> Send Message ?</label> &nbsp;&nbsp;
+                                <button mat-raised-button (click)="generateSalesOrder()" color="primary">Sales Order
+                                    Copy </button> &nbsp;&nbsp;
 
-                            <div class="col-md-4">
-                                <button mat-raised-button *ngIf="balanceAmountChild <= 10 && orginalOrderStatus != 2" (click)="generateInvoice()" color="accent">Generate Order
-                                    Invoice</button>
+
+                                <button mat-raised-button  
+                                    color="accent" *ngIf="!invoiceGenerated && (orginalOrderStatus == 1 || (balanceAmount <= 10 && orginalOrderStatus != 2)) " (click)="UpdateRemarks()" color="accent">
+                                    Generate Invoice Order
+                                </button>
+                                <button mat-raised-button *ngIf="invoiceGenerated" (click)="generateInvoice()"
+                                    color="accent">
+                                    View Invoice Copy
+                                </button>
+                            </div>
+                            <div class="col-md-2">
+
                                 <button class="backButton" mat-raised-button (click)="goBack()"><i
-                                        class="typcn typcn-arrow-back"></i> Back</button>
+                                        class="typcn typcn-arrow-back"></i> Back </button>
                             </div>
                         </div>
                         <div class="row">
@@ -35,44 +46,66 @@
                                             <th>Customer Name</th>
                                             <td>
                                                 <p>
-                                                  {{ customer?.name }}  / {{ customer?.phone }}
+                                                    {{ customer?.name }} / {{ customer?.phone }}
                                                 </p>
                                                 <p *appPermissions="['ORDER_CREATE']">
-                                                  <a [routerLink]="['/customer', customer?.id, 'overview']">More..</a>
+                                                    <a [routerLink]="['/customer', customer?.id, 'overview']">More..</a>
                                                 </p>
 
                                             </td>
-                                            <th>ORDER ID</th>
+                                            <th>Order Id</th>
                                             <td>
                                                 <p> PCO0{{ order?.id }} </p>
                                             </td>
                                         </tr>
 
                                         <tr>
-                                            <th>Recent Payment Method</th>
-                                            <td [ngSwitch]="recentPayment?.payment_type">
-                                              <p *ngSwitchCase="1">CASH</p>
-                                              <p *ngSwitchCase="2">CARD</p>
-                                              <p *ngSwitchCase="3">CREDIT</p>
-                                              <p *ngSwitchCase="4">ONLINE</p>
-                                              <p *ngSwitchCase="5">UPI</p>
-                                          </td>
-                                          
-                                            <th>ORDER DATE</th>
-                                            <td><p>{{ order?.created_at | date: "dd-MM-yyyy ',' HH:mm a"}}</p></td>
+                                            <th>Payments Method </th>
+                                            <td>{{ order?.payment_methods }}</td>
+
+                                            <th>Order Date</th>
+                                            <td>
+                                                <p>{{ order?.created_at | date: "dd-MM-yyyy ',' HH:mm a"}}</p>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <th>Quantity</th>
                                             <td>
                                                 <p> {{ order?.orderitems?.length }} </p>
                                             </td>
-                                                <th>ORDER STATUS</th>
-                                                <td [ngSwitch]="order?.order_status">
-                                                    <p *ngSwitchCase="0">Order Placed</p>
-                                                    <p *ngSwitchCase="1">Order Completed</p>
-                                                    <p *ngSwitchCase="2">Order Cancelled</p>
-                                                </td>
+                                            <th>Order Status</th>
+                                            <td [ngSwitch]="order?.order_status">
+                                                <p *ngSwitchCase="0">Order Placed</p>
+                                                <p *ngSwitchCase="1">Order Completed</p>
+                                                <p *ngSwitchCase="2">Order Cancelled</p>
+                                            </td>
                                         </tr>
+
+                                        <tr *ngIf="order?.order_status === 2">
+                                            <th>Cancelled Reason</th>
+                                            <td>
+                                                <p>
+                                                    {{ order?.cancel_order_message }}
+                                                </p>
+
+                                            </td>
+                                            <th>Cancelled Date</th>
+                                            <td>
+                                                <p> {{ order?.cancel_date | date: "dd-MM-yyyy" }} </p>
+                                            </td>
+                                        </tr>
+                                        <tr *ngIf="order?.order_status === 1">
+                                            <th>Force Completed Reason</th>
+                                            <td>
+                                                <p>{{ order?.force_completed_reason }}</p>
+                                            </td>
+                                            <th>Force Completed On</th>
+                                            <td>
+                                                <p>{{ order?.force_completed_on | date: "dd-MM-yyyy ',' HH:mm a" }}</p>
+                                            </td>
+                                        </tr>
+
+
                                     </tbody>
                                 </table>
                             </div>
@@ -82,7 +115,7 @@
                                 <table class="table thead-light" *ngIf="orderItems.length > 0">
                                     <tr>
                                         <th style="width: 25%">Item</th>
-                                        <th style="width: 15%" ></th>
+                                        <th style="width: 15%"></th>
                                         <th style="width: 25%">Capture Image</th>
                                         <th style="width: 10%"></th>
                                         <!-- <th style="width: 20%"></th>
@@ -114,7 +147,8 @@
                                             </mat-form-field>
                                         </td>
                                         <td *ngIf="!measurementId">
-                                            <button mat-raised-button (click)="gotoAddMeasurementPage()" color="primary">Add Measurement</button>
+                                            <button mat-raised-button (click)="gotoAddMeasurementPage()"
+                                                color="primary">Add Measurement</button>
                                         </td>
                                         <td></td>
                                     </tr>
@@ -152,26 +186,26 @@
                                                     <button type="button" (click)="viewItemStausModal(cart.id)" color="primary" mat-flat-button>View Item Statuses</button> -->
                                         </td>
                                         <td>
-                                          <mat-form-field appearance="fill">
-                                            <mat-label> Sales Employee</mat-label>
-                                            <mat-select   (selectionChange)="updateOrderSalesEmployee(cart.id,$event)"
-                                            [value]="cart.sales_emp_id"
-                                            [disabled]="isSelectDisabled(cart.created_at) || !checkOrderCreatePermission"
-                                            >
-                                            <!-- <input placeholder="Search..." matInput type="text" (keyup)="onSearchEmpKey($event.target.value)" (click)="selectOptions(cart, 'salesemployee')" class="sales-emp-input"> -->
-                                                <mat-option value="-1">None</mat-option>
-                                                <mat-option *ngFor="let saleEmp of searchSelectedEmployees" [value]="saleEmp.id">
-                                                    <span>{{ saleEmp.name }} - {{saleEmp.employe_code}}</span>
-                                                </mat-option>
-                                            </mat-select>
-                                          </mat-form-field>
+                                            <mat-form-field appearance="fill">
+                                                <mat-label> Sales Employee</mat-label>
+                                                <mat-select (selectionChange)="updateOrderSalesEmployee(cart.id,$event)"
+                                                    [value]="cart.sales_emp_id"
+                                                    [disabled]="isSelectDisabled(cart.created_at) || !checkOrderCreatePermission">
+                                                    <!-- <input placeholder="Search..." matInput type="text" (keyup)="onSearchEmpKey($event.target.value)" (click)="selectOptions(cart, 'salesemployee')" class="sales-emp-input"> -->
+                                                    <mat-option value="-1">None</mat-option>
+                                                    <mat-option *ngFor="let saleEmp of searchSelectedEmployees"
+                                                        [value]="saleEmp.id">
+                                                        <span>{{ saleEmp.name }} - {{saleEmp.employe_code}}</span>
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
 
                                         </td>
 
 
                                         <td style="width: 10%;" *ngIf="cart?.style_id">
                                             <!-- <button type="button" (click)="measurementStyle(cart?.style_id)" color="primary" mat-flat-button>Style</button> -->
-                                            <button type="button" [routerLink]="['/style', cart?.style_id]"
+                                            <button type="button" [routerLink]="['/style', cart?.style_id, orderId]"
                                                 color="primary" mat-flat-button>View Style</button>
                                             <!-- <button type="button" color="primary" [routerLink]="['/measurments', cart?.measurements_id]" mat-flat-button>Measurement</button> -->
                                         </td>
@@ -231,7 +265,8 @@
                             </div>
                         </div>
 
-                        <app-order-place (getBalanceAmountEvent)="setBalanceAmount($event)" [discountEnable]="true" (updateEvent)="ngOnInit()"></app-order-place>
+                        <app-order-place (getBalanceAmountEvent)="setBalanceAmount($event)" [discountEnable]="true"
+                            (updateEvent)="ngOnInit()"></app-order-place>
                     </div>
 
                 </div>
@@ -247,9 +282,12 @@
     </div>
 </div>
 
-<div class='text-center'>
-    <button *ngIf="order.order_status == 0 && roleId == 0" mat-raised-button (click)="cancelorder(orderId)" color="warn">Cancel Order</button>
+<div style="display: flex text-center;">
+    <div class='text-center mt-3'>
+        <button *ngIf="order.order_status == 0 && roleId == 0" mat-raised-button (click)="completeorder(orderId)"
+            color="primary" style="margin-right: 10px;">Complete Order</button>
+        <button *ngIf="order.order_status == 0 && roleId == 0" mat-raised-button (click)="cancelorder(orderId)"
+            color="warn">Cancel Order</button>
+    </div>
+
 </div>
-
-
-

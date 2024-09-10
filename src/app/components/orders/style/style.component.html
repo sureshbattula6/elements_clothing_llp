@@ -7,6 +7,7 @@
 
 <div class="">
   <button type="button" color="primary" mat-flat-button (click)="convetToPDF()" >Download PDF</button>
+
   <!-- <input type="button" value="Convert" (click)="convetToPDF()"/> -->
   </div>
   <div id="content">
@@ -14,7 +15,9 @@
 
     <div class="row">
         <div class="col-4">
-            <h2>Order_ID:<span>PCO0{{ orderId }}</span></h2>
+            <br /><br /><br />
+            <h2 style="text-decoration: none;">Order ID : <span>PCO0{{ orderId }}</span></h2>
+            <br />
         </div>
 
     </div>
@@ -23,33 +26,36 @@
         <div class="col-md-6 shape">
             <div class="col-md-4 shapes">
                 <div class="form-check form-check-inline">
-                    <input mdbRadio class="form-check-input" type="radio" name="button" id="button1"
+
+                    <label class="form-check-label rdiobox" for="button1">
+                      <input mdbRadio class="form-check-input" type="radio" name="button" id="button1"
                       value="1 button" [(ngModel)]="form.button"  #button="ngModel"
                     />
-                    <label class="form-check-label" for="button1">
-                        <img src="assets/10.png">
+                        <span></span><img src="assets/10.png">
                         <p><b>1 BUTTON</b></p>
                     </label>
                 </div>
             </div>
             <div class="col-md-4 shapes">
                 <div class="form-check form-check-inline">
-                    <input mdbRadio class="form-check-input" type="radio" name="button" id="button2"
+
+                    <label class="form-check-label rdiobox" for="button2">
+                      <input mdbRadio class="form-check-input" type="radio" name="button" id="button2"
                       value="2 button" [(ngModel)]="form.button"  #button="ngModel"
                     />
-                    <label class="form-check-label" for="button2">
-                        <img src="assets/11.png">
+                        <span></span><img src="assets/11.png">
                         <p><b>2 BUTTON</b></p>
                     </label>
                 </div>
             </div>
             <div class="col-md-4 shapes">
                 <div class="form-check form-check-inline">
-                    <input mdbRadio class="form-check-input" type="radio" name="button" id="button3"
+
+                    <label class="form-check-label rdiobox" for="button3">
+                      <input mdbRadio class="form-check-input" type="radio" name="button" id="button3"
                       value="double brusted" [(ngModel)]="form.button"  #button="ngModel"
                     />
-                    <label class="form-check-label" for="button3">
-                        <img src="assets/12.png">
+                        <span></span><img src="assets/12.png">
                         <p><b>DOUBLE BRUSTED</b></p>
                     </label>
                 </div>
@@ -58,33 +64,36 @@
         <div class="col-md-6 shape">
           <div class="col-md-4 shapes">
               <div class="form-check form-check-inline">
-                  <input mdbRadio class="form-check-input" type="radio" name="lapel" id="lapel1"
+
+                  <label class="form-check-label rdiobox" for="lapel1">
+                    <input mdbRadio class="form-check-input" type="radio" name="lapel" id="lapel1"
                     value="peak lapel" [(ngModel)]="form.lapel"  #lapel="ngModel"
                   />
-                  <label class="form-check-label" for="lapel1">
-                      <img src="assets/13.png">
+                      <span></span><img src="assets/13.png">
                       <p><b>PEAK LAPEL</b></p>
                   </label>
               </div>
           </div>
           <div class="col-md-4 shapes">
               <div class="form-check form-check-inline">
-                  <input mdbRadio class="form-check-input" type="radio" name="lapel" id="lapel2"
+
+                  <label class="form-check-label rdiobox" for="lapel2">
+                    <input mdbRadio class="form-check-input" type="radio" name="lapel" id="lapel2"
                     value="notch lapel" [(ngModel)]="form.lapel"  #lapel="ngModel"
                   />
-                  <label class="form-check-label" for="lapel2">
-                      <img src="assets/14.png">
+                      <span></span><img src="assets/14.png">
                       <p><b>NOTCH LAPEL</b></p>
                   </label>
               </div>
           </div>
           <div class="col-md-4 shapes">
               <div class="form-check form-check-inline">
-                  <input mdbRadio class="form-check-input" type="radio" name="lapel" id="lapel3"
+
+                  <label class="form-check-label rdiobox" for="lapel3">
+                    <input mdbRadio class="form-check-input" type="radio" name="lapel" id="lapel3"
                     value="shawl lapel" [(ngModel)]="form.lapel"  #lapel="ngModel"
                   />
-                  <label class="form-check-label" for="lapel3">
-                      <img src="assets/15.png">
+                      <span></span><img src="assets/15.png">
                       <p><b>SHAWL LAPEL</b></p>
                   </label>
               </div>
@@ -95,33 +104,36 @@
         <div class="col-md-6 shape">
             <div class="col-md-4 shapes" >
                 <div class="form-check form-check-inline">
-                    <input mdbRadio class="form-check-input" type="radio" name="vent" id="vent1"
+
+                    <label class="form-check-label rdiobox" for="vent1">
+                      <input mdbRadio class="form-check-input" type="radio" name="vent" id="vent1"
                       value="no vent" [(ngModel)]="form.vent"  #vent="ngModel"
                     />
-                    <label class="form-check-label" for="vent1">
-                        <img src="assets/17.png">
+                        <span></span><img src="assets/17.png">
                         <p><b>NO VENT</b></p>
                     </label>
                 </div>
             </div>
             <div class="col-md-4 shapes">
                 <div class="form-check form-check-inline">
-                    <input mdbRadio class="form-check-input" type="radio" name="vent" id="vent2"
+
+                    <label class="form-check-label rdiobox" for="vent2">
+                      <input mdbRadio class="form-check-input" type="radio" name="vent" id="vent2"
                       value="center vent" [(ngModel)]="form.vent"  #vent="ngModel"
                     />
-                    <label class="form-check-label" for="vent2">
-                        <img src="assets/18.png">
+                        <span></span><img src="assets/18.png">
                         <p><b>CENTER VENT</b></p>
                     </label>
                 </div>
             </div>
             <div class="col-md-4 shapes">
                 <div class="form-check form-check-inline">
-                    <input mdbRadio class="form-check-input" type="radio" name="vent" id="vent3"
+
+                    <label class="form-check-label rdiobox" for="vent3">
+                      <input mdbRadio class="form-check-input" type="radio" name="vent" id="vent3"
                       value="side vent" [(ngModel)]="form.vent"  #vent="ngModel"
                     />
-                    <label class="form-check-label" for="vent3">
-                        <img src="assets/19.png">
+                        <span></span><img src="assets/19.png">
                         <p><b>SIDE VENT</b></p>
                     </label>
                 </div>
@@ -130,33 +142,36 @@
         <div class="col-md-6 shape">
           <div class="col-md-4 shapes">
               <div class="form-check form-check-inline">
-                  <input mdbRadio class="form-check-input" type="radio" name="pocket" id="pocket1"
+
+                  <label class="form-check-label rdiobox" for="pocket1">
+                    <input mdbRadio class="form-check-input" type="radio" name="pocket" id="pocket1"
                   value="slant pocket" [(ngModel)]="form.pocket"  #pocket="ngModel"
                   />
-                  <label class="form-check-label" for="pocket1">
-                      <img src="assets/20.png">
+                      <span></span><img src="assets/20.png">
                       <p><b>SLANT POCKET</b></p>
                   </label>
               </div>
           </div>
           <div class="col-md-4 shapes">
               <div class="form-check form-check-inline">
-                  <input mdbRadio class="form-check-input" type="radio" name="pocket" id="pocket2"
+
+                  <label class="form-check-label rdiobox" for="pocket2">
+                    <input mdbRadio class="form-check-input" type="radio" name="pocket" id="pocket2"
                   value="straight pocket" [(ngModel)]="form.pocket"  #pocket="ngModel"
                   />
-                  <label class="form-check-label" for="pocket2">
-                      <img src="assets/21.png">
+                      <span></span><img src="assets/21.png">
                       <p><b>STRAIGHT POCKET</b></p>
                   </label>
               </div>
           </div>
           <div class="col-md-4 shapes">
               <div class="form-check form-check-inline">
-                  <input mdbRadio class="form-check-input" type="radio" name="pocket" id="pocket3"
+
+                  <label class="form-check-label rdiobox" for="pocket3">
+                    <input mdbRadio class="form-check-input" type="radio" name="pocket" id="pocket3"
                   value="patch pocket" [(ngModel)]="form.pocket"  #pocket="ngModel"
                   />
-                  <label class="form-check-label" for="pocket3">
-                      <img src="assets/22.png">
+                      <span></span><img src="assets/22.png">
                       <p><b>PATCH POCKET</b></p>
                   </label>
               </div>
@@ -167,11 +182,12 @@
         <div class="col-md-2 shape">
             <div class="col-md-12">
                 <div class="form-check form-check-inline">
-                    <input mdbRadio class="form-check-input" type="radio" name="jodhpuri" id="jodhpuri"
+
+                    <label class="form-check-label rdiobox" for="jodhpuri">
+                      <input mdbRadio class="form-check-input" type="radio" name="jodhpuri" id="jodhpuri"
                       value="jodhpuri" [(ngModel)]="form.jodhpuri"  #jodhpuri="ngModel"
                     />
-                    <label class="form-check-label" for="jodhpuri">
-                        <img src="assets/16.png">
+                        <span></span><img src="assets/16.png">
                         <p><b>JODHPURI</b></p>
                     </label>
                 </div>
@@ -180,22 +196,24 @@
         <div class="col-md-4 shape">
             <div class="col-md-6 shapes">
                 <div class="form-check form-check-inline">
-                    <input mdbRadio class="form-check-input" type="radio" name="type" id="type1"
+
+                    <label class="form-check-label rdiobox" for="type1">
+                      <input mdbRadio class="form-check-input" type="radio" name="type" id="type1"
                     value="regular" [(ngModel)]="form.type"  #type="ngModel"
                     />
-                    <label class="form-check-label" for="type1">
-                        <img src="assets/23.png">
+                        <span></span><img src="assets/23.png">
                         <p><b>REGULAR</b></p>
                     </label>
                 </div>
             </div>
             <div class="col-md-6 shapes">
                 <div class="form-check form-check-inline">
-                    <input mdbRadio class="form-check-input" type="radio" name="type" id="type2"
+
+                    <label class="form-check-label rdiobox" for="type2">
+                      <input mdbRadio class="form-check-input" type="radio" name="type" id="type2"
                     value="functional" [(ngModel)]="form.type"  #type="ngModel"
                     />
-                    <label class="form-check-label" for="type2">
-                        <img src="assets/24.png">
+                        <span></span><img src="assets/24.png">
                         <p><b>FUNCTIONAL</b></p>
                     </label>
                 </div>
@@ -204,22 +222,24 @@
         <div class="col-md-3 shape">
           <div class="col-md-6 shapes">
               <div class="form-check form-check-inline">
-                  <input mdbRadio class="form-check-input" type="radio" name="pleat" id="pleat1"
+
+                  <label class="form-check-label rdiobox" for="pleat1">
+                    <input mdbRadio class="form-check-input" type="radio" name="pleat" id="pleat1"
                     value="no pleat" [(ngModel)]="form.pleat"  #pleat="ngModel"
                   />
-                  <label class="form-check-label" for="pleat1">
-                      <img src="assets/25.png">
+                      <span></span><img src="assets/25.png">
                       <p><b>NO PLEAT</b></p>
                   </label>
               </div>
           </div>
           <div class="col-md-6 shapes">
               <div class="form-check form-check-inline">
-                  <input mdbRadio class="form-check-input" type="radio" name="pleat" id="pleat2"
+
+                  <label class="form-check-label rdiobox" for="pleat2">
+                    <input mdbRadio class="form-check-input" type="radio" name="pleat" id="pleat2"
                     value="2 pleat" [(ngModel)]="form.pleat"  #pleat="ngModel"
                   />
-                  <label class="form-check-label" for="pleat2">
-                      <img src="assets/26.png">
+                      <span></span><img src="assets/26.png">
                       <p><b>2 PLEAT</b></p>
                   </label>
               </div>
@@ -228,22 +248,24 @@
         <div class="col-md-3 shape">
           <div class="col-md-6 shapes">
               <div class="form-check form-check-inline">
-                  <input mdbRadio class="form-check-input" type="radio" name="pocket_type" id="pocket_type1"
+
+                  <label class="form-check-label rdiobox" for="pocket_type1">
+                    <input mdbRadio class="form-check-input" type="radio" name="pocket_type" id="pocket_type1"
                     value="cross pocket" [(ngModel)]="form.pocket_type"  #pocket_type="ngModel"
                   />
-                  <label class="form-check-label" for="pocket_type1">
-                      <img src="assets/27.png">
+                      <span></span><img src="assets/27.png">
                       <p><b>CROSS POCKET</b></p>
                   </label>
               </div>
           </div>
           <div class="col-md-6 shapes">
               <div class="form-check form-check-inline">
-                  <input mdbRadio class="form-check-input" type="radio" name="pocket_type" id="pocket_type2"
+
+                  <label class="form-check-label rdiobox" for="pocket_type2">
+                    <input mdbRadio class="form-check-input" type="radio" name="pocket_type" id="pocket_type2"
                     value="side pocket" [(ngModel)]="form.pocket_type"  #pocket_type="ngModel"
                   />
-                  <label class="form-check-label" for="pocket_type2">
-                      <img src="assets/28.png">
+                      <span></span><img src="assets/28.png">
                       <p><b>SIDE POCKET</b></p>
                   </label>
               </div>
@@ -254,22 +276,24 @@
         <div class="col-md-3 shape">
             <div class="col-md-6 shapes">
                 <div class="form-check form-check-inline">
-                    <input mdbRadio class="form-check-input" type="radio" name="back_pocket" id="back_pocket1"
+
+                    <label class="form-check-label rdiobox" for="back_pocket1">
+                      <input mdbRadio class="form-check-input" type="radio" name="back_pocket" id="back_pocket1"
                       value="1 back pocket" [(ngModel)]="form.back_pocket"  #back_pocket="ngModel"
                     />
-                    <label class="form-check-label" for="back_pocket1">
-                        <img src="assets/29.png">
+                        <span></span><img src="assets/29.png">
                         <p><b>1 BACK POCKET</b></p>
                     </label>
                 </div>
             </div>
             <div class="col-md-6 shapes">
                 <div class="form-check form-check-inline">
-                    <input mdbRadio class="form-check-input" type="radio" name="back_pocket" id="back_pocket2"
+
+                    <label class="form-check-label rdiobox" for="back_pocket2">
+                      <input mdbRadio class="form-check-input" type="radio" name="back_pocket" id="back_pocket2"
                       value="2 back pocket" [(ngModel)]="form.back_pocket"  #back_pocket="ngModel"
                     />
-                    <label class="form-check-label" for="back_pocket2">
-                        <img src="assets/30.png">
+                        <span></span><img src="assets/30.png">
                         <p><b>2 BACK POCKET</b></p>
                     </label>
                 </div>
@@ -278,22 +302,24 @@
         <div class="col-md-3 shape">
             <div class="col-md-6 shapes">
                 <div class="form-check form-check-inline">
-                    <input mdbRadio class="form-check-input" type="radio" name="shape" id="shape1"
+
+                    <label class="form-check-label rdiobox" for="shape1">
+                      <input mdbRadio class="form-check-input" type="radio" name="shape" id="shape1"
                       value="shoe shape" [(ngModel)]="form.shape"  #shape="ngModel"
                     />
-                    <label class="form-check-label" for="shape1">
-                        <img src="assets/31.png">
+                        <span></span><img src="assets/31.png">
                         <p><b>SHOE SHAPE</b></p>
                     </label>
                 </div>
             </div>
             <div class="col-md-6 shapes">
                 <div class="form-check form-check-inline">
-                    <input mdbRadio class="form-check-input" type="radio" name="shape" id="shape2"
+
+                    <label class="form-check-label rdiobox" for="shape2">
+                      <input mdbRadio class="form-check-input" type="radio" name="shape" id="shape2"
                       value="turn up" [(ngModel)]="form.shape"  #shape="ngModel"
                     />
-                    <label class="form-check-label" for="shape2">
-                        <img src="assets/32.png">
+                        <span></span><img src="assets/32.png">
                         <p><b>TURN UP</b></p>
                     </label>
                 </div>
@@ -302,22 +328,24 @@
         <div class="col-md-3 shape">
           <div class="col-md-6 shapes">
               <div class="form-check form-check-inline">
-                  <input mdbRadio class="form-check-input" type="radio" name="cut_way" id="cut_way1"
+
+                  <label class="form-check-label rdiobox" for="cut_way1">
+                    <input mdbRadio class="form-check-input" type="radio" name="cut_way" id="cut_way1"
                     value="full cut way" [(ngModel)]="form.cut_way"  #cut_way="ngModel"
                   />
-                  <label class="form-check-label" for="cut_way1">
-                      <img src="assets/33.png">
+                      <span></span><img src="assets/33.png">
                       <p><b>FULL CUT WAY</b></p>
                   </label>
               </div>
           </div>
           <div class="col-md-6 shapes">
               <div class="form-check form-check-inline">
-                  <input mdbRadio class="form-check-input" type="radio" name="cut_way" id="cut_way2"
+
+                  <label class="form-check-label rdiobox" for="cut_way2">
+                    <input mdbRadio class="form-check-input" type="radio" name="cut_way" id="cut_way2"
                     value="semi cut way" [(ngModel)]="form.cut_way"  #cut_way="ngModel"
                   />
-                  <label class="form-check-label" for="cut_way2">
-                      <img src="assets/34.png">
+                      <span></span><img src="assets/34.png">
                       <p><b>SEMI CUT WAY</b></p>
                   </label>
               </div>
@@ -326,22 +354,24 @@
       <div class="col-md-3 shape">
           <div class="col-md-6 shapes">
               <div class="form-check form-check-inline">
-                  <input mdbRadio class="form-check-input" type="radio" name="collar_type" id="collar_type1"
+
+                  <label class="form-check-label rdiobox" for="collar_type1">
+                    <input mdbRadio class="form-check-input" type="radio" name="collar_type" id="collar_type1"
                     value="wing collar" [(ngModel)]="form.collar_type"  #collar_type="ngModel"
                   />
-                  <label class="form-check-label" for="collar_type1">
-                      <img src="assets/35.png">
+                      <span></span><img src="assets/35.png">
                       <p><b>WING COLLAR</b></p>
                   </label>
               </div>
           </div>
           <div class="col-md-6 shapes">
               <div class="form-check form-check-inline">
-                  <input mdbRadio class="form-check-input" type="radio" name="collar_type" id="collar_type2"
+
+                  <label class="form-check-label rdiobox" for="collar_type2">
+                    <input mdbRadio class="form-check-input" type="radio" name="collar_type" id="collar_type2"
                     value="mandarin collar" [(ngModel)]="form.collar_type"  #collar_type="ngModel"
                   />
-                  <label class="form-check-label" for="collar_type2">
-                      <img src="assets/36.png">
+                      <span></span><img src="assets/36.png">
                       <p><b>MANDARIN COLLAR</b></p>
                   </label>
               </div>
@@ -352,42 +382,46 @@
         <div class="col-md-12 shape">
             <div class="col-md-3 shapes">
                 <div class="form-check form-check-inline">
-                    <input mdbRadio class="form-check-input" type="radio" name="placket" id="placket1"
+
+                    <label class="form-check-label rdiobox" for="placket1">
+                      <input mdbRadio class="form-check-input" type="radio" name="placket" id="placket1"
                       value="forward point" [(ngModel)]="form.placket"  #placket="ngModel"/>
-                    <label class="form-check-label" for="placket1">
-                        <img src="assets/37.png">
+                        <span></span><img src="assets/37.png">
                         <p><b>FORWARD POINT</b></p>
                     </label>
                 </div>
             </div>
             <div class="col-md-3 shapes">
                 <div class="form-check form-check-inline">
-                    <input mdbRadio class="form-check-input" type="radio" name="placket" id="placket2"
+
+                    <label class="form-check-label rdiobox" for="placket2">
+                      <input mdbRadio class="form-check-input" type="radio" name="placket" id="placket2"
                       value="plain placket" [(ngModel)]="form.placket"  #placket="ngModel"/>
-                    <label class="form-check-label" for="placket2">
-                        <img src="assets/38.png">
+                        <span></span><img src="assets/38.png">
                         <p><b>PLAIN PLACKET</b></p>
                     </label>
                 </div>
             </div>
             <div class="col-md-3 shapes">
                 <div class="form-check form-check-inline">
-                    <input mdbRadio class="form-check-input" type="radio" name="placket" id="placket3"
+
+                    <label class="form-check-label rdiobox" for="placket3">
+                      <input mdbRadio class="form-check-input" type="radio" name="placket" id="placket3"
                       value="box placket" [(ngModel)]="form.placket"  #placket="ngModel"
                     />
-                    <label class="form-check-label" for="placket3">
-                        <img src="assets/39.png">
+                        <span></span><img src="assets/39.png">
                         <p><b>BOX PLACKET</b></p>
                     </label>
                 </div>
             </div>
             <div class="col-md-3 shapes">
                 <div class="form-check form-check-inline">
-                    <input mdbRadio class="form-check-input" type="radio" name="placket" id="placket4"
+
+                    <label class="form-check-label rdiobox" for="placket4">
+                      <input mdbRadio class="form-check-input" type="radio" name="placket" id="placket4"
                       value="concealed" [(ngModel)]="form.placket"  #placket="ngModel"
                     />
-                    <label class="form-check-label" for="placket4">
-                        <img src="assets/40.png">
+                        <span></span><img src="assets/40.png">
                         <p><b>CONCEALED</b></p>
                     </label>
                 </div>
@@ -398,11 +432,12 @@
         <div class="col-md-5 shape">
             <div class="col-md-4 shapes">
                 <div class="form-check form-check-inline">
-                    <input mdbRadio class="form-check-input" type="radio" name="cuff_type" id="cuff_type1"
+
+                    <label class="form-check-label rdiobox" for="cuff_type1">
+                      <input mdbRadio class="form-check-input" type="radio" name="cuff_type" id="cuff_type1"
                       value="square cuff 2buttons" [(ngModel)]="form.cuff_type"  #cuff_type="ngModel"
                     />
-                    <label class="form-check-label" for="cuff_type1">
-                        <img src="assets/41.png">
+                        <span></span><img src="assets/41.png">
                         <p><b>SQUARE CUFF</b></p>
                         <p><b>2 BUTTONS</b></p>
                     </label>
@@ -410,11 +445,12 @@
             </div>
             <div class="col-md-4 shapes">
                 <div class="form-check form-check-inline">
-                    <input mdbRadio class="form-check-input" type="radio" name="cuff_type" id="cuff_type2"
+
+                    <label class="form-check-label rdiobox" for="cuff_type2">
+                      <input mdbRadio class="form-check-input" type="radio" name="cuff_type" id="cuff_type2"
                       value="round cuff 2buttons" [(ngModel)]="form.cuff_type"  #cuff_type="ngModel"
                     />
-                    <label class="form-check-label" for="cuff_type2">
-                        <img src="assets/41.png">
+                        <span></span><img src="assets/41.png">
                         <p><b>ROUND CUFF </b></p>
                         <p><b>2 BUTTONS</b></p>
                     </label>
@@ -422,11 +458,12 @@
             </div>
             <div class="col-md-4 shapes">
                 <div class="form-check form-check-inline">
-                    <input mdbRadio class="form-check-input" type="radio" name="cuff_type" id="cuff_type3"
+
+                    <label class="form-check-label rdiobox" for="cuff_type3">
+                      <input mdbRadio class="form-check-input" type="radio" name="cuff_type" id="cuff_type3"
                       value="french cuff" [(ngModel)]="form.cuff_type"  #cuff_type="ngModel"
                     />
-                    <label class="form-check-label" for="cuff_type3">
-                        <img src="assets/42.png">
+                        <span></span><img src="assets/42.png">
                         <p><b>FRENCH CUFF</b></p>
                     </label>
                 </div>
@@ -436,10 +473,11 @@
         <div class="col-md-7 shape">
             <div class="col-md-3 shapes">
                 <div class="form-check form-check-inline">
-                    <input mdbRadio class="form-check-input" type="radio" name="other" id="other1"
+
+                    <label class="form-check-label rdiobox" for="other1">
+                      <input mdbRadio class="form-check-input" type="radio" name="other" id="other1"
                       value="np pocket" [(ngModel)]="form.other"  #other="ngModel"
-                    />
-                    <label class="form-check-label" for="other1">
+                    /><span></span>
                         <p class="noimage"></p>
                         <p style="margin-top: -68px;"><b>NO POCKET</b></p>
                     </label>
@@ -447,10 +485,11 @@
             </div>
             <div class="col-md-3 shapes">
                 <div class="form-check form-check-inline">
-                    <input mdbRadio class="form-check-input" type="radio" name="other" id="other2"
+
+                    <label class="form-check-label rdiobox" for="other2">
+                      <input mdbRadio class="form-check-input" type="radio" name="other" id="other2"
                       value="apple cut" [(ngModel)]="form.other"  #other="ngModel"
-                    />
-                    <label class="form-check-label" for="other2">
+                    /><span></span>
                         <p class="noimage"></p>
                         <p style="margin-top: -68px;"><b>APPLE CUT</b></p>
                     </label>
@@ -458,10 +497,11 @@
             </div>
             <div class="col-md-3 shapes">
                 <div class="form-check form-check-inline">
-                    <input mdbRadio class="form-check-input" type="radio" name="other" id="other3"
+
+                    <label class="form-check-label rdiobox" for="other3">
+                      <input mdbRadio class="form-check-input" type="radio" name="other" id="other3"
                       value="round" [(ngModel)]="form.other"  #other="ngModel"
-                    />
-                    <label class="form-check-label" for="other3">
+                    /><span></span>
                         <p class="noimage"></p>
                         <p style="margin-top: -68px;"><b>ROUND</b></p>
                     </label>
@@ -469,10 +509,11 @@
             </div>
             <div class="col-md-3 shapes">
                 <div class="form-check form-check-inline">
-                    <input mdbRadio class="form-check-input" type="radio" name="other" id="other4"
+
+                    <label class="form-check-label rdiobox" for="other4">
+                      <input mdbRadio class="form-check-input" type="radio" name="other" id="other4"
                       value="side slip" [(ngModel)]="form.other"  #other="ngModel"
-                    />
-                    <label class="form-check-label" for="other4">
+                    /><span></span>
                         <p class="noimage"></p>
                         <p style="margin-top: -68px;"><b>SIDE SLIP</b></p>
                     </label>
@@ -484,22 +525,24 @@
         <div class="col-md-5 shape">
             <div class="col-md-6 shapes">
                 <div class="form-check form-check-inline">
-                    <input mdbRadio class="form-check-input" type="radio" name="shape_type" id="shape_type1"
+
+                    <label class="form-check-label rdiobox" for="shape_type1">
+                      <input mdbRadio class="form-check-input" type="radio" name="shape_type" id="shape_type1"
                     value="v-shape" [(ngModel)]="form.shape_type"  #shape_type="ngModel"
                     />
-                    <label class="form-check-label" for="shape_type1">
-                        <img src="assets/43.png">
+                        <span></span><img src="assets/43.png">
                         <p><b>V-SHAPE</b></p>
                     </label>
                 </div>
             </div>
             <div class="col-md-6 shapes">
                 <div class="form-check form-check-inline">
-                    <input mdbRadio class="form-check-input" type="radio" name="shape_type" id="shape_type2"
+
+                    <label class="form-check-label rdiobox" for="shape_type2">
+                      <input mdbRadio class="form-check-input" type="radio" name="shape_type" id="shape_type2"
                     value="round shape" [(ngModel)]="form.shape_type"  #shape_type="ngModel"
                     />
-                    <label class="form-check-label" for="shape_type2">
-                        <img src="assets/44.png">
+                        <span></span><img src="assets/44.png">
                         <p><b>ROUND SHAPE</b></p>
                     </label>
                 </div>
@@ -509,10 +552,11 @@
         <div class="col-md-7 shape">
             <div class="col-md-4 shapes">
                 <div class="form-check form-check-inline">
-                    <input mdbRadio class="form-check-input" type="radio" name="fit_type" id="fit_type1"
+
+                    <label class="form-check-label rdiobox" for="fit_type1">
+                      <input mdbRadio class="form-check-input" type="radio" name="fit_type" id="fit_type1"
                       value="slim fit" [(ngModel)]="form.fit_type"  #fit_type="ngModel"
-                    />
-                    <label class="form-check-label" for="fit_type1">
+                    /><span></span>
                         <p class="noimage"></p>
                         <p style="margin-top: -68px;"><b>SLIM FIT</b></p>
                     </label>
@@ -520,10 +564,11 @@
             </div>
             <div class="col-md-4 shapes">
                 <div class="form-check form-check-inline">
-                    <input mdbRadio class="form-check-input" type="radio" name="fit_type" id="fit_type2"
+
+                    <label class="form-check-label rdiobox" for="fit_type2">
+                      <input mdbRadio class="form-check-input" type="radio" name="fit_type" id="fit_type2"
                       value="medium fit" [(ngModel)]="form.fit_type"  #fit_type="ngModel"
-                    />
-                    <label class="form-check-label" for="fit_type2">
+                    /><span></span>
                         <p class="noimage"></p>
                         <p style="margin-top: -68px;"><b>MEDIUM FIT</b></p>
                     </label>
@@ -531,10 +576,11 @@
             </div>
             <div class="col-md-4 shapes">
                 <div class="form-check form-check-inline">
-                    <input mdbRadio class="form-check-input" type="radio" name="fit_type" id="fit_type3"
+
+                    <label class="form-check-label rdiobox" for="fit_type3">
+                      <input mdbRadio class="form-check-input" type="radio" name="fit_type" id="fit_type3"
                       value="regular fit" [(ngModel)]="form.fit_type"  #fit_type="ngModel"
-                    />
-                    <label class="form-check-label" for="fit_type3">
+                    /><span></span>
                         <p class="noimage"></p>
                         <p style="margin-top: -68px;"><b>REGULAR FIT</b></p>
                     </label>
@@ -550,7 +596,8 @@
     <div class="col-md-12">
         <div class="form-group">
             <label for="remark" class="form-label">Remark</label>
-            <input type="text" class="form-control" name="remark" [(ngModel)]="form.remark" #remark="ngModel">
+            <div class="mdisplay"> {{ form.remark}} </div>
+            <!-- <input type="text" class="form-control" name="remark" [(ngModel)]="form.remark" #remark="ngModel"> -->
             <!-- <div class="alert alert-danger mt-2" role="alert" *ngIf="title.errors && measurment.submitted">
                 Please enter Measurement Name
             </div> -->

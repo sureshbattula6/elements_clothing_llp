@@ -44,7 +44,7 @@ export class DashboardComponent implements OnInit {
         this.ShirtsCount = res.data.ShirtsCount;
         this.trousersCount = res.data.trousersCount;
         this.latestOrders = res.data.latestOrders;
-         console.log(res.data.latestOrders);
+        // console.log(res.data.latestOrders);
         this.visits = res.data.visits;
 
       }

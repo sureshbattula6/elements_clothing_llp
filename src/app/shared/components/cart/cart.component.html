@@ -87,14 +87,7 @@
                   New Measurement
                 </button>
               </div>
-              <!-- <div class="col-md-4">
-                <mat-form-field>
-                  <mat-label>GST NO</mat-label>
-                  <input type="text" formControlName="gst" matInput>
-                  <<mat-error *ngIf="formSubmitted  && formValidate?.trailDate?.errors?.required">This field is
-                    required.</mat-error>
-                </mat-form-field>
-              </div> -->
+
             </div>
           </div>
 
@@ -102,7 +95,7 @@
           <div class="row">
             <div class="col-lg-8">
               <ng-container *ngFor="let result of productCountArray; let i = index">
-              <div class="row align-items-center">
+                <div class="row align-items-center">
                   <div class="col-md-5">
                     <p>{{ result.product_name }}</p>
                   </div>
@@ -110,9 +103,9 @@
                     {{ result.product_count }} Qty
                   </div>
                   <input type="checkbox" (change)="onSelectProduct($event, result.product_id)">
-                <!-- </ng-container> -->
-              </div>
-            </ng-container>
+                  <!-- </ng-container> -->
+                </div>
+              </ng-container>
               <hr />
               <div class="row cartrowheading">
                 <div class="col-md-6">Product Name</div>
@@ -124,9 +117,16 @@
               <div class="row align-items-center">
                 <div class="col-lg-12">
                   <table class="table thead-light carttable">
-                    <app-cart-item *ngFor="let cart of cartList" [cart]="cart" [prescriptions]="prescriptionList"
-                      (newEvent)="cartUpdate($event)"></app-cart-item>
+                    <app-cart-item *ngFor="let cart of cartList" [cart]="cart" [salesList]="salesEmployeeList"
+                      [prescriptions]="prescriptionList" (newEvent)="cartUpdate($event)"></app-cart-item>
+
                   </table>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-2 AppliedAllCheckbox">
+                  <mat-checkbox (change)="updateAdditionalCostAppliedAll($event)">Size - Apply to all</mat-checkbox>
                 </div>
               </div>
 
@@ -143,16 +143,7 @@
               <div class="checkout">
                 <div class="row">
                   <div class="col-lg-12">
-                    <!-- <div class="row">
-                    <div class="col-lg-6">
-                      <p>Coupons</p>
-                    </div>
-                    <div class="col-lg-6">
-                      <button type="button" mat-stroked-button>
-                        Add Coupons
-                      </button>
-                    </div>
-                  </div> -->
+
                     <div class="row">
                       <div class="col-lg-12">
                         <h2>Summary:</h2>
@@ -161,11 +152,12 @@
                   </div>
                 </div>
                 <hr />
+
                 <div class="row">
-                  <div class="col-lg-12">
+                  <div class="col-lg-12 summary-row">
                     <div class="row">
                       <div class="col-lg-6">
-                        <p>Subtotal</p>
+                        <p>Order Total</p>
                       </div>
                       <div class="col-lg-6">
                         <mat-form-field>
@@ -176,6 +168,34 @@
                         </mat-form-field>
                       </div>
                     </div>
+                    <div class="row">
+                      <div class="col-lg-6">
+                        <p>Discount</p>
+                      </div>
+                      <div class="col-lg-6">
+                        <mat-form-field>
+                          <button type="button" mat-button mat-icon-button matPrefix>
+                            ₹
+                          </button>
+                          <input matInput type="number" [value]="discount" [disabled]="true" />
+                        </mat-form-field>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-6">
+                        <p>Taxable Value</p>
+                      </div>
+                      <div class="col-lg-6">
+                        <mat-form-field>
+                          <button type="button" mat-button mat-icon-button matPrefix>
+                            ₹
+                          </button>
+                          <input matInput type="number" [value]="taxableValue" [disabled]="true" />
+
+                        </mat-form-field>
+                      </div>
+                    </div>
+
                     <div class="row">
                       <div class="col-lg-6">
                         <p>GST</p>
@@ -195,21 +215,13 @@
                       </div>
                       <div class="col-lg-6">
                         <mat-form-field>
-                          <!-- <mat-select formControlName="discountType">
-                            <mat-option *ngFor="let discount of discountTypeOption" [value]="discountType">
-                                <span>{{ discount?.name }}</span>
-                            </mat-option>
-                          </mat-select> -->
-                          <mat-select [(value)]="discountType" (selectionChange)="showDiscountType()"> <!-- (selectionChange)="showDiscountType()"-->
-                            <mat-option value="percentage">Percentage</mat-option>
-                            <mat-option value="amount">Amount</mat-option>
+                          <mat-label>Discount Type</mat-label>
+                          <mat-select [(value)]="discountType" (selectionChange)="showDiscountType()">
+                            <mat-option [value]="1">Percentage</mat-option>
+                            <mat-option [value]="2">Amount</mat-option>
                           </mat-select>
-                          <!-- <button type="button" mat-button mat-icon-button matPrefix>
-                            %
-                          </button>
-                          <input matInput type="number" [value]="discountPercent" (input)="onInput($event)" /> -->
-                          <!-- <input matInput type="text"  [value]="value | number: '.0' : 'en-US'" (input)="onInput($event)"/> -->
                         </mat-form-field>
+
                       </div>
                     </div>
                     <div class="row">
@@ -217,41 +229,53 @@
                         <p></p>
                       </div>
                       <div class="col-lg-6">
-                        <mat-form-field>
-                          <!-- <input matInput type="number" [value]="discountValue" (input)="onInput($event)" /> -->
-                          <input matInput type="number" formControlName="discountInputValue" (keyup)="onInput()"  />
-                        </mat-form-field>
-                        <div *ngIf="discountError" class="mat-error">
+                        <div>
+                          <mat-form-field>
+                            <mat-label>Discount Input</mat-label>
+                            <input matInput formControlName="discountInputValue" />
+                            <div class="disBtn">
+                              <button class="applyBtn" type="button" color="primary" mat-flat-button
+                                (click)="onInput()">
+                                Apply
+                              </button>
+                            </div>
+
+                          </mat-form-field>
+
+                        </div>
+
+                        <div *ngIf="discountType === '1' && discountError" class="mat-error">
                           Discount limit exceeded.
                         </div>
-                        <div *ngIf="invalidDiscountError" class="mat-error">
+                        <div *ngIf="discountType === '1' && invalidDiscountError" class="mat-error">
                           Invalid Discount.
                         </div>
                       </div>
                     </div>
+
                     <hr />
                     <div class="row">
                       <div class="col-lg-6">
-                        <p>Order Total</p>
+                        <p>Total</p>
                       </div>
                       <div class="col-lg-6">
                         <mat-form-field>
                           <button type="button" mat-button mat-icon-button matPrefix>
                             ₹
                           </button>
-                          <input matInput type="number" [value]="total" [disabled]="true" />
+                          <input matInput type="number" name="totalAmt" id="1" [value]="total" [disabled]="true" />
                         </mat-form-field>
                       </div>
                     </div>
                     <hr />
                   </div>
                 </div>
-                <div class="row paymentsummary">
 
+                <div class="row paymentsummary">
                   <div class="col-lg-12 mg-t-10">
                     <mat-form-field>
                       <mat-label> Payment Type</mat-label>
-                      <mat-select formControlName="paymentType">
+                      <mat-select formControlName="paymentType" (selectionChange)="onPaymentMethodChange($event.value)">
                         <mat-option *ngFor="let payment of paymentTypeOptions;" [value]="payment">
                           <span>{{ payment?.name }}</span>
                         </mat-option>
@@ -261,9 +285,10 @@
                   </div>
 
                   <div class="col-lg-12 mg-t-10">
-                    <mat-form-field>
+                    <mat-form-field *ngIf="isPaymentAmountVisible">
                       <mat-label> Payment Settlement </mat-label>
-                      <mat-select formControlName="paymentSettlement" (selectionChange)="onPaymentOptionChange($event.value)">
+                      <mat-select formControlName="paymentSettlement"
+                        (selectionChange)="onPaymentOptionChange($event.value)">
                         <mat-option *ngFor="let settlement of paymentSettlementOptions" [value]="settlement">
                           <span>{{ settlement?.name }}</span>
                         </mat-option>
@@ -275,39 +300,16 @@
                   </div>
 
                   <div class="col-lg-12 mg-t-10">
-                    <mat-form-field>
+                    <mat-form-field *ngIf="isPaymentAmountVisible">
                       <mat-label>Amount</mat-label>
-                      <input type="number" formControlName="amount" matInput   />
+                      <input type="number" formControlName="amount" matInput />
                       <mat-error *ngIf="formValidate?.amount?.errors?.required">This field is required.</mat-error>
                     </mat-form-field>
-
                   </div>
-                  <!-- <div class="col-lg-12 mg-t-10">
-                    <label class="ckbox">
-                      <input  formControlName="paymentOption" value="1" type="checkbox"><span>Proceed without Payment</span>
-                      </label>
-                  </div> -->
                   <div class="col-lg-12 mg-t-10">
                     <textarea formControlName="remarks" placeholder="Remarks" class="form-control"></textarea>
                   </div>
-                  <!-- <div class="col-lg-12 mg-t-10">
-                    <mat-form-field>
-                        <mat-label> Order Status </mat-label>
-                        <mat-select formControlName="orderStatus">
-                            <mat-option *ngFor="let orderStatus of orderStatusOptions;" [value]="orderStatus">
-                                <span>{{orderStatus?.name}}</span>
-                            </mat-option>
-                        </mat-select>
-                        <mat-error *ngIf="formValidate?.orderStatus?.errors?.required">This field is required.</mat-error>
-                    </mat-form-field>
-                </div> -->
-                  <!-- <div class="col-lg-12 text-center">
-                    <div class="button-group">
-                        <button type="submit" mat-raised-button="" class="mat-focus-indicator btn-int-blue mat-raised-button mat-button-base">
-                             Update Payment
-                        </button>
-                    </div>
-                </div> -->
+
                 </div>
 
                 <!-- (click)="navigateToPlaceOrder()" -->
@@ -333,7 +335,7 @@
                             </mat-select>
                           </mat-form-field> -->
             </div>
-            <div class="col-lg-4" *ngIf="cartList.length">
+            <div class="cartList" *ngIf="cartList.length">
               <!-- <button type="button" color="warn" (click)="navigateToPlaceOrder()" mat-flat-button>Place Order</button> -->
             </div>
           </div>

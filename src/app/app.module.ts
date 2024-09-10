@@ -1,3 +1,4 @@
+
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -79,7 +80,9 @@ import { OrderReportComponent } from './components/order-report/order-report.com
 import { DataTablesModule } from 'angular-datatables';
 import { MatInputModule } from "@angular/material/input";
 import { ReportSalesemployeeComponent } from './components/report-salesemployee/report-salesemployee.component';
-
+import { CancelOrderComponent } from './components/cancel-order/cancel-order.component';
+import { CompleteOrderComponent } from './components/complete-order/complete-order.component';
+import { UpdateRemarksDialogComponent } from './update-remarks-dialog/update-remarks-dialog.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -138,7 +141,10 @@ import { ReportSalesemployeeComponent } from './components/report-salesemployee/
     MeasurementsListComponent,
     OnlinePaymentsComponent,
     OrderReportComponent,
-    ReportSalesemployeeComponent
+    ReportSalesemployeeComponent,
+    CancelOrderComponent,
+    CompleteOrderComponent,
+    UpdateRemarksDialogComponent
 
   ],
   imports: [

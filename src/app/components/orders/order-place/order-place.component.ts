@@ -30,8 +30,8 @@ export class OrderPlaceComponent implements OnInit {
   public paymentTypeOptions: any[] = [
     { id: 1, name: 'CASH' },
     { id: 2, name: 'CARD'},
-    { id: 3, name: 'CREDIT'},
-    { id: 4, name: 'ONLINE'},
+    // { id: 3, name: 'CREDIT'},
+    //{ id: 4, name: 'ONLINE'},
     { id: 5, name: 'UPI'}
   ];
 
@@ -90,9 +90,9 @@ export class OrderPlaceComponent implements OnInit {
       this.isDiscountError = false;
     }
 
-    // this.balanceAmount = totalAmont - this.paidAmount - beforeDiscount - discount;
+   
      this.afterDiscount = discount;
-    // console.log(this.balanceAmount);
+   
   }
 
   formEvents(){
@@ -134,7 +134,7 @@ export class OrderPlaceComponent implements OnInit {
   get formValidate(){ return this.orderForm.controls; }
 
   getOrders(){
-    this.productService.showOrder(this.orderId).subscribe( (res:any) => {
+    this.productService.showOrderDetails(this.orderId).subscribe( (res:any) => {
       this.orderItem = res.data.order;
       this.afterDiscountAmount = +this.orderItem.after_discount;
       this.orderAmount = +this.orderItem.total_amount;
@@ -167,8 +167,9 @@ export class OrderPlaceComponent implements OnInit {
       this.orderItem = res.data;
       this.checkOrderShow();
       this.updateOrder();
-      this.ngOnInit();
-      this._router.navigate(['/orders']);
+      // this.ngOnInit();
+      window.location.reload();
+      // this._router.navigate(['/order-view', this.orderId]);
     });
   }
 
@@ -187,7 +188,7 @@ export class OrderPlaceComponent implements OnInit {
 
     });
 
-     this.balanceAmount = this.orderAmount - this.discount- this.paidAmount - this.afterDiscountAmount;
+     this.balanceAmount = this.orderAmount - this.paidAmount;
 
      this.balanceAmount = Math.floor(this.balanceAmount);
      this.balanceAmount = parseFloat(this.balanceAmount.toFixed(2));

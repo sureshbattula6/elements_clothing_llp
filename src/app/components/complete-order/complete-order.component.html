@@ -1,0 +1,26 @@
+<div class="card">
+    <div class="modal-header">
+        <h3 class="modal-title">Complete Order</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="cancel()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="card-body">
+        <form [formGroup]="completeordermessageform" (ngSubmit)="onlineFormSubmit()">
+
+            <div class="form-group">
+                <textarea name="force_completed_reason" class="form-control" formControlName="force_completed_reason" placeholder="Reason" [ngClass]="{ 'is-invalid': submitted && formvalidate.force_completed_reason.errors }"></textarea>
+                <div *ngIf="submitted && formvalidate.force_completed_reason.errors" class="invalid-feedback">
+                    <div *ngIf="formvalidate.force_completed_reason.errors.required">The Required Field is Mandatory</div>
+                </div>
+            </div>
+
+            <div class="button-group text-center mt-3">
+                <button type="submit" mat-raised-button class="btn-int-blue">Confirm </button>
+                <button type="button" class="cancelBtn" data-dismiss="modal" mat-stroked-button color="warn"
+                  (click)="cancel()">Cancel</button>
+              </div>
+        </form>
+    </div>
+</div>

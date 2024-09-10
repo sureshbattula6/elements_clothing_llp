@@ -14,7 +14,7 @@ import { ShirtStyleComponent } from '../../../components/cart/shirt-style/shirt-
 import { TrouserStyleComponent } from '../../../components/cart/trouser-style/trouser-style.component';
 import { ActivatedRoute } from '@angular/router';
 
-const dialogConfig= new MatDialogConfig();
+const dialogConfig = new MatDialogConfig();
 dialogConfig.disableClose = true;
 dialogConfig.autoFocus = true;
 
@@ -30,56 +30,60 @@ export class CartItemComponent implements OnInit {
   public salesEmployeeList: any;
   public searchSelectedEmployees: any;
   public SERVER_PATH = environment.REST_API_URL;
-  @Input() cart:any;
-  @Input() prescriptions:any;
+  @Input() cart: any;
+  @Input() prescriptions: any;
+  @Input('salesList') filteredSalesEmployeeList: any[] = [];
 
   @Output() newEvent = new EventEmitter();
 
 
-  public prescription:any;
-  public prescriptionForm:FormGroup;
+  public prescription: any;
+  public prescriptionForm: FormGroup;
 
-  public selected:number = 0;
-  public lensForm:FormGroup;
-  public measurementsForm:FormGroup;
+  public selected: number = 0;
+  public lensForm: FormGroup;
+  public measurementsForm: FormGroup;
 
-  public life_styles:string[] = [];
-  public lens_recommendeds:string[] = [];
-  public tint_types:string[] = [];
-  public mirror_coatings:string[] = [];
-  public colours:string[] = [];
-  public gradients:string[] = [];
+  public life_styles: string[] = [];
+  public lens_recommendeds: string[] = [];
+  public tint_types: string[] = [];
+  public mirror_coatings: string[] = [];
+  public colours: string[] = [];
+  public gradients: string[] = [];
 
-  public diameters:string[] = [];
-  public base_curves:string[] = [];
-  public vertex_distances:string[] = [];
-  public pantascopic_angles:string[] = [];
-  public frame_wrap_angles:string[] = [];
-  public reading_distances:string[] = [];
-  public shapes:string[] = [];
+  public diameters: string[] = [];
+  public base_curves: string[] = [];
+  public vertex_distances: string[] = [];
+  public pantascopic_angles: string[] = [];
+  public frame_wrap_angles: string[] = [];
+  public reading_distances: string[] = [];
+  public shapes: string[] = [];
+  
 
-  filteredSalesEmployeeList: any[] = [];
   searchCtrl: FormControl = new FormControl();
-  public productDiscount:number = 0;
-  public productTotal:number = 0;
-  public productQuantity:number = 0;
-  public productPrice:number = 0;
+  public productDiscount: number = 0;
+  public productTotal: number = 0;
+  public productQuantity: number = 0;
+  public productPrice: number = 0;
   public totalGSD: number = 0;
   cartList: any;
   productCountArray: any;
 
   editing = false;
   editedPrice: number;
+  additionalOption: string;
+  public customerId: any = this.authenticationService.getCustomerId();
+  selectionChange: any
 
-  constructor(private fb:FormBuilder,
-    private dialog:MatDialog,
+  constructor(private fb: FormBuilder,
+    private dialog: MatDialog,
     private commonService: CommonService,
     private prescriptionService: PrescriptionService,
-    private productService:ProductService,
+    private productService: ProductService,
     private measurementService: MeasurmentService,
     private authenticationService: AuthenticationService,
     private route: ActivatedRoute,
-    ) { }
+  ) { }
 
   ngOnInit(): void {
     this.createForm();
@@ -92,32 +96,38 @@ export class CartItemComponent implements OnInit {
       this.prescription = this.prescriptions.find(p => p.id === id);
     })
 
-    this.getSalesEmployeeList();
+    //console.log('sales List:: ', this.filteredSalesEmployeeList);
+
+    this.salesEmployeeList = this.filteredSalesEmployeeList;
+    this.filteredSalesEmployeeList = this.salesEmployeeList.slice(); // Initial copy
+
+    // this.getSalesEmployeeList();
 
     // this.getMeasurementList();
 
+    this.onSearchEmpKey('');
+
   }
 
-  getSalesEmployeeList() {
+  // getSalesEmployeeList() {
 
-    this.productService.getSaleEmployees().subscribe(
-      (res) => {
-        console.log(res)
-        this.salesEmployeeList = res;
-        this.searchSelectedEmployees = this.salesEmployeeList;
-        this.filteredSalesEmployeeList = this.salesEmployeeList.slice(); // Initial copy
+  //   this.productService.getSaleEmployees().subscribe(
+  //     (res) => {
+  //      // console.log(res)
+  //       this.salesEmployeeList = res;
+  //       this.searchSelectedEmployees = this.salesEmployeeList;
+  //       this.filteredSalesEmployeeList = this.salesEmployeeList.slice(); // Initial copy
 
-      },
-      (err) => {
-        console.log('Error Sales Employee', err)
-      }
-    )
-  }
+  //     },
+  //     (err) => {
+  //       console.log('Error Sales Employee', err)
+  //     }
+  //   )
+  // }
 
-  updateSalesEmployee(cartId: number, event:any)
-  {
+  updateSalesEmployee(cartId: number, event: any) {
     const params = {
-      sales_emp_id : event.value
+      sales_emp_id: event.value
     };
 
     this.productService.updateCartSalesEmployee(this.cart.id, params).subscribe(
@@ -131,11 +141,12 @@ export class CartItemComponent implements OnInit {
 
 
 
-  measurementStyle(cartId?:any,product_category_id?:any):void{
+
+  measurementStyle(cartId?: any, product_category_id?: any): void {
 
     localStorage.setItem("cart_id", cartId);
 
-    dialogConfig.width ="60%";
+    dialogConfig.width = "60%";
     dialogConfig.data = {
       id: undefined,
     }
@@ -146,53 +157,50 @@ export class CartItemComponent implements OnInit {
       this.dialog.open(SuitStyleComponent, dialogConfig);
     } else if (product_category_id == 4) {
       this.dialog.open(ShirtStyleComponent, dialogConfig);
-    } else if (product_category_id == 2){
+    } else if (product_category_id == 2) {
       this.dialog.open(TrouserStyleComponent, dialogConfig);
     }
     // UPDATE CONTACT DETAILS AFTER CREATING THE CONTACT
-    this.dialog.afterAllClosed.subscribe(e=>{
+    this.dialog.afterAllClosed.subscribe(e => {
       //  this.getData(this.current_page, this.page_length);
     });
   }
 
-
   selectedProducts: any[] = [];
 
 
+  // getMeasurementList() {
+  //   const customerId = this.authenticationService.getCustomerId();
+  //   this.measurementService.measurementList(customerId).subscribe(
+  //     (res: any) => {
+  //       const measurements = res.data.measurment;
+  //       // var measureList = measurements.map((obj : any) =>  obj.title).join('|$');
+  //       // console.log(measurements);
 
+  //       // this.toppingList = measureList.split("|$");
+  //       this.toppingList = measurements;
+  //       const selectedMeasurement = measurements.filter((obj:any) => obj.value == this.cart.cart_measurements_id);
+  //       this.toppings = new FormControl(selectedMeasurement[0].value);
 
+  //     },
+  //     (err) => console.log('Error ', err)
+  //   );
+  // }
 
-  getMeasurementList() {
-    const customerId = this.authenticationService.getCustomerId();
-    this.measurementService.measurementList(customerId).subscribe(
-      (res: any) => {
-        const measurements = res.data.measurment;
-        // var measureList = measurements.map((obj : any) =>  obj.title).join('|$');
-        // console.log(measurements);
-
-        // this.toppingList = measureList.split("|$");
-        this.toppingList = measurements;
-        const selectedMeasurement = measurements.filter((obj:any) => obj.value == this.cart.cart_measurements_id);
-        this.toppings = new FormControl(selectedMeasurement[0].value);
-
-      },
-      (err) => console.log('Error ', err)
-    );
-  }
-
-  measurementUpdate(measurementId: any){
+  measurementUpdate(measurementId: any) {
     const param = {
       measurementId: measurementId.value
     }
     this.measurementService.measurementUpdate(this.cart.id, param).subscribe(
-      (response:any)=>{
+      (response: any) => {
+        
         console.log(response)
       },
-      (err)=> console.log(err)
+      (err) => console.log(err)
     )
-   }
+  }
 
-  getDetails():void{
+  getDetails(): void {
     // this.prescriptionService.createPrescription().subscribe(
     //   (res:any) => {
 
@@ -218,17 +226,17 @@ export class CartItemComponent implements OnInit {
     // )
   }
 
-  getCart(){
+  getCart() {
     this.productService.showCart(this.cart.id).subscribe(
-      (response:any) => {
+      (response: any) => {
 
-        if(response.data.cart.prescription != undefined){
+        if (response.data.cart.prescription != undefined) {
           this.prescription = response.data.cart.prescription;
           this.prescriptionForm.patchValue({
             prescriptionId: response.data.cart.prescription.id
           });
         }
-        if(response.data.cart.lens != undefined){
+        if (response.data.cart.lens != undefined) {
           this.lensForm.patchValue({
             life_style: +response.data.cart.lens.life_style,
             lens_recommended: +response.data.cart.lens.lens_recommended,
@@ -239,50 +247,50 @@ export class CartItemComponent implements OnInit {
           });
         }
 
-        if(
+        if (
           response.data.cart.measurements != undefined &&
-          response.data.cart.measurements.precalvalues.length >= 2  &&
+          response.data.cart.measurements.precalvalues.length >= 2 &&
           response.data.cart.measurements.thickness.length >= 3
-          ){
+        ) {
           this.measurementsForm.patchValue({
-              diameter: +response.data.cart.measurements.diameter,
-              base_curve: +response.data.cart.measurements.base_curve,
-              vertex_distance: +response.data.cart.measurements.vertex_distance,
-              pantascopic_angle: +response.data.cart.measurements.pantascopic_angle,
-              frame_wrap_angle: +response.data.cart.measurements.frame_wrap_angle,
-              reading_distance: +response.data.cart.measurements.reading_distance,
-              shapes: response.data.cart.measurements.shape,
-              precal_values: {
-                right_value: {
-                  pd: response.data.cart.measurements.precalvalues[0].pd,
-                  ph: response.data.cart.measurements.precalvalues[0].ph,
-                },
-                left_value: {
-                  pd: response.data.cart.measurements.precalvalues[1].pd,
-                  ph: response.data.cart.measurements.precalvalues[1].ph,
-                },
+            diameter: +response.data.cart.measurements.diameter,
+            base_curve: +response.data.cart.measurements.base_curve,
+            vertex_distance: +response.data.cart.measurements.vertex_distance,
+            pantascopic_angle: +response.data.cart.measurements.pantascopic_angle,
+            frame_wrap_angle: +response.data.cart.measurements.frame_wrap_angle,
+            reading_distance: +response.data.cart.measurements.reading_distance,
+            shapes: response.data.cart.measurements.shape,
+            precal_values: {
+              right_value: {
+                pd: response.data.cart.measurements.precalvalues[0].pd,
+                ph: response.data.cart.measurements.precalvalues[0].ph,
               },
-              thickness: {
-                center_thickness: {
-                  right: response.data.cart.measurements.thickness[0].right,
-                  left:  response.data.cart.measurements.thickness[0].left
-                },
-                nose_edge_thickness: {
-                  right: response.data.cart.measurements.thickness[1].right,
-                  left:  response.data.cart.measurements.thickness[1].left
-                },
-                temple_edge_thickness: {
-                  right: response.data.cart.measurements.thickness[2].right,
-                  left:  response.data.cart.measurements.thickness[2].left
-                },
+              left_value: {
+                pd: response.data.cart.measurements.precalvalues[1].pd,
+                ph: response.data.cart.measurements.precalvalues[1].ph,
               },
-              lens_size:{
-                lens_width: response.data.cart.measurements.lens_width,
-                bridge_distance: response.data.cart.measurements.bridge_distance,
-                lens_height: response.data.cart.measurements.lens_height,
-                temple: response.data.cart.measurements.temple,
-                total_width: response.data.cart.measurements.total_width,
-              }
+            },
+            thickness: {
+              center_thickness: {
+                right: response.data.cart.measurements.thickness[0].right,
+                left: response.data.cart.measurements.thickness[0].left
+              },
+              nose_edge_thickness: {
+                right: response.data.cart.measurements.thickness[1].right,
+                left: response.data.cart.measurements.thickness[1].left
+              },
+              temple_edge_thickness: {
+                right: response.data.cart.measurements.thickness[2].right,
+                left: response.data.cart.measurements.thickness[2].left
+              },
+            },
+            lens_size: {
+              lens_width: response.data.cart.measurements.lens_width,
+              bridge_distance: response.data.cart.measurements.bridge_distance,
+              lens_height: response.data.cart.measurements.lens_height,
+              temple: response.data.cart.measurements.temple,
+              total_width: response.data.cart.measurements.total_width,
+            }
           });
 
         }
@@ -290,88 +298,88 @@ export class CartItemComponent implements OnInit {
     );
   }
 
-  createForm(){
+  createForm() {
     this.prescriptionForm = this.fb.group({
-      prescriptionId:["",[Validators.required]]
+      prescriptionId: ["", [Validators.required]]
     })
   }
 
-  createLensForm():void{
+  createLensForm(): void {
     this.lensForm = this.fb.group({
-        life_style: ["",[Validators.required]],
-        lens_recommended: ["",[Validators.required]],
-        tint_type: ["",[Validators.required]],
-        mirror_coating: ["",[Validators.required]],
-        colour: ["",[Validators.required]],
-        gradient: ["",[Validators.required]],
+      life_style: ["", [Validators.required]],
+      lens_recommended: ["", [Validators.required]],
+      tint_type: ["", [Validators.required]],
+      mirror_coating: ["", [Validators.required]],
+      colour: ["", [Validators.required]],
+      gradient: ["", [Validators.required]],
     });
   }
 
-  get lensFormValidate(){ return this.lensForm.controls; }
+  get lensFormValidate() { return this.lensForm.controls; }
 
 
-  get precalRightValuesValidate(){ return this.measurementsFormValidate.precal_values.get("right_value")["controls"]; }
-  get precalLeftValuesValidate(){ return this.measurementsFormValidate.precal_values.get("left_value")["controls"]; }
+  get precalRightValuesValidate() { return this.measurementsFormValidate.precal_values.get("right_value")["controls"]; }
+  get precalLeftValuesValidate() { return this.measurementsFormValidate.precal_values.get("left_value")["controls"]; }
 
-  get centerThicknessValidate(){ return this.measurementsFormValidate.thickness.get("center_thickness")["controls"]; }
-  get noseEdgeThicknessValidate(){ return this.measurementsFormValidate.thickness.get("nose_edge_thickness")["controls"]; }
-  get templeEdgeThicknessValidate(){ return this.measurementsFormValidate.thickness.get("temple_edge_thickness")["controls"]; }
+  get centerThicknessValidate() { return this.measurementsFormValidate.thickness.get("center_thickness")["controls"]; }
+  get noseEdgeThicknessValidate() { return this.measurementsFormValidate.thickness.get("nose_edge_thickness")["controls"]; }
+  get templeEdgeThicknessValidate() { return this.measurementsFormValidate.thickness.get("temple_edge_thickness")["controls"]; }
 
-  get lensSizeValidate(){ return this.measurementsFormValidate.lens_size["controls"]; }
+  get lensSizeValidate() { return this.measurementsFormValidate.lens_size["controls"]; }
 
 
-  createMeasurementsForm():void{
+  createMeasurementsForm(): void {
     this.measurementsForm = this.fb.group({
-      diameter: ["",[Validators.required]],
-      base_curve: ["",[Validators.required]],
+      diameter: ["", [Validators.required]],
+      base_curve: ["", [Validators.required]],
       precal_values: this.fb.group({
         right_value: this.fb.group({
-          pd: ["",[Validators.required]],
-          ph: ["",[Validators.required]],
+          pd: ["", [Validators.required]],
+          ph: ["", [Validators.required]],
         }),
         left_value: this.fb.group({
-          pd: ["",[Validators.required]],
-          ph: ["",[Validators.required]],
+          pd: ["", [Validators.required]],
+          ph: ["", [Validators.required]],
         }),
       }),
-      vertex_distance: ["",[Validators.required]],
-      pantascopic_angle: ["",[Validators.required]],
-      frame_wrap_angle: ["",[Validators.required]],
-      reading_distance: ["",[Validators.required]],
+      vertex_distance: ["", [Validators.required]],
+      pantascopic_angle: ["", [Validators.required]],
+      frame_wrap_angle: ["", [Validators.required]],
+      reading_distance: ["", [Validators.required]],
       thickness: this.fb.group({
         center_thickness: this.fb.group({
-          right: ["",[Validators.required]],
-          left: ["",[Validators.required]],
+          right: ["", [Validators.required]],
+          left: ["", [Validators.required]],
         }),
         nose_edge_thickness: this.fb.group({
-          right: ["",[Validators.required]],
-          left: ["",[Validators.required]],
+          right: ["", [Validators.required]],
+          left: ["", [Validators.required]],
         }),
         temple_edge_thickness: this.fb.group({
-          right: ["",[Validators.required]],
-          left: ["",[Validators.required]],
+          right: ["", [Validators.required]],
+          left: ["", [Validators.required]],
 
 
         }),
       }),
-      shapes: ["",[Validators.required]],
+      shapes: ["", [Validators.required]],
       lens_size: this.fb.group({
-        lens_width: ["",[Validators.required]],
-        bridge_distance: ["",[Validators.required]],
-        lens_height: ["",[Validators.required]],
-        temple: ["",[Validators.required]],
-        total_width: ["",[Validators.required]],
+        lens_width: ["", [Validators.required]],
+        bridge_distance: ["", [Validators.required]],
+        lens_height: ["", [Validators.required]],
+        temple: ["", [Validators.required]],
+        total_width: ["", [Validators.required]],
       })
     });
   }
 
-  get measurementsFormValidate(){ return this.measurementsForm.controls; }
+  get measurementsFormValidate() { return this.measurementsForm.controls; }
 
-  tintTypeChange(type:string){
-    if(type === "Colour"){
+  tintTypeChange(type: string) {
+    if (type === "Colour") {
       this.lensFormValidate.colour.setValidators([Validators.required]);
       this.lensFormValidate.gradient.setValidators(null);
-    }else{
+    } else {
       this.lensFormValidate.colour.setValidators(null);
       this.lensFormValidate.gradient.setValidators([Validators.required]);
     }
@@ -380,25 +388,25 @@ export class CartItemComponent implements OnInit {
     this.lensFormValidate.gradient.updateValueAndValidity();
   }
 
-  tabChange(input:number = 0){
+  tabChange(input: number = 0) {
 
-    if(input === 1){
+    if (input === 1) {
       this.prescriptionFormSubmit()
-    }else if (input === 2){
+    } else if (input === 2) {
       this.lensFormSubmit();
     }
 
     this.selected = input;
   }
 
-  setupProductDetails(){
+  setupProductDetails() {
     this.productPrice = +this.cart.product.price;
     this.productQuantity = +this.cart.quantities;
     this.calculateTotal();
   }
 
-  calculateTotal(){
-    this.productTotal  = this.productPrice * this.productQuantity;
+  calculateTotal() {
+    this.productTotal = this.productPrice * this.productQuantity;
   }
 
   // increment(){
@@ -413,52 +421,62 @@ export class CartItemComponent implements OnInit {
   //   }
   // }
 
-  remove():void{
-    dialogConfig.width ="20%";
-    dialogConfig.height ="30%";
+  remove(): void {
+    dialogConfig.width = "20%";
+    dialogConfig.height = "30%";
     dialogConfig.data = {
       title: "Remove Item",
-      message : "Are you sure you want to remove this item?",
+      message: "Are you sure you want to remove this item?",
       id: "",
-   };
+    };
 
-   dialogConfig.panelClass = "delelteModel";
+    dialogConfig.panelClass = "delelteModel";
 
-    const dialogRef = this.dialog.open(ConfirmDialogComponent,dialogConfig);
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(
       (res) => {
-          if(res.status){
-            this.deleteCart();
-          }
+        if (res.status) {
+          this.deleteCart();
+        }
       }
     );
 
   }
 
-  deleteCart(){
-    let params = { prescriptionId: this.cart.prescriptionId, quantities: this.productQuantity, status: "0" };
-    this.productService.updateCart(this.cart.id, params).subscribe(
-      (response:any)=>{
-         console.log(response);
-         this.newEvent.emit("Delete card")
-      },
-      (err)=> console.log(err)
-    )
-   }
+  //deleteCart() {
+  //  let params = { id: this.cart.id, prescriptionId: this.cart.prescriptionId, quantities: this.productQuantity, status: "0" };
+  //  this.productService.deletecart( params).subscribe(
+  //    (response: any) => {
+  //      console.log(response);
+  //      this.newEvent.emit("Delete card")
+  //    },
+  //    (err) => console.log(err)
+  //  )
+  //}
 
-  cartUpdate(){
-   let params = { prescriptionId: this.cart.prescriptionId,price: this.cart.price, quantities: this.productQuantity, status: this.cart.status };
-   this.productService.updateCart(this.cart.id, params).subscribe(
-     (response:any)=>{
-        this.newEvent.emit("update card")
-     },
-     (err)=> console.log(err)
-   )
+  deleteCart() {
+    let params = {  prescriptionId: this.cart.prescriptionId, quantities: this.productQuantity, status: "0" };
+    this.productService.updateCart(this.cart.id, params).subscribe(
+      (response: any) => {
+        console.log(response);
+        this.newEvent.emit("Delete card")
+      },
+      (err) => console.log(err)
+    )
   }
 
-  prescriptionFormSubmit(){
-    if(this.prescriptionForm.invalid){
+  cartUpdate() {
+    let params = { prescriptionId: this.cart.prescriptionId, price: this.cart.price, quantities: this.productQuantity, status: this.cart.status };
+    this.productService.updateCart(this.cart.id, params).subscribe(
+      (response: any) => {
+      },
+      (err) => console.log(err)
+    )
+  }
+
+  prescriptionFormSubmit() {
+    if (this.prescriptionForm.invalid) {
       return;
     }
 
@@ -466,47 +484,47 @@ export class CartItemComponent implements OnInit {
       prescriptionId: this.prescriptionForm.get('prescriptionId').value,
       quantities: this.productQuantity,
       status: this.cart.status
-     };
+    };
 
     this.productService.updateCart(this.cart.id, params).subscribe(
-      (response:any)=>{
-         this.commonService.openAlert(response.message);
+      (response: any) => {
+        this.commonService.openAlert(response.message);
       },
-      (err)=> console.log(err)
+      (err) => console.log(err)
     )
 
   }
 
-  lensFormSubmit(){
+  lensFormSubmit() {
 
-    if(this.lensForm.invalid){
+    if (this.lensForm.invalid) {
       return;
     }
 
     this.lensForm.addControl("cartId", new FormControl(this.cart.id));
 
     this.productService.addLensToCart(this.lensForm.value).subscribe(
-      (response:any)=>{
-         this.commonService.openAlert(response.message);
+      (response: any) => {
+        this.commonService.openAlert(response.message);
       },
-      (err)=> console.log(err)
+      (err) => console.log(err)
     )
 
   }
 
-  measurementFormSubmit(){
+  measurementFormSubmit() {
 
-    if(this.measurementsForm.invalid){
+    if (this.measurementsForm.invalid) {
       return;
     }
 
     this.measurementsForm.addControl("cartId", new FormControl(this.cart.id));
 
     this.productService.addMeasurementsToCart(this.measurementsForm.value).subscribe(
-      (response:any)=>{
-         this.commonService.openAlert(response.message);
+      (response: any) => {
+        this.commonService.openAlert(response.message);
       },
-      (err)=> console.log(err)
+      (err) => console.log(err)
     )
 
   }
@@ -515,15 +533,14 @@ export class CartItemComponent implements OnInit {
     // let gst = 0;
     // gst = this.calculateGST(+product.price, +product.gst);
     // this.totalGSD = this.totalGSD + gst;
-    let result =  Number(this.cart.price) + Number(this.cart.gst_amount)
+    let result = Number(this.cart.price) + Number(this.cart.gst_amount)
     return Math.floor(result).toFixed(2);
-
   }
 
-     /*  In order to add GST to base amount,
-      GST Amount = ( Original Cost * GST% ) / 100
-      Net Price = Original Cost + GST Amount */
-  calculateGST(cost: number = 0, gst: number = 0){
+  /*  In order to add GST to base amount,
+   GST Amount = ( Original Cost * GST% ) / 100
+   Net Price = Original Cost + GST Amount */
+  calculateGST(cost: number = 0, gst: number = 0) {
     return ((cost * gst) / 100);
   }
 
@@ -555,7 +572,7 @@ export class CartItemComponent implements OnInit {
   submitEdit(event: Event) {
     event.preventDefault();
 
-    if(this.editedPrice < 0) {
+    if (this.editedPrice < 0) {
       alert('Invalid Price');
       return;
     }
@@ -567,21 +584,41 @@ export class CartItemComponent implements OnInit {
     let params = {
       price: this.editedPrice,
       gst_amount: gst_price
-      };
+    };
 
     this.productService.updateCartPrice(this.cart.id, params).subscribe(
-      (response:any)=>{
+      (response: any) => {
         // this.newEvent.emit("update card")
         this.newEvent.emit("Delete card")
-          this.commonService.openAlert(response.message);
+        this.commonService.openAlert(response.message);
       },
-      (err)=> {
+      (err) => {
         console.log(err)
         this.commonService.openAlert('Failed to Update Price, Try again');
       }
     )
     this.editing = false;
   }
+
+  updateAdditionalCost(event: any) {
+    const params = {
+      additional_option: event.value
+    };
+     console.log('additional_option' ,params);
+    this.productService.updateCartAdditionalOption(this.cart.id, params).subscribe(
+      (response: any) => {
+        this.newEvent.emit("Update card")
+        this.commonService.openAlert(response.message);
+      },
+      (err) => {
+        console.log(err)
+        this.commonService.openAlert('Failed to add option, Try again');
+      }
+    )
+  } 
+
+
+ 
 
   cancelEdit(event: Event) {
     event.preventDefault();

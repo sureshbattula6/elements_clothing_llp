@@ -93,6 +93,7 @@ const routes: Routes = [
   { path: 'tailor-orders', component:TailorOrdersComponent },
   { path: 'tailor-order-view/:orderId', component:TailorOrderViewComponent },
   { path: 'measurments/:id/:orderId', component: MeasurmentsComponent },
+  
   { path: 'measurments/:id', component:MeasurmentsComponent },
   { path: 'measurements-list', component:MeasurementsListComponent },
   // { path: 'ordermeasurments/:id', component:MeasurmentsComponent },
@@ -106,6 +107,7 @@ const routes: Routes = [
   { path: 'supervisor-order-view',component: SupervisorOrderViewComponent},
   { path:'access-denied', component:AccessDeniedComponent },
   { path: 'camera/:cartId', component:CameraComponent },
+  { path: 'style/:id/:orderId', component:StyleComponent },
   { path: 'style/:id', component:StyleComponent },
   { path: 'updatemeasurement/:id', component:UpdatemeasurementComponent},
   { path: 'sales-employees', component: SalesEmployeesComponent},

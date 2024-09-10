@@ -8,7 +8,8 @@ h2{
 .form-check-label p {
   /* margin: 0px 0 0px; */
   text-align: center;
-  margin-top: -10px;
+  margin-top: 0px;
+  font-size: 18px;
 }
 .form-check-label .noimage{
   width:100px;
@@ -26,3 +27,26 @@ float: left;
   color:#BB8FCE;
 } */
 
+
+.rdiobox span:before {
+  width: 36px;
+  height: 36px;
+}
+
+label img {
+  opacity: .6;
+}
+.rdiobox input[type=radio]:checked + span:before {
+  background-color: #000;
+}
+
+.mdisplay {
+  font-weight:500;
+  color:black;
+  border-radius: 0;
+  border-color:#222;
+  font-size: 32px;
+  padding: 10px;
+  min-height: 42px;
+  border: solid 1px #222;
+}

@@ -35,7 +35,7 @@ export class OverviewComponent implements OnInit, AfterViewInit,OnDestroy{
 
   ngOnInit(): void {
     this.customerId = + this.activatedroute.snapshot.paramMap.get("userId");
-    console.log(`customer ID :: `,this.customerId);
+    //console.log(`customer ID :: `,this.customerId);
   }
 
   ngAfterViewInit(){

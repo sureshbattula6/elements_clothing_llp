@@ -20,6 +20,7 @@
     >
       <i class="fa fa-download"></i> Download PDF
     </button>
+
   </div>
 </div>
 
@@ -34,1563 +35,683 @@
     </div> -->
     <div class="row" >
         <div class="col-4">
-            <h2 *ngIf="orderId" style="text-decoration: none;">Order ID : <span>PCO0{{ orderId }}</span></h2>
+          <h1 *ngIf="orderId" style="text-decoration: none;">Order ID : <span>PCO0{{ orderId }}</span></h1>
         </div>
     </div>
 
-    <div class="row mt-3">
-      <div class="col-md-12">
-        <div class="form-group">
-          <label for="title" class="form-label">Measurement Name</label>
-          <input
-            type="text"
-            class="form-control"
-            name="title"
-            [(ngModel)]="form.title"
-            #title="ngModel"
-          />
+    <div class="form-control">
+      <div class="row mt-3">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label for="title" class="form-label">Measurement Name</label>
+            <div class="mdisplay"> {{ form.title}} </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="form-group">
+            <label for="title" class="form-label">Master Name</label>
+            <div class="mdisplay"> {{ form.master_name}} </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="form-group">
+            <label for="title" class="form-label">Measurement Taken By</label>
+            <div class="mdisplay"> {{ form.meas_taken_by}} </div>
+          </div>
         </div>
       </div>
-    </div>
-
-    <!-- <mat-tab-group> -->
-      <!-- <mat-tab label="SUIT/SHERWANI/JODHPURI/BLAZER/BANDI">
-        <div class="row mt-4">
-          <div class="col-md-2">
-            <div class="mb-3 form-group">
-              <label for="suit_fl" class="form-label">FL Measurement</label>
-              <input
-                type="text"
-                class="form-control"
-                name="suit_fl"
-                [(ngModel)]="form.suit_fl"
-                #suit_fl="ngModel"
-              />
-            </div>
-          </div>
-          <div class="col-md-2">
-            <div class="mb-3 form-group">
-              <label for="suit_bl" class="form-label">BL Measurement</label>
-              <input
-                type="text"
-                class="form-control"
-                name="suit_bl"
-                [(ngModel)]="form.suit_bl"
-                #suit_bl="ngModel"
-              />
-            </div>
-          </div>
-          <div class="col-md-2">
-            <div class="mb-3 form-group">
-              <label for="suit_suitl" class="form-label"
-                >SUIT.L Measurement</label
-              >
-              <input
-                type="text"
-                class="form-control"
-                name="suit_suitl"
-                [(ngModel)]="form.suit_suitl"
-                #suit_suitl="ngModel"
-              />
-            </div>
-          </div>
-          <div class="col-md-2">
-            <div class="mb-3 form-group">
-              <label for="suit_knl" class="form-label">KN.L Measurement</label>
-              <input
-                type="text"
-                class="form-control"
-                name="suit_knl"
-                [(ngModel)]="form.suit_knl"
-                #suit_knl="ngModel"
-              />
-            </div>
-          </div>
-          <div class="col-md-2">
-            <div class="mb-3 form-group">
-              <label for="suit_wl" class="form-label">W.L Measurement</label>
-              <input
-                type="text"
-                class="form-control"
-                name="suit_wl"
-                [(ngModel)]="form.suit_wl"
-                #suit_wl="ngModel"
-              />
-            </div>
-          </div>
-          <div class="col-md-2">
-            <div class="mb-3 form-group">
-              <label for="suit_sh" class="form-label">SH Measurement</label>
-              <input
-                type="text"
-                class="form-control"
-                name="suit_sh"
-                [(ngModel)]="form.suit_sh"
-                #suit_sh="ngModel"
-              />
-            </div>
-          </div>
-          <div class="col-md-2">
-            <div class="mb-3 form-group">
-              <label for="suit_nsh" class="form-label">N-SH Measurement</label>
-              <input
-                type="text"
-                class="form-control"
-                name="suit_nsh"
-                [(ngModel)]="form.suit_nsh"
-                #suit_nsh="ngModel"
-              />
-            </div>
-          </div>
-          <div class="col-md-2">
-            <div class="mb-3 form-group">
-              <label for="suit_sl" class="form-label">SL Measurement</label>
-              <input
-                type="text"
-                class="form-control"
-                name="suit_sl"
-                [(ngModel)]="form.suit_sl"
-                #suit_sl="ngModel"
-              />
-            </div>
-          </div>
-
-          <div class="col-md-2">
-            <div class="mb-3 form-group">
-              <label for="suit_st" class="form-label">ST Measurement</label>
-              <input
-                type="text"
-                class="form-control"
-                name="suit_st"
-                [(ngModel)]="form.suit_st"
-                #suit_st="ngModel"
-              />
-            </div>
-          </div>
-
-          <div class="col-md-2">
-            <div class="mb-3 form-group">
-              <label for="suit_h" class="form-label">H Measurement</label>
-              <input
-                type="text"
-                class="form-control"
-                name="suit_h"
-                [(ngModel)]="form.suit_h"
-                #suit_h="ngModel"
-              />
-            </div>
-          </div>
-          <div class="col-md-2">
-            <div class="mb-3 form-group">
-              <label for="suit_cf" class="form-label">CF Measurement</label>
-              <input
-                type="text"
-                class="form-control"
-                name="suit_cf"
-                [(ngModel)]="form.suit_cf"
-                #suit_cf="ngModel"
-              />
-            </div>
-          </div>
-          <div class="col-md-2">
-            <div class="mb-3 form-group">
-              <label for="suit_cb" class="form-label">CB Measurement</label>
-              <input
-                type="text"
-                class="form-control"
-                name="suit_cb"
-                [(ngModel)]="form.suit_cb"
-                #suit_cb="ngModel"
-              />
-            </div>
-          </div>
-          <div class="col-md-2">
-            <div class="mb-3 form-group">
-              <label for="suit_bicep" class="form-label"
-                >BICEP Measurement</label
-              >
-              <input
-                type="text"
-                class="form-control"
-                name="suit_bicep"
-                [(ngModel)]="form.suit_bicep"
-                #suit_bicep="ngModel"
-              />
-            </div>
-          </div>
-          <div class="col-md-2">
-            <div class="mb-3 form-group">
-              <label for="suit_hb" class="form-label">H.B Measurement</label>
-              <input
-                type="text"
-                class="form-control"
-                name="suit_hb"
-                [(ngModel)]="form.suit_hb"
-                #suit_hb="ngModel"
-              />
-            </div>
-          </div>
-          <div class="col-md-2">
-            <div class="mb-3 form-group">
-              <label for="suit_hf" class="form-label">H.F Measurement</label>
-              <input
-                type="text"
-                class="form-control"
-                name="suit_hf"
-                [(ngModel)]="form.suit_hf"
-                #suit_hf="ngModel"
-              />
-            </div>
-          </div>
-          <div class="col-md-2">
-            <div class="mb-3 form-group">
-              <label for="suit_n" class="form-label">N Measurement</label>
-              <input
-                type="text"
-                class="form-control"
-                name="suit_n"
-                [(ngModel)]="form.suit_n"
-                #suit_n="ngModel"
-              />
-            </div>
-          </div>
-
-          <div class="col-md-2">
-            <div class="mb-3 form-group">
-              <label for="suit_sl_left" class="form-label"
-                >SL-LEFT Measurement</label
-              >
-              <input
-                type="text"
-                class="form-control"
-                name="suit_sl_left"
-                [(ngModel)]="form.suit_sl_left"
-                #suit_sl_left="ngModel"
-              />
-            </div>
-          </div>
-
-          <div class="col-md-2">
-            <div class="mb-3 form-group">
-              <label for="suit_sl_right" class="form-label"
-                >SL-RIGHT Measurement</label
-              >
-              <input
-                type="text"
-                class="form-control"
-                name="suit_sl_right"
-                [(ngModel)]="form.suit_sl_right"
-                #suit_sl_right="ngModel"
-              />
-            </div>
-          </div>
-
-          <div class="col-md-2">
-            <div class="mb-3 form-group">
-              <label for="suit_upper_ch" class="form-label"
-                >U-CH Measurement</label
-              >
-              <input
-                type="text"
-                class="form-control"
-                name="suit_upper_ch"
-                [(ngModel)]="form.suit_upper_ch"
-                #suit_upper_ch="ngModel"
-              />
-            </div>
-          </div>
-
-          <div class="col-md-2">
-            <div class="mb-3 form-group">
-              <label for="suit_lower_ch" class="form-label"
-                >L-CH Measurement</label
-              >
-              <input
-                type="text"
-                class="form-control"
-                name="suit_lower_ch"
-                [(ngModel)]="form.suit_lower_ch"
-                #suit_lower_ch="ngModel"
-              />
-            </div>
-          </div>
-
-          <div class="col-md-2">
-            <div class="mb-3 form-group">
-              <label for="suit_left_cuff" class="form-label"
-                >L.CUFF MEASUREMENT</label
-              >
-              <input
-                type="text"
-                class="form-control"
-                name="suit_left_cuff"
-                [(ngModel)]="form.suit_left_cuff"
-                #suit_left_cuff="ngModel"
-              />
-            </div>
-          </div>
-
-          <div class="col-md-2">
-            <div class="mb-3 form-group">
-              <label for="suit_right_cuff" class="form-label"
-                >R.CUFF MEASUREMENT</label
-              >
-              <input
-                type="text"
-                class="form-control"
-                name="suit_right_cuff"
-                [(ngModel)]="form.suit_right_cuff"
-                #suit_right_cuff="ngModel"
-              />
-            </div>
-          </div>
-        </div>
-      </mat-tab> -->
-      <!---------------------END POINT OF SUIT/SHERWANI/JODHPURI/BLAZER/BANDI---------------------------------------------->
-      <!----------STARTING OF SHIRT/KURTA------------------------->
-      <!-- <mat-tab label="SHIRT/KURTA">
-        <div class="row mt-3">
-          <div class="col-md-2">
-            <div class="mb-3 form-group">
-              <label for="shirt_l" class="form-label">L Measurement</label>
-              <input
-                type="text"
-                class="form-control"
-                name="shirt_l"
-                [(ngModel)]="form.shirt_l"
-                #shirt_l="ngModel"
-              />
-            </div>
-          </div>
-          <div class="col-md-2">
-            <div class="mb-3 form-group">
-              <label for="shirt_kl" class="form-label">K.L Measurement</label>
-              <input
-                type="text"
-                class="form-control"
-                name="shirt_kl"
-                [(ngModel)]="form.shirt_kl"
-                #shirt_kl="ngModel"
-              />
-            </div>
-          </div>
-          <div class="col-md-2">
-            <div class="mb-3 form-group">
-              <label for="shirt_sl" class="form-label">S.H Measurement</label>
-              <input
-                type="text"
-                class="form-control"
-                name="shirt_sl"
-                [(ngModel)]="form.shirt_sl"
-                #shirt_sl="ngModel"
-              />
-            </div>
-          </div>
-          <div class="col-md-2">
-            <div class="mb-3 form-group">
-              <label for="shirt_arm" class="form-label">ARM Measurement</label>
-              <input
-                type="text"
-                class="form-control"
-                name="shirt_arm"
-                [(ngModel)]="form.shirt_arm"
-                #shirt_arm="ngModel"
-              />
-            </div>
-          </div>
-          <div class="col-md-2">
-            <div class="mb-3 form-group">
-              <label for="shirt_farm" class="form-label"
-                >F.ARM Measurement</label
-              >
-              <input
-                type="text"
-                class="form-control"
-                name="shirt_farm"
-                [(ngModel)]="form.shirt_farm"
-                #shirt_farm="ngModel"
-              />
-            </div>
-          </div>
-          <div class="col-md-2">
-            <div class="mb-3 form-group">
-              <label for="shirt_cuff" class="form-label"
-                >CUFF Measurement</label
-              >
-              <input
-                type="text"
-                class="form-control"
-                name="shirt_cuff"
-                [(ngModel)]="form.shirt_cuff"
-                #shirt_cuff="ngModel"
-              />
-            </div>
-          </div>
-
-          <div class="col-md-2">
-            <div class="mb-3 form-group">
-              <label for="shirt_sl_left" class="form-label"
-                >SL-LEFT Measurement</label
-              >
-              <input
-                type="text"
-                class="form-control"
-                name="shirt_sl_left"
-                [(ngModel)]="form.shirt_sl_left"
-                #shirt_sl_left="ngModel"
-              />
-            </div>
-          </div>
-
-          <div class="col-md-2">
-            <div class="mb-3 form-group">
-              <label for="shirt_sl_right" class="form-label"
-                >SL-RIGHT Measurement</label
-              >
-              <input
-                type="text"
-                class="form-control"
-                name="shirt_sl_right"
-                [(ngModel)]="form.shirt_sl_right"
-                #shirt_sl_right="ngModel"
-              />
-            </div>
-          </div>
-
-          <div class="col-md-2">
-            <div class="mb-3 form-group">
-              <label for="shirt_upper_ch" class="form-label"
-                >U-CH Measurement</label
-              >
-              <input
-                type="text"
-                class="form-control"
-                name="shirt_upper_ch"
-                [(ngModel)]="form.shirt_upper_ch"
-                #shirt_upper_ch="ngModel"
-              />
-            </div>
-          </div>
-
-          <div class="col-md-2">
-            <div class="mb-3 form-group">
-              <label for="shirt_lower_ch" class="form-label"
-                >L-CH Measurement</label
-              >
-              <input
-                type="text"
-                class="form-control"
-                name="shirt_lower_ch"
-                [(ngModel)]="form.shirt_lower_ch"
-                #shirt_lower_ch="ngModel"
-              />
-            </div>
-          </div>
-
-          <div class="col-md-2">
-            <div class="mb-3 form-group">
-              <label for="shirt_left_cuff" class="form-label"
-                >CB MEASUREMENT</label
-              >
-              <input
-                type="text"
-                class="form-control"
-                name="shirt_left_cuff"
-                [(ngModel)]="form.shirt_left_cuff"
-                #shirt_left_cuff="ngModel"
-              />
-            </div>
-          </div>
-
-          <div class="col-md-2">
-            <div class="mb-3 form-group">
-              <label for="shirt_right_cuff" class="form-label"
-                >CF MEASUREMENT</label
-              >
-              <input
-                type="text"
-                class="form-control"
-                name="shirt_right_cuff"
-                [(ngModel)]="form.shirt_right_cuff"
-                #shirt_right_cuff="ngModel"
-              />
-            </div>
-          </div>
-
-          <div class="col-md-2">
-            <div class="mb-3 form-group">
-              <label for="" class="form-label">HP Measurement</label>
-              <input
-                type="text"
-                class="form-control"
-                name="shirt_hp"
-                [(ngModel)]="form.shirt_hp"
-                #shirt_hp="ngModel"
-              />
-            </div>
-          </div>
-
-          <div class="col-md-2">
-            <div class="mb-3 form-group">
-              <label for="" class="form-label">ST Measurement</label>
-              <input
-                type="text"
-                class="form-control"
-                name="shirt_st"
-                [(ngModel)]="form.shirt_st"
-                #shirt_st="ngModel"
-              />
-            </div>
-          </div>
-
-          <div class="col-md-2">
-            <div class="mb-3 form-group">
-              <label for="" class="form-label">N Measurement</label>
-              <input
-                type="text"
-                class="form-control"
-                name="shirt_n"
-                [(ngModel)]="form.shirt_n"
-                #shirt_n="ngModel"
-              />
-            </div>
-          </div>
-        </div> </mat-tab -->
-      <!-----------------ENDING OF SHIRT/KURTA------------------------------------>
-      <!-----------------STARTING POINT OF TROUSER------------------------------------>
-      <!-- <mat-tab label="TROUSER">
-        <div class="row mt-4">
-          <div class="col-md-2">
-            <div class="mb-3 form-group">
-              <label for="trouser_l" class="form-label">L Measurement</label>
-              <input
-                type="text"
-                class="form-control"
-                name="trouser_l"
-                [(ngModel)]="form.trouser_l"
-                #trouser_l="ngModel"
-              />
-            </div>
-          </div>
-          <div class="col-md-2">
-            <div class="mb-3 form-group">
-              <label for="trouser_w" class="form-label">W Measurement</label>
-              <input
-                type="text"
-                class="form-control"
-                name="trouser_w"
-                [(ngModel)]="form.trouser_w"
-                #trouser_w="ngModel"
-              />
-            </div>
-          </div>
-          <div class="col-md-2">
-            <div class="mb-3 form-group">
-              <label for="trouser_h" class="form-label">H Measurement</label>
-              <input
-                type="text"
-                class="form-control"
-                name="trouser_h"
-                [(ngModel)]="form.trouser_h"
-                #trouser_h="ngModel"
-              />
-            </div>
-          </div>
-          <div class="col-md-2">
-            <div class="mb-3 form-group">
-              <label for="trouser_fth" class="form-label"
-                >F.TH Measurement</label
-              >
-              <input
-                type="text"
-                class="form-control"
-                name="trouser_fth"
-                [(ngModel)]="form.trouser_fth"
-                #trouser_fth="ngModel"
-              />
-            </div>
-          </div>
-          <div class="col-md-2">
-            <div class="mb-3 form-group">
-              <label for="trouser_kn" class="form-label">KN Measurement</label>
-              <input
-                type="text"
-                class="form-control"
-                name="trouser_kn"
-                [(ngModel)]="form.trouser_kn"
-                #trouser_kn="ngModel"
-              />
-            </div>
-          </div>
-          <div class="col-md-2">
-            <div class="mb-3 form-group">
-              <label for="trouser_b" class="form-label">B Measurement</label>
-              <input
-                type="text"
-                class="form-control"
-                name="trouser_b"
-                [(ngModel)]="form.trouser_b"
-                #trouser_b="ngModel"
-              />
-            </div>
-          </div>
-          <div class="col-md-2">
-            <div class="mb-3 form-group">
-              <label for="trouser_hl" class="form-label">H.L Measurement</label>
-              <input
-                type="text"
-                class="form-control"
-                name="trouser_hl"
-                [(ngModel)]="form.trouser_hl"
-                #trouser_hl="ngModel"
-              />
-            </div>
-          </div>
-          <div class="col-md-2">
-            <div class="mb-3 form-group">
-              <label for="trouser_bal" class="form-label"
-                >BAL Measurement</label
-              >
-              <input
-                type="text"
-                class="form-control"
-                name="trouser_bal"
-                [(ngModel)]="form.trouser_bal"
-                #trouser_bal="ngModel"
-              />
-            </div>
-          </div>
-
-          <div class="col-md-2">
-            <div class="mb-3 form-group">
-              <label for="trouser_calf_round" class="form-label">CALF</label>
-              <input
-                type="text"
-                class="form-control"
-                name="trouser_calf_round"
-                [(ngModel)]="form.trouser_calf_round"
-                #trouser_calf_round="ngModel"
-              />
-            </div>
-          </div>
-
-          <div class="col-md-2">
-            <div class="mb-3 form-group">
-              <label for="trouser_crotch_length" class="form-label"
-                >CROTCH LENGTH</label
-              >
-              <input
-                type="text"
-                class="form-control"
-                name="trouser_crotch_length"
-                [(ngModel)]="form.trouser_crotch_length"
-                #trouser_crotch_length="ngModel"
-              />
-            </div>
-          </div>
-
-          <div class="col-md-2">
-            <div class="mb-3 form-group">
-              <label for="" class="form-label">U ROUND</label>
-              <input
-                type="text"
-                class="form-control"
-                name="trouser_uround"
-                [(ngModel)]="form.trouser_uround"
-                #trouser_uround="ngModel"
-              />
-            </div>
-          </div>
-        </div>
-      </mat-tab> -->
-    <!-- </mat-tab-group> -->
-
-    <div class="container">
-        <!-- SUIT/SHERWANI/JODHPURI/BLAZER/BANDI Section -->
-        <div class="form-section">
-          <h2>SUIT/SHERWANI/JODHPURI/BLAZER/BANDI</h2>
-          <div class="row mt-4">
-            <div class="col-md-2">
-              <div class="mb-3 form-group">
-                <label for="suit_fl" class="form-label">FL Measurement</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  name="suit_fl"
-                  [(ngModel)]="form.suit_fl"
-                  #suit_fl="ngModel"
-                />
+  
+  
+      <div class="container">
+          <!-- SUIT/SHERWANI/JODHPURI/BLAZER/BANDI Section -->
+          <div class="form-section">
+            <h2>SUIT/SHERWANI/JODHPURI/BLAZER/BANDI</h2>
+            <div class="row mt-4">
+              <div class="col-md-2">
+                <div class="mb-3 form-group">
+                  <label for="suit_fl" class="form-label">FRONT LENGTH</label>
+                  <div class="mdisplay"> {{ form.suit_fl}} </div>
+                </div>
+              </div>
+  
+              <div class="col-md-2">
+                <div class="mb-3 form-group">
+                  <label for="suit_bl" class="form-label">BACK LENGTH</label>
+                  <div class="mdisplay"> {{ form.suit_bl}} </div>
+                </div>
+              </div>
+  
+              <div class="col-md-2">
+                <div class="mb-3 form-group">
+                  <label for="suit_suitl" class="form-label"
+                    >SUIT LENGTH</label
+                  >
+                  <div class="mdisplay"> {{ form.suit_suitl}} </div>
+                </div>
+              </div>
+  
+              <div class="col-md-2">
+                <div class="mb-3 form-group">
+                  <label for="suit_knl" class="form-label">KNEE LENGTH</label>
+                  <div class="mdisplay"> {{ form.suit_knl}} </div>
+                </div>
+              </div>
+  
+              <div class="col-md-2">
+                <div class="mb-3 form-group">
+                  <label for="suit_wl" class="form-label">WAIST COAST LENGTH</label>
+                  <div class="mdisplay"> {{ form.suit_wl}} </div>
+                </div>
+              </div>
+  
+              <div class="col-md-2">
+                <div class="mb-3 form-group">
+                  <label for="suit_sh" class="form-label">SHOULDER</label>
+                  <div class="mdisplay"> {{ form.suit_sh}} </div>
+                </div>
+              </div>
+  
+              <div class="col-md-2">
+                <div class="mb-3 form-group">
+                  <label for="suit_nsh" class="form-label">NECK TO SHOULDER</label>
+                  <div class="mdisplay"> {{ form.suit_nsh}} </div>
+                </div>
+              </div>
+  
+              <div class="col-md-2">
+                <div class="mb-3 form-group">
+                  <label for="suit_sl" class="form-label">SLEEVE LENGTH</label>
+                  <div class="mdisplay"> {{ form.suit_sl}} </div>
+                </div>
+              </div>
+  
+              <div class="col-md-2">
+                <div class="mb-3 form-group">
+                  <label for="suit_sl_left" class="form-label"
+                    >ARM</label
+                  >
+                  <div class="mdisplay"> {{ form.suit_sl_left}} </div>
+                </div>
+              </div>
+  
+              <div class="col-md-2">
+                <div class="mb-3 form-group">
+                  <label for="suit_sl_right" class="form-label"
+                    >FORE ARM</label
+                  >
+                  <div class="mdisplay"> {{ form.suit_sl_right}} </div>
+                </div>
+              </div>
+  
+              <div class="col-md-2">
+                <div class="mb-3 form-group">
+                  <label for="suit_upper_ch" class="form-label"
+                    >UPPER CHEST</label
+                  >
+                  <div class="mdisplay"> {{ form.suit_upper_ch}} </div>
+                </div>
+              </div>
+  
+              <div class="col-md-2">
+                <div class="mb-3 form-group">
+                  <label for="suit_lower_ch" class="form-label"
+                    >LOWER CHEST</label
+                  >
+                  <div class="mdisplay"> {{ form.suit_lower_ch}} </div>
+                </div>
+              </div>
+  
+              <div class="col-md-2">
+                <div class="mb-3 form-group">
+                  <label for="suit_st" class="form-label">STOMACH</label>
+                  <div class="mdisplay"> {{ form.suit_st}} </div>
+                </div>
+              </div>
+  
+              <div class="col-md-2">
+                <div class="mb-3 form-group">
+                  <label for="suit_h" class="form-label">HIP</label>
+                  <div class="mdisplay"> {{ form.suit_h}} </div>
+                </div>
+              </div>
+  
+              <div class="col-md-2">
+                <div class="mb-3 form-group">
+                  <label for="suit_n" class="form-label">NECK</label>
+                  <div class="mdisplay"> {{ form.suit_n}} </div>
+                </div>
+              </div>
+  
+              <div class="col-md-2">
+                <div class="mb-3 form-group">
+                  <label for="suit_cf" class="form-label">ACROSS FRONT</label>
+                  <div class="mdisplay"> {{ form.suit_cf}} </div>
+                </div>
+              </div>
+  
+              <div class="col-md-2">
+                <div class="mb-3 form-group">
+                  <label for="suit_cb" class="form-label">ACROSS BACK</label>
+                  <div class="mdisplay"> {{ form.suit_cb}} </div>
+                </div>
+              </div>
+  
+              <div class="col-md-2">
+                <div class="mb-3 form-group">
+                  <label for="suit_right_cuff" class="form-label"
+                    >CUFF</label
+                  >
+                  <div class="mdisplay"> {{ form.suit_right_cuff}} </div>
+                </div>
+              </div>
+  
+              <div class="col-md-2">
+                <div class="mb-3 form-group">
+                  <label for="suit_bicep" class="form-label"
+                    >ALL ROUND BICEP</label
+                  >
+                  <div class="mdisplay"> {{ form.suit_bicep}} </div>
+                </div>
               </div>
             </div>
-            <div class="col-md-2">
-              <div class="mb-3 form-group">
-                <label for="suit_bl" class="form-label">BL Measurement</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  name="suit_bl"
-                  [(ngModel)]="form.suit_bl"
-                  #suit_bl="ngModel"
-                />
+          </div>
+          </div>
+          <!---------------------END POINT OF SUIT/SHERWANI/JODHPURI/BLAZER/BANDI---------------------------------------------->
+  <!---------------------------------------------------------------STARTING OF SHIRT/KURTA-------------------------------------------------------->
+          <div class="container">
+  
+          <!-- SHIRT/KURTA Section -->
+          <div class="form-section">
+            <h2>SHIRT/KURTA</h2>
+            <div class="row mt-3">
+              <div class="col-md-2">
+                <div class="mb-3 form-group">
+                  <label for="shirt_l" class="form-label">LENGTH</label>
+                  <div class="mdisplay"> {{ form.shirt_l}} </div>
+  
+                </div>
               </div>
-            </div>
-            <div class="col-md-2">
-              <div class="mb-3 form-group">
-                <label for="suit_suitl" class="form-label"
-                  >SUIT.L Measurement</label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  name="suit_suitl"
-                  [(ngModel)]="form.suit_suitl"
-                  #suit_suitl="ngModel"
-                />
+  
+              <div class="col-md-2">
+                <div class="mb-3 form-group">
+                  <label for="shirt_kl" class="form-label">KURTA LENGTH</label>
+                  <div class="mdisplay"> {{ form.shirt_kl}} </div>
+                </div>
               </div>
-            </div>
-            <div class="col-md-2">
-              <div class="mb-3 form-group">
-                <label for="suit_knl" class="form-label">KN.L Measurement</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  name="suit_knl"
-                  [(ngModel)]="form.suit_knl"
-                  #suit_knl="ngModel"
-                />
+  
+              <div class="col-md-2">
+                <div class="mb-3 form-group">
+                  <label for="shirt_sl" class="form-label">SHOULDER</label>
+                  <div class="mdisplay"> {{ form.shirt_sl}} </div>
+                </div>
               </div>
-            </div>
-            <div class="col-md-2">
-              <div class="mb-3 form-group">
-                <label for="suit_wl" class="form-label">W.L Measurement</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  name="suit_wl"
-                  [(ngModel)]="form.suit_wl"
-                  #suit_wl="ngModel"
-                />
+  
+              <div class="col-md-2">
+                <div class="mb-3 form-group">
+                  <label for="shirt_sl_left" class="form-label"
+                    >SLEEVE LENGTH LEFT</label
+                  >  <div class="mdisplay"> {{ form.shirt_sl_left}} </div>
+                </div>
               </div>
-            </div>
-            <div class="col-md-2">
-              <div class="mb-3 form-group">
-                <label for="suit_sh" class="form-label">SH Measurement</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  name="suit_sh"
-                  [(ngModel)]="form.suit_sh"
-                  #suit_sh="ngModel"
-                />
+  
+              <div class="col-md-2">
+                <div class="mb-3 form-group">
+                  <label for="shirt_upper_ch" class="form-label"
+                    >UPPER CHEST</label
+                  > <div class="mdisplay"> {{ form.shirt_upper_ch}} </div>
+                </div>
               </div>
-            </div>
-            <div class="col-md-2">
-              <div class="mb-3 form-group">
-                <label for="suit_nsh" class="form-label">N-SH Measurement</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  name="suit_nsh"
-                  [(ngModel)]="form.suit_nsh"
-                  #suit_nsh="ngModel"
-                />
+  
+              <div class="col-md-2">
+                <div class="mb-3 form-group">
+                  <label for="shirt_lower_ch" class="form-label"
+                    >LOWER CHEST</label
+                  > <div class="mdisplay"> {{ form.shirt_lower_ch}} </div>
+  
+                </div>
               </div>
-            </div>
-            <div class="col-md-2">
-              <div class="mb-3 form-group">
-                <label for="suit_sl" class="form-label">SL Measurement</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  name="suit_sl"
-                  [(ngModel)]="form.suit_sl"
-                  #suit_sl="ngModel"
-                />
+  
+              <div class="col-md-2">
+                <div class="mb-3 form-group">
+                  <label for="" class="form-label">STOMACH</label>
+                  <div class="mdisplay"> {{ form.shirt_st}} </div>
+                </div>
               </div>
-            </div>
-
-            <div class="col-md-2">
-              <div class="mb-3 form-group">
-                <label for="suit_st" class="form-label">ST Measurement</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  name="suit_st"
-                  [(ngModel)]="form.suit_st"
-                  #suit_st="ngModel"
-                />
+  
+              <div class="col-md-2">
+                <div class="mb-3 form-group">
+                  <label for="" class="form-label">HIP</label>
+                  <div class="mdisplay"> {{ form.shirt_hp}} </div>
+                </div>
               </div>
-            </div>
-
-            <div class="col-md-2">
-              <div class="mb-3 form-group">
-                <label for="suit_h" class="form-label">H Measurement</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  name="suit_h"
-                  [(ngModel)]="form.suit_h"
-                  #suit_h="ngModel"
-                />
+  
+              <div class="col-md-2">
+                <div class="mb-3 form-group">
+                  <label for="" class="form-label">NECK</label>
+                  <div class="mdisplay"> {{ form.shirt_n}} </div>
+                </div>
               </div>
-            </div>
-            <div class="col-md-2">
-              <div class="mb-3 form-group">
-                <label for="suit_cf" class="form-label">CF Measurement</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  name="suit_cf"
-                  [(ngModel)]="form.suit_cf"
-                  #suit_cf="ngModel"
-                />
+  
+              <div class="col-md-2">
+                <div class="mb-3 form-group">
+                  <label for="shirt_right_cuff" class="form-label"
+                    >ACROSS FRONT</label
+                  > <div class="mdisplay"> {{ form.shirt_right_cuff}} </div>
+                </div>
               </div>
-            </div>
-            <div class="col-md-2">
-              <div class="mb-3 form-group">
-                <label for="suit_cb" class="form-label">CB Measurement</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  name="suit_cb"
-                  [(ngModel)]="form.suit_cb"
-                  #suit_cb="ngModel"
-                />
+  
+              <div class="col-md-2">
+                <div class="mb-3 form-group">
+                  <label for="shirt_left_cuff" class="form-label"
+                    >ACROSS BACK</label
+                  > <div class="mdisplay"> {{ form.shirt_left_cuff}} </div>
+                </div>
               </div>
-            </div>
-            <div class="col-md-2">
-              <div class="mb-3 form-group">
-                <label for="suit_bicep" class="form-label"
-                  >BICEP Measurement</label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  name="suit_bicep"
-                  [(ngModel)]="form.suit_bicep"
-                  #suit_bicep="ngModel"
-                />
+  
+              <div class="col-md-2">
+                <div class="mb-3 form-group">
+                  <label for="shirt_arm" class="form-label">ARM</label>
+                  <div class="mdisplay"> {{ form.shirt_arm}} </div>
+                </div>
               </div>
-            </div>
-            <div class="col-md-2">
-              <div class="mb-3 form-group">
-                <label for="suit_hb" class="form-label">H.B Measurement</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  name="suit_hb"
-                  [(ngModel)]="form.suit_hb"
-                  #suit_hb="ngModel"
-                />
+  
+              <div class="col-md-2">
+                <div class="mb-3 form-group">
+                  <label for="shirt_farm" class="form-label"
+                    >FORE ARM</label
+                  >
+                  <div class="mdisplay"> {{ form.shirt_farm}} </div>
+                </div>
               </div>
-            </div>
-            <div class="col-md-2">
-              <div class="mb-3 form-group">
-                <label for="suit_hf" class="form-label">H.F Measurement</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  name="suit_hf"
-                  [(ngModel)]="form.suit_hf"
-                  #suit_hf="ngModel"
-                />
+  
+              <div class="col-md-2">
+                <div class="mb-3 form-group">
+                  <label for="shirt_cuff" class="form-label"
+                    >CUFF</label
+                  >
+                  <div class="mdisplay"> {{ form.shirt_cuff}} </div>
+                </div>
               </div>
+  
             </div>
-            <div class="col-md-2">
-              <div class="mb-3 form-group">
-                <label for="suit_n" class="form-label">N Measurement</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  name="suit_n"
-                  [(ngModel)]="form.suit_n"
-                  #suit_n="ngModel"
-                />
+          </div>
+          </div>
+        <!-----------------ENDING OF SHIRT/KURTA------------------------------------>
+        <!-----------------STARTING POINT OF TROUSER------------------------------------>
+          <!-- TROUSER Section -->
+          <div class="container">
+  
+          <div class="form-section">
+            <h2>TROUSER</h2>
+            <div class="row mt-4">
+              <div class="col-md-2">
+                <div class="mb-3 form-group">
+                  <label for="trouser_l" class="form-label">LENGTH</label>
+                  <div class="mdisplay"> {{ form.trouser_l}} </div>
+  
+                </div>
               </div>
-            </div>
-
-            <div class="col-md-2">
-              <div class="mb-3 form-group">
-                <label for="suit_sl_left" class="form-label"
-                  >SL-LEFT Measurement</label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  name="suit_sl_left"
-                  [(ngModel)]="form.suit_sl_left"
-                  #suit_sl_left="ngModel"
-                />
+  
+              <div class="col-md-2">
+                <div class="mb-3 form-group">
+                  <label for="trouser_w" class="form-label"><i class="wi wi-forecast-io-hail">WAIST</i></label>
+                  <div class="mdisplay"> {{ form.trouser_w}} </div>
+                </div>
               </div>
-            </div>
-
-            <div class="col-md-2">
-              <div class="mb-3 form-group">
-                <label for="suit_sl_right" class="form-label"
-                  >SL-RIGHT Measurement</label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  name="suit_sl_right"
-                  [(ngModel)]="form.suit_sl_right"
-                  #suit_sl_right="ngModel"
-                />
+              <div class="col-md-2">
+                <div class="mb-3 form-group">
+                  <label for="trouser_h" class="form-label">HIP</label>
+                  <div class="mdisplay"> {{ form.trouser_h}} </div>
+                </div>
               </div>
-            </div>
-
-            <div class="col-md-2">
-              <div class="mb-3 form-group">
-                <label for="suit_upper_ch" class="form-label"
-                  >U-CH Measurement</label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  name="suit_upper_ch"
-                  [(ngModel)]="form.suit_upper_ch"
-                  #suit_upper_ch="ngModel"
-                />
+              <div class="col-md-2">
+                <div class="mb-3 form-group">
+                  <label for="trouser_fth" class="form-label"
+                    >FIX THIGH</label
+                  >
+                  <div class="mdisplay"> {{ form.trouser_fth}} </div>
+  
+                </div>
               </div>
-            </div>
-
-            <div class="col-md-2">
-              <div class="mb-3 form-group">
-                <label for="suit_lower_ch" class="form-label"
-                  >L-CH Measurement</label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  name="suit_lower_ch"
-                  [(ngModel)]="form.suit_lower_ch"
-                  #suit_lower_ch="ngModel"
-                />
+              <div class="col-md-2">
+                <div class="mb-3 form-group">
+                  <label for="trouser_kn" class="form-label"><i class="ri-keynote-line"></i>KNEE</label>
+                  <div class="mdisplay"> {{ form.trouser_kn}} </div>
+                </div>
               </div>
-            </div>
-
-            <div class="col-md-2">
-              <div class="mb-3 form-group">
-                <label for="suit_left_cuff" class="form-label"
-                  >L.CUFF MEASUREMENT</label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  name="suit_left_cuff"
-                  [(ngModel)]="form.suit_left_cuff"
-                  #suit_left_cuff="ngModel"
-                />
+              <div class="col-md-2">
+                <div class="mb-3 form-group">
+                  <label for="trouser_b" class="form-label">BOTTOM</label>
+                  <div class="mdisplay"> {{ form.trouser_b}} </div>
+  
+                </div>
               </div>
-            </div>
-
-            <div class="col-md-2">
-              <div class="mb-3 form-group">
-                <label for="suit_right_cuff" class="form-label"
-                  >R.CUFF MEASUREMENT</label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  name="suit_right_cuff"
-                  [(ngModel)]="form.suit_right_cuff"
-                  #suit_right_cuff="ngModel"
-                />
+              <div class="col-md-2">
+                <div class="mb-3 form-group">
+                  <label for="trouser_hl" class="form-label">HALF LENGTH</label>
+                  <div class="mdisplay"> {{ form.trouser_hl}} </div>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="mb-3 form-group">
+                  <label for="trouser_bal" class="form-label"
+                    >BALANCE</label
+                  > <div class="mdisplay"> {{ form.trouser_bal}} </div>
+                </div>
+              </div>
+  
+              <div class="col-md-2">
+                <div class="mb-3 form-group">
+                  <label for="trouser_calf_round" class="form-label">CALF</label>
+                  <div class="mdisplay"> {{ form.trouser_calf_round}} </div>
+                </div>
+              </div>
+  
+              <div class="col-md-2">
+                <div class="mb-3 form-group">
+                  <label for="trouser_crotch_length" class="form-label"
+                    >CROTCH LENGTH</label
+                  >
+                  <div class="mdisplay"> {{ form.trouser_crotch_length}} </div>
+  
+                </div>
+              </div>
+  
+              <div class="col-md-2">
+                <div class="mb-3 form-group">
+                  <label for="" class="form-label">U ROUND</label>
+                  <div class="mdisplay"> {{ form.trouser_uround}} </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-        </div>
-        <!---------------------END POINT OF SUIT/SHERWANI/JODHPURI/BLAZER/BANDI---------------------------------------------->
-      <!----------STARTING OF SHIRT/KURTA------------------------->
-        <div class="container">
-
-        <!-- SHIRT/KURTA Section -->
-        <div class="form-section">
-          <h2>SHIRT/KURTA</h2>
-          <div class="row mt-3">
-            <div class="col-md-2">
-              <div class="mb-3 form-group">
-                <label for="shirt_l" class="form-label">L Measurement</label>
+  
+  
+  
+      <div class="row">
+        <div class="col-md-6 shape">
+          <div class="col-md-4 shapes">
+            <div class="form-check form-check-inline">
+  
+              <label class="form-check-label rdiobox" for="backshape1">
                 <input
-                  type="text"
-                  class="form-control"
-                  name="shirt_l"
-                  [(ngModel)]="form.shirt_l"
-                  #shirt_l="ngModel"
-                />
-              </div>
+                mdbRadio
+                class="form-check-input"
+                type="radio"
+                name="backshape"
+                id="backshape1"
+                value="normal"
+                [(ngModel)]="form.backshape"
+                #backshape="ngModel"
+              /> <span></span>
+                <img src="assets/01.png" />
+                <p><b>NORMAL</b></p>
+              </label>
             </div>
-            <div class="col-md-2">
-              <div class="mb-3 form-group">
-                <label for="shirt_kl" class="form-label">K.L Measurement</label>
+          </div>
+          <div class="col-md-4 shapes">
+            <div class="form-check form-check-inline">
+  
+              <label class="form-check-label rdiobox" for="backshape2">
                 <input
-                  type="text"
-                  class="form-control"
-                  name="shirt_kl"
-                  [(ngModel)]="form.shirt_kl"
-                  #shirt_kl="ngModel"
-                />
-              </div>
+                mdbRadio
+                class="form-check-input"
+                type="radio"
+                name="backshape"
+                id="backshape2"
+                value="hunched"
+                [(ngModel)]="form.backshape"
+                #backshape="ngModel"
+              /> <span></span>
+                <img src="assets/02.png" />
+                <p><b>HUNCHED</b></p>
+              </label>
             </div>
-            <div class="col-md-2">
-              <div class="mb-3 form-group">
-                <label for="shirt_sl" class="form-label">S.H Measurement</label>
+          </div>
+          <div class="col-md-4 shapes">
+            <div class="form-check form-check-inline">
+  
+              <label class="form-check-label rdiobox" for="backshape3">
                 <input
-                  type="text"
-                  class="form-control"
-                  name="shirt_sl"
-                  [(ngModel)]="form.shirt_sl"
-                  #shirt_sl="ngModel"
-                />
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div class="mb-3 form-group">
-                <label for="shirt_arm" class="form-label">ARM Measurement</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  name="shirt_arm"
-                  [(ngModel)]="form.shirt_arm"
-                  #shirt_arm="ngModel"
-                />
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div class="mb-3 form-group">
-                <label for="shirt_farm" class="form-label"
-                  >F.ARM Measurement</label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  name="shirt_farm"
-                  [(ngModel)]="form.shirt_farm"
-                  #shirt_farm="ngModel"
-                />
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div class="mb-3 form-group">
-                <label for="shirt_cuff" class="form-label"
-                  >CUFF Measurement</label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  name="shirt_cuff"
-                  [(ngModel)]="form.shirt_cuff"
-                  #shirt_cuff="ngModel"
-                />
-              </div>
-            </div>
-
-            <div class="col-md-2">
-              <div class="mb-3 form-group">
-                <label for="shirt_sl_left" class="form-label"
-                  >SL-LEFT Measurement</label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  name="shirt_sl_left"
-                  [(ngModel)]="form.shirt_sl_left"
-                  #shirt_sl_left="ngModel"
-                />
-              </div>
-            </div>
-
-            <div class="col-md-2">
-              <div class="mb-3 form-group">
-                <label for="shirt_sl_right" class="form-label"
-                  >SL-RIGHT Measurement</label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  name="shirt_sl_right"
-                  [(ngModel)]="form.shirt_sl_right"
-                  #shirt_sl_right="ngModel"
-                />
-              </div>
-            </div>
-
-            <div class="col-md-2">
-              <div class="mb-3 form-group">
-                <label for="shirt_upper_ch" class="form-label"
-                  >U-CH Measurement</label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  name="shirt_upper_ch"
-                  [(ngModel)]="form.shirt_upper_ch"
-                  #shirt_upper_ch="ngModel"
-                />
-              </div>
-            </div>
-
-            <div class="col-md-2">
-              <div class="mb-3 form-group">
-                <label for="shirt_lower_ch" class="form-label"
-                  >L-CH Measurement</label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  name="shirt_lower_ch"
-                  [(ngModel)]="form.shirt_lower_ch"
-                  #shirt_lower_ch="ngModel"
-                />
-              </div>
-            </div>
-
-            <div class="col-md-2">
-              <div class="mb-3 form-group">
-                <label for="shirt_left_cuff" class="form-label"
-                  >CB MEASUREMENT</label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  name="shirt_left_cuff"
-                  [(ngModel)]="form.shirt_left_cuff"
-                  #shirt_left_cuff="ngModel"
-                />
-              </div>
-            </div>
-
-            <div class="col-md-2">
-              <div class="mb-3 form-group">
-                <label for="shirt_right_cuff" class="form-label"
-                  >CF MEASUREMENT</label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  name="shirt_right_cuff"
-                  [(ngModel)]="form.shirt_right_cuff"
-                  #shirt_right_cuff="ngModel"
-                />
-              </div>
-            </div>
-
-            <div class="col-md-2">
-              <div class="mb-3 form-group">
-                <label for="" class="form-label">HP Measurement</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  name="shirt_hp"
-                  [(ngModel)]="form.shirt_hp"
-                  #shirt_hp="ngModel"
-                />
-              </div>
-            </div>
-
-            <div class="col-md-2">
-              <div class="mb-3 form-group">
-                <label for="" class="form-label">ST Measurement</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  name="shirt_st"
-                  [(ngModel)]="form.shirt_st"
-                  #shirt_st="ngModel"
-                />
-              </div>
-            </div>
-
-            <div class="col-md-2">
-              <div class="mb-3 form-group">
-                <label for="" class="form-label">N Measurement</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  name="shirt_n"
-                  [(ngModel)]="form.shirt_n"
-                  #shirt_n="ngModel"
-                />
-              </div>
+                mdbRadio
+                class="form-check-input"
+                type="radio"
+                name="backshape"
+                id="backshape3"
+                value="erect"
+                [(ngModel)]="form.backshape"
+                #backshape="ngModel"
+              /><span></span>
+                <img src="assets/03.png" />
+                <p><b>ERECT</b></p>
+              </label>
             </div>
           </div>
         </div>
-        </div>
-      <!-----------------ENDING OF SHIRT/KURTA------------------------------------>
-      <!-----------------STARTING POINT OF TROUSER------------------------------------>
-        <!-- TROUSER Section -->
-        <div class="container">
-
-        <div class="form-section">
-          <h2>TROUSER</h2>
-          <div class="row mt-4">
-            <div class="col-md-2">
-              <div class="mb-3 form-group">
-                <label for="trouser_l" class="form-label">L Measurement</label>
+        <div class="col-md-6 shape">
+          <div class="col-md-4 shapes">
+            <div class="form-check form-check-inline">
+  
+              <label class="form-check-label rdiobox" for="stomach1">
                 <input
-                  type="text"
-                  class="form-control"
-                  name="trouser_l"
-                  [(ngModel)]="form.trouser_l"
-                  #trouser_l="ngModel"
-                />
-              </div>
+                mdbRadio
+                class="form-check-input"
+                type="radio"
+                name="stomach"
+                id="stomach1"
+                value="flat"
+                [(ngModel)]="form.stomach"
+                #stomach="ngModel"
+              /> <span></span>
+                <img src="assets/04.png" />
+                <p><b>FLAT</b></p>
+              </label>
             </div>
-            <div class="col-md-2">
-              <div class="mb-3 form-group">
-                <label for="trouser_w" class="form-label">W Measurement</label>
+          </div>
+          <div class="col-md-4 shapes">
+            <div class="form-check form-check-inline">
+  
+              <label class="form-check-label rdiobox" for="stomach2">
                 <input
-                  type="text"
-                  class="form-control"
-                  name="trouser_w"
-                  [(ngModel)]="form.trouser_w"
-                  #trouser_w="ngModel"
-                />
-              </div>
+                mdbRadio
+                class="form-check-input"
+                type="radio"
+                name="stomach"
+                id="stomach2"
+                value="slight"
+                [(ngModel)]="form.stomach"
+                #stomach="ngModel"
+              /><span></span>
+                <img src="assets/05.png" />
+                <p><b>SLIGHT</b></p>
+              </label>
             </div>
-            <div class="col-md-2">
-              <div class="mb-3 form-group">
-                <label for="trouser_h" class="form-label">H Measurement</label>
+          </div>
+          <div class="col-md-4 shapes">
+            <div class="form-check form-check-inline">
+  
+              <label class="form-check-label rdiobox" for="stomach3">
                 <input
-                  type="text"
-                  class="form-control"
-                  name="trouser_h"
-                  [(ngModel)]="form.trouser_h"
-                  #trouser_h="ngModel"
-                />
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div class="mb-3 form-group">
-                <label for="trouser_fth" class="form-label"
-                  >F.TH Measurement</label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  name="trouser_fth"
-                  [(ngModel)]="form.trouser_fth"
-                  #trouser_fth="ngModel"
-                />
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div class="mb-3 form-group">
-                <label for="trouser_kn" class="form-label">KN Measurement</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  name="trouser_kn"
-                  [(ngModel)]="form.trouser_kn"
-                  #trouser_kn="ngModel"
-                />
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div class="mb-3 form-group">
-                <label for="trouser_b" class="form-label">B Measurement</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  name="trouser_b"
-                  [(ngModel)]="form.trouser_b"
-                  #trouser_b="ngModel"
-                />
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div class="mb-3 form-group">
-                <label for="trouser_hl" class="form-label">H.L Measurement</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  name="trouser_hl"
-                  [(ngModel)]="form.trouser_hl"
-                  #trouser_hl="ngModel"
-                />
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div class="mb-3 form-group">
-                <label for="trouser_bal" class="form-label"
-                  >BAL Measurement</label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  name="trouser_bal"
-                  [(ngModel)]="form.trouser_bal"
-                  #trouser_bal="ngModel"
-                />
-              </div>
-            </div>
-
-            <div class="col-md-2">
-              <div class="mb-3 form-group">
-                <label for="trouser_calf_round" class="form-label">CALF</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  name="trouser_calf_round"
-                  [(ngModel)]="form.trouser_calf_round"
-                  #trouser_calf_round="ngModel"
-                />
-              </div>
-            </div>
-
-            <div class="col-md-2">
-              <div class="mb-3 form-group">
-                <label for="trouser_crotch_length" class="form-label"
-                  >CROTCH LENGTH</label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  name="trouser_crotch_length"
-                  [(ngModel)]="form.trouser_crotch_length"
-                  #trouser_crotch_length="ngModel"
-                />
-              </div>
-            </div>
-
-            <div class="col-md-2">
-              <div class="mb-3 form-group">
-                <label for="" class="form-label">U ROUND</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  name="trouser_uround"
-                  [(ngModel)]="form.trouser_uround"
-                  #trouser_uround="ngModel"
-                />
-              </div>
+                mdbRadio
+                class="form-check-input"
+                type="radio"
+                name="stomach"
+                id="stomach3"
+                value="large"
+                [(ngModel)]="form.stomach"
+                #stomach="ngModel"
+              /><span></span>
+                <img src="assets/06.png" />
+                <p><b>LARGE</b></p>
+              </label>
             </div>
           </div>
         </div>
       </div>
-
-
-
-    <div class="row">
-      <div class="col-md-6 shape">
-        <div class="col-md-4 shapes">
-          <div class="form-check form-check-inline">
-            <input
-              mdbRadio
-              class="form-check-input"
-              type="radio"
-              name="backshape"
-              id="backshape1"
-              value="normal"
-              [(ngModel)]="form.backshape"
-              #backshape="ngModel"
-            />
-            <label class="form-check-label" for="backshape1">
-              <img src="assets/01.png" />
-              <p><b>NORMAL</b></p>
-            </label>
+  
+      <div class="row">
+        <div class="col-md-6 shape">
+          <div class="col-md-4 shapes">
+            <div class="form-check form-check-inline">
+  
+              <label class="form-check-label rdiobox" for="shoulder1">
+                <input
+                mdbRadio
+                class="form-check-input"
+                type="radio"
+                name="shoulder"
+                id="shoulder1"
+                value="square"
+                [(ngModel)]="form.shoulder"
+                #shoulder="ngModel"
+              /><span></span>
+                <img src="assets/07.png" />
+                <p><b>SQUARE</b></p>
+              </label>
+            </div>
+          </div>
+          <div class="col-md-4 shapes">
+            <div class="form-check form-check-inline">
+  
+              <label class="form-check-label rdiobox" for="shoulder2">
+                <input
+                mdbRadio
+                class="form-check-input"
+                type="radio"
+                name="shoulder"
+                id="shoulder2"
+                value="regular"
+                [(ngModel)]="form.shoulder"
+                #shoulder="ngModel"
+              /><span></span>
+                <img src="assets/08.png" />
+                <p><b>REGULAR</b></p>
+              </label>
+            </div>
+          </div>
+          <div class="col-md-4 shapes">
+            <div class="form-check form-check-inline">
+  
+              <label class="form-check-label rdiobox" for="shoulder3">
+                <input
+                mdbRadio
+                class="form-check-input"
+                type="radio"
+                name="shoulder"
+                id="shoulder3"
+                value="sloping"
+                [(ngModel)]="form.shoulder"
+                #shoulder="ngModel"
+              /><span></span>
+                <img src="assets/09.png" />
+                <p><b>SLOPING</b></p>
+              </label>
+            </div>
           </div>
         </div>
-        <div class="col-md-4 shapes">
-          <div class="form-check form-check-inline">
-            <input
-              mdbRadio
-              class="form-check-input"
-              type="radio"
-              name="backshape"
-              id="backshape2"
-              value="hunched"
-              [(ngModel)]="form.backshape"
-              #backshape="ngModel"
-            />
-            <label class="form-check-label" for="backshape2">
-              <img src="assets/02.png" />
-              <p><b>HUNCHED</b></p>
-            </label>
+        <div class="col-md-6 shape">
+          <div class="col-md-4 shapes">
+            <div class="form-check form-check-inline">
+  
+              <label class="form-check-label rdiobox" for="fit_type1">
+                <input
+                mdbRadio
+                class="form-check-input"
+                type="radio"
+                name="fit_type"
+                id="fit_type1"
+                value="slim fit"
+                [(ngModel)]="form.fit_type"
+                #fit_type="ngModel"
+              /> <span></span>
+                <p class="noimage"></p>
+                <p style="margin-top: -68px"><b>SLIM FIT</b></p>
+              </label>
+            </div>
           </div>
-        </div>
-        <div class="col-md-4 shapes">
-          <div class="form-check form-check-inline">
-            <input
-              mdbRadio
-              class="form-check-input"
-              type="radio"
-              name="backshape"
-              id="backshape3"
-              value="erect"
-              [(ngModel)]="form.backshape"
-              #backshape="ngModel"
-            />
-            <label class="form-check-label" for="backshape3">
-              <img src="assets/03.png" />
-              <p><b>ERECT</b></p>
-            </label>
+          <div class="col-md-4 shapes">
+            <div class="form-check form-check-inline">
+  
+              <label class="form-check-label rdiobox" for="fit_type2">
+                <input
+                mdbRadio
+                class="form-check-input"
+                type="radio"
+                name="fit_type"
+                id="fit_type2"
+                value="medium fit"
+                [(ngModel)]="form.fit_type"
+                #fit_type="ngModel"
+              /> <span></span>
+                <p class="noimage"></p>
+                <p style="margin-top: -68px"><b>MEDIUM FIT</b></p>
+              </label>
+            </div>
+          </div>
+          <div class="col-md-4 shapes">
+            <div class="form-check form-check-inline">
+  
+              <label class="form-check-label rdiobox" for="fit_type3">
+                <input
+                mdbRadio
+                class="form-check-input"
+                type="radio"
+                name="fit_type"
+                id="fit_type3"
+                value="regular fit"
+                [(ngModel)]="form.fit_type"
+                #fit_type="ngModel"
+              /> <span></span>
+                <p class="noimage"></p>
+                <p style="margin-top: -68px"><b>REGULAR FIT</b></p>
+              </label>
+            </div>
           </div>
         </div>
       </div>
-      <div class="col-md-6 shape">
-        <div class="col-md-4 shapes">
-          <div class="form-check form-check-inline">
-            <input
-              mdbRadio
-              class="form-check-input"
-              type="radio"
-              name="stomach"
-              id="stomach1"
-              value="flat"
-              [(ngModel)]="form.stomach"
-              #stomach="ngModel"
+  
+      <div class="row mt-3">
+        <div class="col-md-4">
+          <button type="button" for="front">Capture Front Measurement</button>
+          <div *ngIf="form.front_captured_img">
+            <img
+              class="captureimg"
+              [src]="form.storage_path + '/' + form.front_captured_img"
             />
-            <label class="form-check-label" for="stomach1">
-              <img src="assets/04.png" />
-              <p><b>FLAT</b></p>
-            </label>
           </div>
         </div>
-        <div class="col-md-4 shapes">
-          <div class="form-check form-check-inline">
-            <input
-              mdbRadio
-              class="form-check-input"
-              type="radio"
-              name="stomach"
-              id="stomach2"
-              value="slight"
-              [(ngModel)]="form.stomach"
-              #stomach="ngModel"
+        <div class="col-md-4">
+          <button type="button" for="back">Capture Back Measurement</button>
+          <div *ngIf="form.back_captured_img">
+            <img
+              class="captureimg"
+              [src]="form.storage_path + '/' + form.back_captured_img"
             />
-            <label class="form-check-label" for="stomach2">
-              <img src="assets/05.png" />
-              <p><b>SLIGHT</b></p>
-            </label>
           </div>
         </div>
-        <div class="col-md-4 shapes">
-          <div class="form-check form-check-inline">
-            <input
-              mdbRadio
-              class="form-check-input"
-              type="radio"
-              name="stomach"
-              id="stomach3"
-              value="large"
-              [(ngModel)]="form.stomach"
-              #stomach="ngModel"
+        <div class="col-md-4">
+          <button type="button" for="side">Capture Side Measurement</button>
+          <div *ngIf="form.side_captured_img">
+            <img
+              class="captureimg"
+              [src]="form.storage_path + '/' + form.side_captured_img"
             />
-            <label class="form-check-label" for="stomach3">
-              <img src="assets/06.png" />
-              <p><b>LARGE</b></p>
-            </label>
+          </div>
+        </div>
+      </div>
+  
+      <div class="row mt-3">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label for="remark" class="form-label">Remark</label>
+            <div class="mdisplay"> {{ form.remark}} </div>
           </div>
         </div>
       </div>
     </div>
-
-    <div class="row">
-      <div class="col-md-6 shape">
-        <div class="col-md-4 shapes">
-          <div class="form-check form-check-inline">
-            <input
-              mdbRadio
-              class="form-check-input"
-              type="radio"
-              name="shoulder"
-              id="shoulder1"
-              value="square"
-              [(ngModel)]="form.shoulder"
-              #shoulder="ngModel"
-            />
-            <label class="form-check-label" for="shoulder1">
-              <img src="assets/07.png" />
-              <p><b>SQUARE</b></p>
-            </label>
-          </div>
-        </div>
-        <div class="col-md-4 shapes">
-          <div class="form-check form-check-inline">
-            <input
-              mdbRadio
-              class="form-check-input"
-              type="radio"
-              name="shoulder"
-              id="shoulder2"
-              value="regular"
-              [(ngModel)]="form.shoulder"
-              #shoulder="ngModel"
-            />
-            <label class="form-check-label" for="shoulder2">
-              <img src="assets/08.png" />
-              <p><b>REGULAR</b></p>
-            </label>
-          </div>
-        </div>
-        <div class="col-md-4 shapes">
-          <div class="form-check form-check-inline">
-            <input
-              mdbRadio
-              class="form-check-input"
-              type="radio"
-              name="shoulder"
-              id="shoulder3"
-              value="sloping"
-              [(ngModel)]="form.shoulder"
-              #shoulder="ngModel"
-            />
-            <label class="form-check-label" for="shoulder3">
-              <img src="assets/09.png" />
-              <p><b>SLOPING</b></p>
-            </label>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6 shape"></div>
-    </div>
-
-    <div class="row mt-3">
-      <div class="col-md-4">
-        <button type="button" for="front">Capture Front Measurement</button>
-        <div *ngIf="form.front_captured_img">
-          <img
-            class="captureimg"
-            [src]="form.storage_path + '/' + form.front_captured_img"
-          />
-        </div>
-      </div>
-      <div class="col-md-4">
-        <button type="button" for="back">Capture Back Measurement</button>
-        <div *ngIf="form.back_captured_img">
-          <img
-            class="captureimg"
-            [src]="form.storage_path + '/' + form.back_captured_img"
-          />
-        </div>
-      </div>
-      <div class="col-md-4">
-        <button type="button" for="side">Capture Side Measurement</button>
-        <div *ngIf="form.side_captured_img">
-          <img
-            class="captureimg"
-            [src]="form.storage_path + '/' + form.side_captured_img"
-          />
-        </div>
-      </div>
-    </div>
-
-    <div class="row mt-3">
-      <div class="col-md-12">
-        <div class="form-group">
-          <label for="remark" class="form-label">Remark</label>
-          <input
-            type="text"
-            class="form-control"
-            name="remark"
-            [(ngModel)]="form.remark"
-            #remark="ngModel"
-          />
-        </div>
-      </div>
-    </div>
+  
+  
 
     <!-- <div class=" text-center mt-4">
         <div class="button-group">

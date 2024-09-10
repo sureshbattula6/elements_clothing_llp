@@ -39,7 +39,7 @@ export class CustomerViewComponent implements OnInit,OnDestroy,AfterViewInit {
     // this.visitId = + this.activatedroute.snapshot.paramMap.get("visitId");
 
     this.userId = + this.activatedroute.snapshot.paramMap.get("userId");
-    console.log('urlUserid',  this.userId );
+    //console.log('urlUserid',  this.userId );
     this.authenticationService.setCustomerId(this.userId);
     this.createCustomerForm();
   }
@@ -55,8 +55,7 @@ export class CustomerViewComponent implements OnInit,OnDestroy,AfterViewInit {
 
     this.customerService.showCustomer(this.userId).subscribe(
       (res:any)=>{
-        console.log(res);
-
+        //console.log(res);
           this.countries = res.data.countries;
           // let customer = res.data.customer;
           // this.customer = (customer != undefined) ? customer :{}

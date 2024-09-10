@@ -42,6 +42,7 @@ form: any = {
 
   ngOnInit(): void {
      this.getCustomerMeasurement();
+     
   }
 
   getCustomerMeasurement() {
@@ -56,9 +57,6 @@ form: any = {
         this.order_item = res.data.order_items;
         this.order = res.data.order;
 
-       console.log(res);
-       console.log('Measurements', measurements);
-         console.log('sds',measurements);
         this.form.suit_fl = measurements.suit_fl;
         this.form.suit_bl = measurements.suit_bl;
         this.form.suit_suitl = measurements.suit_suitl;
@@ -107,7 +105,12 @@ form: any = {
         this.form.shirt_st = measurements.shirt_st;
         this.form.shirt_n = measurements.shirt_n;
         this.form.trouser_uround = measurements.trouser_uround;
-
+        this.form.master_name = measurements.master_name;
+        this.form.meas_taken_by = measurements.meas_taken_by;
+        this.form.backshape = measurements.backshape;
+        this.form.stomach = measurements.stomach;
+        this.form.shoulder = measurements.shoulder;
+        this.form.fit_type = measurements.fit_type;
         this.form.title    = measurements.title;
         this.form.remark    = measurements.remark;
         this.form.front_captured_img = measurements.front_captured_img;
@@ -149,12 +152,17 @@ form: any = {
       var pageHeight = 295;
       var imgHeight = (canvas.height * imgWidth) / canvas.width;
       var heightLeft = imgHeight;
-
       const contentDataURL = canvas.toDataURL('image/png');
       let pdf = new jspdf('p', 'mm', 'a4'); // A4 size page of PDF
       var position = 0;
-      pdf.addImage(contentDataURL, 'PNG', 1, position, imgWidth, imgHeight);
+      pdf.addImage(contentDataURL, 'PNG', 1, position, imgWidth, pageHeight);
       pdf.save('order-measurement.pdf'); // Generated PDF
+
+      const pdfBlob = pdf.output('blob');
+
+      const pdfUrl = URL.createObjectURL(pdfBlob);
+  
+      window.open(pdfUrl);
     });
   }
 

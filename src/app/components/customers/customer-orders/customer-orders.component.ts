@@ -75,7 +75,7 @@ export class CustomerOrdersComponent implements OnInit {
    if( customerId !== ''){
       this.productService.getOrders(params)
       .subscribe((response: any) =>{
-        console.log(response, 'customer_ID', customerId)
+        //console.log(response, 'customer_ID', customerId)
         this.dataSource = new MatTableDataSource<any>(response.data);
         this.dataSource.paginator = this.paginator;
         this.page_length = response.total;

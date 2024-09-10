@@ -1,0 +1,344 @@
+<div class="az-content">
+  <div class="container">
+    <div class="az-content-body d-flex flex-column">
+      <div class="az-content-title">
+        <form [formGroup]="orderForm" (ngSubmit)="orderFormSubmit()">
+          <div class="cart-header">
+            <div class="row">
+              <div class="col-md-6">
+                <h1>Cart ( {{ TotalCartItem }} )</h1>
+              </div>
+              <div class="col-md-6">
+                <button type="button" class="backButton" (click)="goBack()" mat-raised-button><i
+                    class="typcn typcn-arrow-back"></i> Back</button>
+              </div>
+            </div>
+            <div class="row mb-2 align-items-center">
+              <div class="col-md-4">
+                <mat-form-field>
+                  <mat-label>Sales Order Date</mat-label>
+                  <input type="date" [value]="getCurrentDate()" matInput>
+                </mat-form-field>
+
+              </div>
+
+              <div class="col-md-4">
+                <mat-form-field>
+                  <mat-label>Customer Name</mat-label>
+                  <input type="text" readonly [value]="cartList[0]?.customer?.name" matInput>
+                </mat-form-field>
+
+              </div>
+              <div class="col-md-4">
+                <mat-form-field appearance="fill" *ngIf="cartList.length">
+                  <mat-label>Select Measurements</mat-label>
+                  <mat-select [formControl]="measurements" (selectionChange)="measurementUpdate($event)">
+                    <mat-option *ngFor="let measurement of measurementsList" [value]="measurement.value">{{
+                      measurement.viewValue }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row mb-2 align-items-center">
+              <div class="col-md-4">
+                <!-- <input type="date" formControlName="deliveryDate" class="form-control" />
+                <mat-error *ngIf="formSubmitted  && formValidate?.deliveryDate?.errors?.required">This field is required.</mat-error> -->
+
+                <mat-form-field>
+                  <mat-label>Delivery Date*</mat-label>
+                  <input type="date" formControlName="deliveryDate" matInput [min]="getCurrentDate()">
+                  <mat-error *ngIf="formSubmitted  && formValidate?.deliveryDate?.errors?.required">This field is
+                    required.</mat-error>
+                </mat-form-field>
+
+              </div>
+              <div class="col-md-4">
+                <mat-form-field>
+                  <mat-label>Customer Code</mat-label>
+                  <input type="text" readonly [value]="cartList[0]?.customer?.code" matInput>
+                </mat-form-field>
+              </div>
+              <div class="col-md-4">
+                <button type="button" *ngIf="selectedViewMeasurement" color="primary" mat-flat-button
+                  [routerLink]="['/updatemeasurement/' + selectedViewMeasurement]">
+                  View & Add Measurement
+                </button>
+              </div>
+            </div>
+            <div class="row mb-2 align-items-center">
+
+              <div class="col-md-4">
+                <mat-form-field>
+                  <mat-label>Trail Date*</mat-label>
+                  <input type="date" formControlName="trailDate" matInput [min]="getCurrentDate()">
+                  <mat-error *ngIf="formSubmitted  && formValidate?.trailDate?.errors?.required">This field is
+                    required.</mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-md-4">
+                <mat-form-field>
+                  <mat-label>Mobile No</mat-label>
+                  <input type="text" readonly [value]="cartList[0]?.customer?.phone" matInput>
+                </mat-form-field>
+              </div>
+              <div class="col-md-4">
+                <button type="button" *ngIf="cartList.length" color="primary" mat-flat-button
+                  [routerLink]="['/addmeasurement']">
+                  New Measurement
+                </button>
+              </div>
+              <!-- <div class="col-md-4">
+                <mat-form-field>
+                  <mat-label>GST NO</mat-label>
+                  <input type="text" formControlName="gst" matInput>
+                  <<mat-error *ngIf="formSubmitted  && formValidate?.trailDate?.errors?.required">This field is
+                    required.</mat-error>
+                </mat-form-field>
+              </div> -->
+            </div>
+          </div>
+
+          <hr /><!------PRODUCT WISE LIST DISPLAYING--------->
+          <div class="row">
+            <div class="col-lg-8">
+              <ng-container *ngFor="let result of productCountArray; let i = index">
+              <div class="row align-items-center">
+                  <div class="col-md-5">
+                    <p>{{ result.product_name }}</p>
+                  </div>
+                  <div class="col-md-1 price">
+                    {{ result.product_count }} Qty
+                  </div>
+                  <input type="checkbox" (change)="onSelectProduct($event, result.product_id)">
+                <!-- </ng-container> -->
+              </div>
+            </ng-container>
+              <hr />
+              <div class="row cartrowheading">
+                <div class="col-md-6">Product Name</div>
+                <div class="col-md-2 text-right">Price</div>
+                <div class="col-md-2 text-right">GST</div>
+                <div class="col-md-2 text-right">Total</div>
+              </div>
+              <hr />
+              <div class="row align-items-center">
+                <div class="col-lg-12">
+                  <table class="table thead-light carttable">
+                    <app-cart-item *ngFor="let cart of cartList" [cart]="cart" [prescriptions]="prescriptionList"
+                      (newEvent)="cartUpdate($event)"></app-cart-item>
+                  </table>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-12 text-center">
+                  <button *ngIf="TotalCartItem" type="button" color="warn" (click)="clearAllItems()" mat-flat-button>
+                    Clear All Items
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-4">
+              <div class="checkout">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <!-- <div class="row">
+                    <div class="col-lg-6">
+                      <p>Coupons</p>
+                    </div>
+                    <div class="col-lg-6">
+                      <button type="button" mat-stroked-button>
+                        Add Coupons
+                      </button>
+                    </div>
+                  </div> -->
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <h2>Summary:</h2>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <hr />
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="row">
+                      <div class="col-lg-6">
+                        <p>Subtotal</p>
+                      </div>
+                      <div class="col-lg-6">
+                        <mat-form-field>
+                          <button type="button" mat-button mat-icon-button matPrefix>
+                            ₹
+                          </button>
+                          <input matInput type="number" [value]="subtotal" [disabled]="true" />
+                        </mat-form-field>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-6">
+                        <p>GST</p>
+                      </div>
+                      <div class="col-lg-6">
+                        <mat-form-field>
+                          <button type="button" mat-button mat-icon-button matPrefix>
+                            ₹
+                          </button>
+                          <input matInput type="number" [value]="totalGST" [disabled]="true" />
+                        </mat-form-field>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-6">
+                        <p>Discount</p>
+                      </div>
+                      <div class="col-lg-6">
+                        <mat-form-field>
+                          <!-- <mat-select formControlName="discountType">
+                            <mat-option *ngFor="let discount of discountTypeOption" [value]="discountType">
+                                <span>{{ discount?.name }}</span>
+                            </mat-option>
+                          </mat-select> -->
+                          <mat-select [(value)]="discountType" (selectionChange)="showDiscountType()"> <!-- (selectionChange)="showDiscountType()"-->
+                            <mat-option value="percentage">Percentage</mat-option>
+                            <mat-option value="amount">Amount</mat-option>
+                          </mat-select>
+                          <!-- <button type="button" mat-button mat-icon-button matPrefix>
+                            %
+                          </button>
+                          <input matInput type="number" [value]="discountPercent" (input)="onInput($event)" /> -->
+                          <!-- <input matInput type="text"  [value]="value | number: '.0' : 'en-US'" (input)="onInput($event)"/> -->
+                        </mat-form-field>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-6">
+                        <p></p>
+                      </div>
+                      <div class="col-lg-6">
+                        <mat-form-field>
+                          <!-- <input matInput type="number" [value]="discountValue" (input)="onInput($event)" /> -->
+                          <input matInput type="number" formControlName="discountInputValue" (keyup)="onInput()"  />
+                        </mat-form-field>
+                        <div *ngIf="discountError" class="mat-error">
+                          Discount limit exceeded.
+                        </div>
+                        <div *ngIf="invalidDiscountError" class="mat-error">
+                          Invalid Discount.
+                        </div>
+                      </div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                      <div class="col-lg-6">
+                        <p>Order Total</p>
+                      </div>
+                      <div class="col-lg-6">
+                        <mat-form-field>
+                          <button type="button" mat-button mat-icon-button matPrefix>
+                            ₹
+                          </button>
+                          <input matInput type="number" [value]="total" [disabled]="true" />
+                        </mat-form-field>
+                      </div>
+                    </div>
+                    <hr />
+                  </div>
+                </div>
+                <div class="row paymentsummary">
+
+                  <div class="col-lg-12 mg-t-10">
+                    <mat-form-field>
+                      <mat-label> Payment Type</mat-label>
+                      <mat-select formControlName="paymentType">
+                        <mat-option *ngFor="let payment of paymentTypeOptions;" [value]="payment">
+                          <span>{{ payment?.name }}</span>
+                        </mat-option>
+                      </mat-select>
+                      <mat-error *ngIf="formValidate?.paymentType?.errors?.required">This field is required.</mat-error>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="col-lg-12 mg-t-10">
+                    <mat-form-field>
+                      <mat-label> Payment Settlement </mat-label>
+                      <mat-select formControlName="paymentSettlement" (selectionChange)="onPaymentOptionChange($event.value)">
+                        <mat-option *ngFor="let settlement of paymentSettlementOptions" [value]="settlement">
+                          <span>{{ settlement?.name }}</span>
+                        </mat-option>
+                      </mat-select>
+                      <mat-error *ngIf="
+                          formValidate?.paymentSettlement?.errors?.required
+                        ">This field is required.</mat-error>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="col-lg-12 mg-t-10">
+                    <mat-form-field>
+                      <mat-label>Amount</mat-label>
+                      <input type="number" formControlName="amount" matInput   />
+                      <mat-error *ngIf="formValidate?.amount?.errors?.required">This field is required.</mat-error>
+                    </mat-form-field>
+
+                  </div>
+                  <!-- <div class="col-lg-12 mg-t-10">
+                    <label class="ckbox">
+                      <input  formControlName="paymentOption" value="1" type="checkbox"><span>Proceed without Payment</span>
+                      </label>
+                  </div> -->
+                  <div class="col-lg-12 mg-t-10">
+                    <textarea formControlName="remarks" placeholder="Remarks" class="form-control"></textarea>
+                  </div>
+                  <!-- <div class="col-lg-12 mg-t-10">
+                    <mat-form-field>
+                        <mat-label> Order Status </mat-label>
+                        <mat-select formControlName="orderStatus">
+                            <mat-option *ngFor="let orderStatus of orderStatusOptions;" [value]="orderStatus">
+                                <span>{{orderStatus?.name}}</span>
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="formValidate?.orderStatus?.errors?.required">This field is required.</mat-error>
+                    </mat-form-field>
+                </div> -->
+                  <!-- <div class="col-lg-12 text-center">
+                    <div class="button-group">
+                        <button type="submit" mat-raised-button="" class="mat-focus-indicator btn-int-blue mat-raised-button mat-button-base">
+                             Update Payment
+                        </button>
+                    </div>
+                </div> -->
+                </div>
+
+                <!-- (click)="navigateToPlaceOrder()" -->
+                <div class="row">
+                  <div class="col-lg-12 mg-t-10 text-center">
+                    <button type="submit" color="primary" mat-flat-button>
+                      Place Order
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-4"></div>
+            <div class="col-lg-4 text-center" *ngIf="cartList.length">
+              <!-- <mat-form-field appearance="fill" style="width:50%">
+                            <mat-label>Select Hub</mat-label>
+                            <mat-select>
+                              <mat-option *ngFor="let hub of storehub" [value]="hub.value">
+                                {{hub.viewValue}}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field> -->
+            </div>
+            <div class="col-lg-4" *ngIf="cartList.length">
+              <!-- <button type="button" color="warn" (click)="navigateToPlaceOrder()" mat-flat-button>Place Order</button> -->
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

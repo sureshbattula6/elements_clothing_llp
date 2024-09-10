@@ -42,6 +42,8 @@ export class OrderProductsComponent implements OnInit {
   public toggle = new FormControl(false);
   public showView:boolean = false;
 
+
+
   public item_types:any[];
   public rim_types:any[];
   public brands:any[];
@@ -186,7 +188,7 @@ export class OrderProductsComponent implements OnInit {
   }
 
   cartProductsList() {
-    // console.log(this.cartProducts)
+    // console.log('Products.....',this.cartProducts)
     this.cartProducts.forEach((element : any) => {
       this.addProductToCart(element.product, element.qty);
     });
@@ -196,8 +198,11 @@ export class OrderProductsComponent implements OnInit {
 
   }
 
-  addProductToCart(id:any, qty: any) {
-    let params = { productId: id, productQty: qty, customerId: this.customerId };
+  addProductToCart(id:any, qty: any , ) {
+    var storeId = this.authenticationService.getStoreId(); 
+    const store_id = storeId ;
+
+    let params = { productId: id, productQty: qty, customerId: this.customerId ,store_id};
     this.productService.productAddToCart(params).subscribe(
       (response:any) =>{
         let data = response.data;
@@ -222,7 +227,5 @@ export class OrderProductsComponent implements OnInit {
   //   let params = { productId: id, customerId: this.customerId };
   //   console.log(params);return;
   // }
-
-
 
 }

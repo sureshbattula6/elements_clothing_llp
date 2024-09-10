@@ -1,10 +1,10 @@
-import { Component, OnInit,Input } from '@angular/core';
+import { Component, OnInit, Input, Output, AfterViewInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ProductService } from '../../../services/product.service';
 import { HttpParams } from '@angular/common/http';
 import { AuthenticationService } from '../../../auth/services/authentication.service';
 import { PrescriptionService } from '../../../services/prescription.service';
-import { Router,ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { CommonService } from 'src/app/services/common.service';
 
 import {
@@ -20,13 +20,16 @@ interface Hub {
   viewValue: string;
 }
 
+
+
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css'],
 })
-export class CartComponent implements OnInit {
+export class CartComponent implements OnInit, AfterViewInit {
   @Input('discountEnable') public discountFlag: boolean = false;
+ 
 
 
 
@@ -36,61 +39,66 @@ export class CartComponent implements OnInit {
   public value?: any;
 
   public total: any = 0;
+  public orderTotal: any = 0;
+  public taxableValue: any = 0;
   public paidAmount: number = 0;
   public subtotal: any = 0;
-   public discount: number = 0;
-  public discountType: string = 'percentage';
+  public discount: any = 0;
+  public discountType: any = 1 ;
   // percentage: string = 'percentage';
   public discountPercent: number = 0;
   public discountValue: number = 0;
   public discountError: any = false;
   public invalidDiscountError: any = false;
   public coupon: string;
-  public totalGST: number = 0;
+  public totalGST: any = 0;
   public selectedViewMeasurement: number = 0;
-  public productCountArray:any = null;
+  public productCountArray: any = null;
   public formSubmitted = false;
   public userDetails = this.authenticationService.getUserDetails();
-  public customerId: string = this.authenticationService.getCustomerId();
+  public customerId: any = this.authenticationService.getCustomerId();
   public roleId: number = +this.authenticationService.getRoleId();
   measurements: any;
   measurementsList: any;
-  Discount?: any;
+  Discount?: any = 0;
+  discount_percent : any = 0;
   // Payment Section
   public orderForm: FormGroup;
   public orderId: number;
 
+  public salesEmployeeList: any []= [];
+  public searchSelectedEmployees: any; 
+  filteredSalesEmployeeList: any[] = [];
+  public isPaymentAmountVisible: boolean = true;
   public paymentTypeOptions: any[] = [
     { id: 1, name: 'CASH' },
-    { id: 2, name: 'CARD'},
-    { id: 3, name: 'CREDIT'},
-    { id: 4, name: 'ONLINE'},
-    { id: 5, name: 'UPI'}
-
+    { id: 2, name: 'CARD' },
+    { id: 3, name: 'CREDIT' },
+    //{ id: 4, name: 'ONLINE'},
+    { id: 5, name: 'UPI' }
   ];
 
-public discountTypeOption: any[] = [
-  { id: 1, name: 'Percentage'},
-  { id: 2, name: 'Amount'}
-];
+  public discountTypeOption: any[] = [
+    { id: 1, name: 'Percentage' },
+    { id: 2, name: 'Amount' }
+  ];
 
   public paymentSettlementOptions: any[] = [
     { id: -1, name: 'None' },
     { id: 1, name: 'Full Amount' },
-    {id: 2, name: 'Advanced Amount'}
+    { id: 2, name: 'Advanced Amount' }
   ];
   products: any;
   cartId: any;
   cart: any;
-
-
+  
   constructor(
     private productService: ProductService,
     private authenticationService: AuthenticationService,
     private prescriptionService: PrescriptionService,
     private commonService: CommonService,
     private measurementService: MeasurmentService,
-    private fb:FormBuilder,
+    private fb: FormBuilder,
     private _router: Router,
     private location: Location,
     private route: ActivatedRoute
@@ -106,33 +114,49 @@ public discountTypeOption: any[] = [
   ngOnInit(): void {
 
     this.orderId = +this.route.snapshot.paramMap.get('orderId');
-    // if(this.discountFlag) {
-    //   this.paymentSettlementOptions.push({ id: 2, name: 'Partial Amount' })
-    // }else {
-    //   this.paymentSettlementOptions.push({ id: 2, name: 'Advanced Amount' })
-    // }
-
+    this.cartId = this.route.snapshot.paramMap.get('cartId');
+    
+    this.getSalesEmployeeList();
     this.getCartItems();
     this.getPrescriptoins();
     this.getMeasurementList();
-
     this.measurements = 6;
     this.createOrderForm();
     this.OrderForm();
     this.subscribeToDeliveryDateChanges();
-
+  }
+  
+  ngAfterViewInit(): void {
+    // this.getSalesEmployeeList();  
   }
 
   OrderForm() {
     this.orderForm = this.fb.group({
-      paymentType: ['',Validators.required],
+      paymentType: ['', Validators.required],
       paymentSettlement: [''],
       deliveryDate: [null, Validators.required],
       trailDate: [null, Validators.required],
-      remarks:[''],
+      remarks: [''],
       amount: [''],
-      discountInputValue:[''],
+      discountType: ['1'],
+      discountInputValue: [''],  
     });
+  }
+
+  getSalesEmployeeList() {
+
+    this.productService.getSaleEmployees().subscribe(
+      (res) => {
+       
+        this.salesEmployeeList = res;
+        //console.log('Sale cart List::', this.salesEmployeeList);
+        this.searchSelectedEmployees = this.salesEmployeeList;
+        // this.filteredSalesEmployeeList = this.salesEmployeeList.slice(); 
+      },
+      (err) => {
+        console.log('Error Sales Employee', err)
+      }
+    )
   }
 
   subscribeToDeliveryDateChanges() {
@@ -143,72 +167,75 @@ public discountTypeOption: any[] = [
       }
     );
   }
-
   storehub: Hub[] = [
     { value: 'Send to Hub', viewValue: 'Send to Hub' },
     { value: 'No send to Hub', viewValue: 'No send to Hub' },
   ];
 
-  onInput(): void {
-    const totalWithoutDisc = this.subtotal + this.totalGST;
 
 
-    if (this.orderForm.value.discountInputValue < 0) {
+onInput(): void {
+  const discountType = this.orderForm.value.discountType;
+  const discountValue = (this.orderForm.value.discountInputValue);
+
+  if (discountType === '1') {
+    if (discountValue < 0) {
       this.invalidDiscountError = true;
       return;
     }
 
-    if (this.discountType == "percentage") {
-      const discountPercent = this.orderForm.value.discountInputValue;
-      this.discountPercent = discountPercent;
-
-      if (this.verifyDiscountPermission()) {
-        this.discountValue = 0;
-        this.discountError = true;
-        return;
-      }
-
-      const discountAmt = totalWithoutDisc * (discountPercent / 100);
-      this.total = Math.round(totalWithoutDisc - discountAmt);
-      this.discount = discountAmt;
-
+    if (this.verifyDiscountPermission(discountValue)) {
+      this.discountValue = 0;
+      this.discountError = true;
+      return;
     }
-    else { // Amount
-      const discountAmt = this.orderForm.value.discountInputValue;;
-      const discountPercent = (discountAmt/totalWithoutDisc) * 100;
-      this.discountPercent = discountPercent;
-
-      if (this.verifyDiscountPermission()) {
-        this.discountValue = 0;
-        this.discountError = true;
-        return;
-      }
-
-      this.total = Math.round(totalWithoutDisc - discountAmt);
-      this.discount = discountAmt;
-
-      // console.log(discountPercent);
-    }
-
-    this.discountError = false;
-    this.invalidDiscountError = false;
-    if (this.total < 0)
-      this.total = 0;
-
   }
 
-  verifyDiscountPermission() {
-    if (this.roleId == 0 && this.discountPercent > 50) {
-        alert('Error: Discount limit upto 50%')
-        return true;
-    } else if (this.roleId != 0 && this.discountPercent > 15)   {
-        alert('Error: Discount limit upto 15%')
-        return true;
+  this.discountError = false;
+  this.invalidDiscountError = false;
+
+  this.discount = discountValue;
+  this.taxableValue = (this.subtotal - this.discount).toFixed(2);
+  this.totalGST = (this.taxableValue * 0.05).toFixed(2);
+  this.total = parseFloat(this.taxableValue) + parseFloat(this.totalGST);
+
+  if (this.total < 0) {
+    this.total = 0;
+  }
+
+  this.updateCartDiscount(this.discount);
+
+  //this.onPaymentOptionChange(this.total);
+}
+
+verifyDiscountPermission(discountValue: number): boolean {
+  if(this.discountType === 1){
+    if (this.roleId == 0 && discountValue > 50) {
+      alert('Error: Discount limit up to 50% for role 0');
+      return true;
+    } else if (this.roleId != 0 && discountValue > 10) {
+      alert('Error: Discount limit up to 10% for non-role 0');
+      return true;
     }
     return false;
   }
+}
 
 
+
+  updateCartDiscount(discount: number ) {
+    
+      const params = {
+        discount: discount,
+        discount_type:this.discountType,
+      };
+      const customerId = Number(this.customerId);
+      this.productService.updateCart(customerId, params).subscribe((res: any) => {
+        //console.log(`Cart item ${customerId} updated with discount`, res);
+      });
+      this.cartUpdate(event);
+  }
+  
   getCartItems(productCount = true): void {
     let params = new HttpParams();
     params = params.set('current_page', '1');
@@ -221,44 +248,32 @@ public discountTypeOption: any[] = [
       if (productCount) {
         this.getProductCountbyProductId();
       }
-
       this.TotalCartItem = response.total;
       this.total = 0;
       this.discount = 0;
       this.subtotal = 0;
       this.totalGST = 0;
-
-      console.log('cartlist', this.cartList);
-      // this.cartList.map((cart) => {
-      //   console.log('cart Object', cart);
-      //   this.subtotal += cart.price * cart.quantities;
-      //   console.log('this subtaotal',  this.subtotal);
-      //   this.subtotal = parseFloat(this.subtotal.toFixed(2));
-
-      //   console.log('emiting', this.subtotal, cart.price * cart.quantities);
-
-      //   this.discount += +cart.discount;
-
-      //   this.totalGST += cart.gst_amount;
-      //   this.totalGST = parseFloat(this.totalGST.toFixed(2));
-
-      // });
+      this.orderTotal = 0;
+      this.taxableValue = 0;
+     // console.log('cartlist', this.cartList);
 
       for (let i = 0; i < this.cartList.length; i++) {
         const cart = this.cartList[i];
-        console.log('cart Object', cart);
-        this.subtotal += cart.price * cart.quantities;
-        console.log('emiting', this.subtotal, cart.price * cart.quantities);
-        this.discount += +cart.discount;
+       // console.log('cart Object', cart);
+        this.subtotal += cart.price * 1;
+        this.discount += +cart.discount_amount;
         this.totalGST += Number(cart.gst_amount);
-        console.log('totalgst', this.totalGST)
+       // console.log('totalgst', this.totalGST)
       }
-
       this.subtotal = +this.subtotal.toFixed(2);
       this.totalGST = +this.totalGST.toFixed(2);
+      this.orderTotal = Math.round(this.subtotal + this.totalGST).toFixed(2);
+      this.taxableValue = this.subtotal.toFixed(2);;
       this.total = this.subtotal + this.totalGST - this.discount;
       this.total = Math.round(this.total).toFixed(2);
-
+      const amountControl = this.orderForm.get('amount');
+      //alert(amountControl);
+      amountControl.setValue(this.total);
     });
   }
 
@@ -277,70 +292,68 @@ public discountTypeOption: any[] = [
     this.getCartItems();
   }
 
+ 
+
   orderFormSubmit() {
-
     if (!confirm('Are you sure to Place Order')) return;
-
+  
     this.formSubmitted = true;
-
-    if(this.orderForm.invalid){
+  
+    if (this.orderForm.invalid) {
       return;
     }
-
-    if (this.orderForm.value.discountInputValue < 0) {
+  
+    const discountInputValue = this.orderForm.value.discountInputValue;
+  
+    if (discountInputValue < 0) {
       this.invalidDiscountError = true;
       return;
     }
-
-    if (this.verifyDiscountPermission()) {
+  
+    if (this.verifyDiscountPermission(this.discountValue)) {
       this.discountValue = 0;
       return;
     }
-
+  
     if (this.cartList.length > 0) {
+      
+      const storeId = this.authenticationService.getStoreId();
+  
       let params = {
         customerId: this.customerId,
         userId: this.userDetails.user_id,
         discount: this.discount,
-        discountPercent:this.discountPercent,
+        discountPercent: this.discountPercent,
         paymentType: this.orderForm.value.paymentType?.id?.toString(),
         paymentSettlement: this.orderForm.value.paymentSettlement?.id?.toString(),
         amount: this.orderForm.value.amount,
         deliveryDate: this.orderForm.value.deliveryDate,
         trailDate: this.orderForm.value.trailDate,
         remarks: this.orderForm.value.remarks,
+        orderTotal: this.subtotal,
+        taxableValue: this.taxableValue,
+        totalGST: this.totalGST,
+        total: this.total,
+        store_id: storeId // Add store_id to params
       };
-          // console.log(params);
+  
+       console.log('testing::',params);
+  
       this.productService.storeOrder(params).subscribe(
         (res: any) => {
-          console.log('res', res)
-          if (res.sales_order_copy_pdf){
+          // console.log('res', res)
+          if (res.sales_order_copy_pdf) {
             const pdfUrl = res.sales_order_copy_pdf;
             const newWindow = window.open(pdfUrl, '_blank');
-            // if (newWindow) {
-            //   newWindow.onload = () => {
-            //     newWindow.print();
-            //   };
-            // }
           }
           this._router.navigate(['/order-view/' + res.data.id]);
         },
         (err) => console.log(err)
       );
     }
-
-
-    // this.productService.checkCartProductMeasurement(this.customerId).subscribe(
-    //   (res: any) => {
-    //     if (res.message) {
-    //       this.commonService.openAlert(res.message);
-    //     } else {
-
-    //     }
-    //   },
-    //   (err) => err
-    // );
   }
+  
+  
 
   public cartMeasurementId: any;
 
@@ -357,7 +370,7 @@ public discountTypeOption: any[] = [
         const measurements = res.data.measurment;
 
         this.measurementsList = measurements;
-        const selectedMeasurement = measurements.filter(
+        const selectedMeasurement = measurements?.filter(
           (obj: any) => obj.value == this.cartMeasurementId
         );
         this.selectedViewMeasurement = selectedMeasurement[0].value;
@@ -380,7 +393,7 @@ public discountTypeOption: any[] = [
     // console.log(this.cartList)
     this.measurementService.measurementUpdate(this.customerId, param).subscribe(
       (response: any) => {
-        console.log(response);
+        //console.log(response);
       },
       (err) => console.log(err)
     );
@@ -421,22 +434,8 @@ public discountTypeOption: any[] = [
       product_count: productInfo[productId].product_count,
     }));
 
-    console.log('pc', this.productCountArray);
+    //console.log('pc', this.productCountArray);
   }
-
-  // selectProduct(id: number,product_name: string): void{
-
-  //   alert(`Sales Employee Selected For Same Product ${id}, ${product_name},`);
-
-
-  //   this.productService.getcartProducts(id).subscribe((res) =>{
-  //           this.products = res.data.products;
-  //           this.cart = res.data.cart;
-  //           console.log(res);
-
-  //   })
-
-  // }
 
 
   getCurrentDate(): string {
@@ -448,25 +447,25 @@ public discountTypeOption: any[] = [
 
   }
 
-  createOrderForm(){
+  createOrderForm() {
     this.orderForm = this.fb.group({
       paymentType: [''],
       paymentSettlement: [''],
       amount: [''],
-      deliveryDate: ['',[Validators.required]],
-      trailDate: ['',[Validators.required]],
+      deliveryDate: ['', [Validators.required]],
+      trailDate: ['', [Validators.required]],
       remarks: [''],
       // orderStatus: ['',[Validators.required]]
     });
   }
 
-  get formValidate(){ return this.orderForm.controls; }
+  get formValidate() { return this.orderForm.controls; }
 
 
   showDiscountType(): void {
     this.onInput()
-    // const selectedDiscountType = this.discountType;
-    // console.log(`The discountType selected: ${selectedDiscountType}`);
+    //const selectedDiscountType = this.discountType;
+    //console.log(`The discountType selected: ${selectedDiscountType}`);
   }
 
   goBack() {
@@ -481,36 +480,64 @@ public discountTypeOption: any[] = [
       var updateStatus = 0;
     }
 
-  const param = {
+    const param = {
       product_id: productId,
-      update_status:updateStatus
+      update_status: updateStatus
     };
 
     this.productService
       .updateProductStyles(this.customerId, param)
       .subscribe((res) => {
 
-        if(res.success == true)
-        {
+        if (res.success == true) {
           this.commonService.openAlert(res.message);
         }
-        if(res.status == 'updated') {
+        if (res.status == 'updated') {
           this.getCartItems(false);
         }
       },
-      (err) => console.log(err));
+        (err) => console.log(err));
   }
 
-  onPaymentOptionChange(selectedOption: any): void
-  {
+  onPaymentOptionChange(selectedOption: any): void {
     const amountControl = this.orderForm.get('amount');
-        if (selectedOption.id == 1) {
-            amountControl.setValue(this.total);
-        } else {
-          amountControl.setValue('');
-        }
+    //alert(amountControl);
+    if (selectedOption.id == 1) {
+      amountControl.setValue(this.total);
+    } else {
+      amountControl.setValue('');
+    }
   }
 
-  
+
+
+  onPaymentMethodChange(selectedOption: any): void {
+    const amountControl = this.orderForm.get('amount');
+    if (selectedOption.id == 3) {
+      this.isPaymentAmountVisible = false;
+      amountControl.setValue('');
+    } else {
+      this.isPaymentAmountVisible = true;
+    }
+  }
+
+
+  updateAdditionalCostAppliedAll(event: any) {
+    if (event.checked) {
+      const params = { additional_option: event.value };
+
+      this.productService.updateAdditionalCostAppliedAll(this.customerId, params).subscribe(
+        (response: any) => {
+          this.commonService.openAlert(response.message);
+          this.getCartItems();
+        },
+        (err) => {
+          console.log(err);
+          this.commonService.openAlert('Failed to add option, try again');
+        }
+      );
+    }
+  }
+
 
 }

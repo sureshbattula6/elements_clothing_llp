@@ -8,7 +8,8 @@ h2{
 .form-check-label p {
     /* margin: 0px 0 0px; */
     text-align: center;
-    margin-top: -10px;
+    margin-top: 0px;
+    font-size: 20px;
 }
 .form-check-label .noimage{
     width:100px;
@@ -28,4 +29,42 @@ h2{
 
 .captureimg {
   width: 100%;
+}
+
+.form-label{
+  color: #222;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.form-control {
+  font-weight:500;
+  color:black;
+  border-radius: 0;
+  font-size: 26px;
+  padding: 30px;
+  height: auto;
+}
+
+.mdisplay {
+  font-weight:500;
+  color:black;
+  border-radius: 0;
+  border-color:#222;
+  font-size: 32px;
+  padding: 10px;
+  min-height: 42px;
+  border: solid 1px #222;
+}
+
+.rdiobox span:before {
+  width: 36px;
+  height: 36px;
+}
+
+label img {
+  opacity: .8;
+}
+.rdiobox input[type=radio]:checked + span:before {
+  background-color: #000;
 }

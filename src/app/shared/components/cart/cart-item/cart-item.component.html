@@ -1,17 +1,9 @@
-
 <div class="row cartitem">
-  <!-- <div class="col-md-1">
-    <img *ngIf="cart?.product?.images !== null" src="{{SERVER_PATH}}/storage/{{cart?.product?.images}}"
-    alt=""
-    class="img" aria-hidden="false">
-    <img *ngIf="cart?.product?.images == null"  class="img" src="assets/images/blank-profile-picture.png" alt="" />
-
-  </div> -->
   <div class="col-md-6">
     {{cart?.product?.name}}
   </div>
-  <div class="col-md-2 text-right price">
-    <!-- <p>{{productPrice | number:'1.2-2'}} </p> -->
+  <div class="col-md-2 text-right price ">
+
     <ng-container *ngIf="!editing">
       <p>{{cart?.price | number:'1.2-2'}} </p>
       <a href="#" *ngIf="cart?.product.category_id == 5" (click)="startEditing($event)">Edit</a>
@@ -19,7 +11,7 @@
   <ng-container *ngIf="editing">
       <input  class="form-control" type="number" [(ngModel)]="editedPrice" />
       <a class="editlink" href="#" (click)="submitEdit($event)">Change </a>
-        <a href="#" class="red editlink" (click)="cancelEdit($event)">X</a>
+        <a href="#" class="red editlink" (click)="deleteCart()">X</a>
   </ng-container>
   </div>
   <div class="col-md-2 text-right price">
@@ -34,33 +26,32 @@
     <button class="forStyleBtn" type="button" (click)="measurementStyle(cart.id,cart.product.category_id)" color="primary" mat-button>Style</button>
 
   </div>
-  <div class="4">
-    <!-- <mat-form-field appearance="fill" *ngIf="salesEmployeeList.length">
-      <mat-label>Sales Employee</mat-label>
-      <mat-select
-        (selectionChange)="updateSalesEmployee(cart.id, $event)"
-        [value]="cart.sales_emp_id"
-      >
-        <mat-option
-          *ngFor="let saleEmp of salesEmployeeList"
-          [value]="saleEmp.id"
-          >{{ saleEmp.name }} - {{saleEmp.employe_code}}</mat-option
-        >
-      </mat-select>
-    </mat-form-field> -->
-
-    <mat-form-field appearance="fill" *ngIf="salesEmployeeList.length">
+  <div class="col-md-4">
+    <mat-form-field appearance="fill" *ngIf="salesEmployeeList?.length">
       <mat-label> Sales Employee</mat-label>
       <mat-select  (selectionChange)="updateSalesEmployee(cartId,$event)" (click)="selectOptions(cart, 'salesemployee')"
       [value]="cart.sales_emp_id" >
       <input placeholder="Search..." matInput type="text" (keyup)="onSearchEmpKey($event.target.value)" class="sales-emp-input">
           <mat-option>None</mat-option>
-          <mat-option *ngFor="let saleEmp of searchSelectedEmployees" [value]="saleEmp.id">
+          <mat-option *ngFor="let saleEmp of searchSelectedEmployees" [value]="saleEmp.id" >
               <span>{{ saleEmp.name }} - {{saleEmp.employe_code}}</span>
           </mat-option>
       </mat-select>
   </mat-form-field>
   </div>
+
+  <div class="col-md-3">
+    <mat-form-field appearance="fill" *ngIf="cart?.product.category_id != 5">
+      <mat-label>Add. Option</mat-label>
+      <mat-select  (selectionChange)="updateAdditionalCost($event)"
+      [value]="cart.additional_option" >
+          <mat-option value="-1">None</mat-option>
+          <mat-option value="extra-size">Extra Size</mat-option>
+          <mat-option value="outside">Outside</mat-option>
+      </mat-select>
+  </mat-form-field>
+  </div>
+
 </div>
 <hr class="cartitem-divider" />
 

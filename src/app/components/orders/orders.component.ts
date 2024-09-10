@@ -116,7 +116,7 @@ export class OrdersComponent implements OnInit {
 
     this.productService.getOrders(params)
       .subscribe((response: any) => {
-        console.log('Orders Data', response.data)
+        //console.log('Orders Data', response.data)
         this.dataSource = new MatTableDataSource<any>(response.data);
         this.dataSource.paginator = this.paginator;
         this.page_length = response.total;

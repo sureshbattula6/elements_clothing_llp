@@ -47,3 +47,21 @@ table.carttable td,table.carttable th,.table td {
     text-transform: uppercase;
     padding:0;
 }
+
+.row .summary-row .row {
+  margin-bottom: -15px;
+}
+
+.disBtn{
+    text-align: end;
+    color: blue; 
+}
+
+.applyBtn{
+    border-radius: 25px;
+}
+
+.AppliedAllCheckbox{
+    text-align: right;
+    margin-left: auto;
+}

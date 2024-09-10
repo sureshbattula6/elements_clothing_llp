@@ -9,19 +9,13 @@
   #measurment="ngForm"
   novalidate
 >
+  
   <div class="row mt-3">
-    <div class="col-md-12">
+    <div class="col-md-4">
       <div class="form-group">
         <label for="title" class="form-label">Measurement Name</label>
-        <input
-          type="text"
-          class="form-control"
-          id="title"
-          name="title"
-          required
-          [(ngModel)]="form.title"
-          #title="ngModel"
-        />
+        <input type="text" class="form-control" id="title" name="title" required [(ngModel)]="form.title"
+          #title="ngModel"/>
         <div
           class="alert alert-danger mt-2"
           role="alert"
@@ -31,6 +25,22 @@
         </div>
       </div>
     </div>
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="master_name" class="form-label">Master Name</label>
+        <input type="text" class="form-control" id="master_name" name="master_name" [(ngModel)]="form.master_name"
+          #master_name="ngModel"/>
+
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="meas_taken_by" class="form-label">Measurement Taken By</label>
+        <input type="text" class="form-control" id="meas_taken_by" name="meas_taken_by" [(ngModel)]="form.meas_taken_by"
+          #meas_taken_by="ngModel"/>
+
+      </div>
+    </div>
   </div>
 
   <mat-tab-group>
@@ -38,7 +48,7 @@
       <div class="row mt-4">
         <div class="col-md-2">
           <div class="mb-3 form-group">
-            <label for="suit_fl" class="form-label">FL Measurement</label>
+            <label for="suit_fl" class="form-label">FRONT LENGTH</label>
             <input
               type="text"
               class="form-control"
@@ -57,7 +67,7 @@
         </div>
         <div class="col-md-2">
           <div class="mb-3 form-group">
-            <label for="suit_bl" class="form-label">BL Measurement</label>
+            <label for="suit_bl" class="form-label">BACK LENGTH</label>
             <input
               type="text"
               class="form-control"
@@ -77,7 +87,7 @@
         <div class="col-md-2">
           <div class="mb-3 form-group">
             <label for="suit_suitl" class="form-label"
-              >SUIT.L Measurement</label
+              >SUIT LENGTH</label
             >
             <input
               type="text"
@@ -97,7 +107,7 @@
         </div>
         <div class="col-md-2">
           <div class="mb-3 form-group">
-            <label for="suit_knl" class="form-label">KN.L Measurement</label>
+            <label for="suit_knl" class="form-label">KNEE LENGTH</label>
             <input
               type="text"
               class="form-control"
@@ -116,7 +126,7 @@
         </div>
         <div class="col-md-2">
           <div class="mb-3 form-group">
-            <label for="suit_wl" class="form-label">W.L Measurement</label>
+            <label for="suit_wl" class="form-label">WAIST COAT LENGTH</label>
             <input
               type="text"
               class="form-control"
@@ -135,7 +145,7 @@
         </div>
         <div class="col-md-2">
           <div class="mb-3 form-group">
-            <label for="suit_sh" class="form-label">SH Measurement</label>
+            <label for="suit_sh" class="form-label">SHOULDER</label>
             <input
               type="text"
               class="form-control"
@@ -154,7 +164,7 @@
         </div>
         <div class="col-md-2">
           <div class="mb-3 form-group">
-            <label for="suit_nsh" class="form-label">N-SH Measurement</label>
+            <label for="suit_nsh" class="form-label">NECK TO SHOULDER</label>
             <input
               type="text"
               class="form-control"
@@ -173,7 +183,7 @@
         </div>
         <div class="col-md-2">
           <div class="mb-3 form-group">
-            <label for="suit_sl" class="form-label">SL Measurement</label>
+            <label for="suit_sl" class="form-label">SLEEVE LENGTH</label>
             <input
               type="text"
               class="form-control"
@@ -193,162 +203,8 @@
 
         <div class="col-md-2">
           <div class="mb-3 form-group">
-            <label for="suit_st" class="form-label">ST Measurement</label>
-            <input
-              type="text"
-              class="form-control"
-              name="suit_st"
-              [(ngModel)]="form.suit_st"
-              #suit_st="ngModel"
-            />
-            <div
-              class="alert alert-danger mt-2"
-              role="alert"
-              *ngIf="suit_st.errors && measurment.submitted"
-            >
-              Please enter ST Measurement
-            </div>
-          </div>
-        </div>
-        <div class="col-md-2">
-          <div class="mb-3 form-group">
-            <label for="suit_h" class="form-label">H Measurement</label>
-            <input
-              type="text"
-              class="form-control"
-              name="suit_h"
-              [(ngModel)]="form.suit_h"
-              #suit_h="ngModel"
-            />
-            <div
-              class="alert alert-danger mt-2"
-              role="alert"
-              *ngIf="suit_h.errors && measurment.submitted"
-            >
-              Please enter H Measurement
-            </div>
-          </div>
-        </div>
-        <div class="col-md-2">
-          <div class="mb-3 form-group">
-            <label for="suit_cf" class="form-label">CF Measurement</label>
-            <input
-              type="text"
-              class="form-control"
-              name="suit_cf"
-              [(ngModel)]="form.suit_cf"
-              #suit_cf="ngModel"
-            />
-            <div
-              class="alert alert-danger mt-2"
-              role="alert"
-              *ngIf="suit_cf.errors && measurment.submitted"
-            >
-              Please enter CF Measurement
-            </div>
-          </div>
-        </div>
-        <div class="col-md-2">
-          <div class="mb-3 form-group">
-            <label for="suit_cb" class="form-label">CB Measurement</label>
-            <input
-              type="text"
-              class="form-control"
-              name="suit_cb"
-              [(ngModel)]="form.suit_cb"
-              #suit_cb="ngModel"
-            />
-            <div
-              class="alert alert-danger mt-2"
-              role="alert"
-              *ngIf="suit_cb.errors && measurment.submitted"
-            >
-              Please enter CB Measurement
-            </div>
-          </div>
-        </div>
-        <div class="col-md-2">
-          <div class="mb-3 form-group">
-            <label for="suit_bicep" class="form-label">BICEP Measurement</label>
-            <input
-              type="text"
-              class="form-control"
-              name="suit_bicep"
-              [(ngModel)]="form.suit_bicep"
-              #suit_bicep="ngModel"
-            />
-            <div
-              class="alert alert-danger mt-2"
-              role="alert"
-              *ngIf="suit_bicep.errors && measurment.submitted"
-            >
-              Please enter BICEP Measurement
-            </div>
-          </div>
-        </div>
-        <div class="col-md-2">
-          <div class="mb-3 form-group">
-            <label for="suit_hb" class="form-label">H.B Measurement</label>
-            <input
-              type="text"
-              class="form-control"
-              name="suit_hb"
-              [(ngModel)]="form.suit_hb"
-              #suit_hb="ngModel"
-            />
-            <div
-              class="alert alert-danger mt-2"
-              role="alert"
-              *ngIf="suit_hb.errors && measurment.submitted"
-            >
-              Please enter H.B Measurement
-            </div>
-          </div>
-        </div>
-        <div class="col-md-2">
-          <div class="mb-3 form-group">
-            <label for="suit_hf" class="form-label">H.F Measurement</label>
-            <input
-              type="text"
-              class="form-control"
-              name="suit_hf"
-              [(ngModel)]="form.suit_hf"
-              #suit_hf="ngModel"
-            />
-            <div
-              class="alert alert-danger mt-2"
-              role="alert"
-              *ngIf="suit_hf.errors && measurment.submitted"
-            >
-              Please enter H.F Measurement
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-2">
-          <div class="mb-3 form-group">
-            <label for="suit_n" class="form-label">N Measurement</label>
-            <input
-              type="text"
-              class="form-control"
-              name="suit_n"
-              [(ngModel)]="form.suit_n"
-              #suit_n="ngModel"
-            />
-            <div
-              class="alert alert-danger mt-2"
-              role="alert"
-              *ngIf="suit_n.errors && measurment.submitted"
-            >
-              Please enter N Measurement
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-2">
-          <div class="mb-3 form-group">
             <label for="suit_sl_left" class="form-label"
-              >SL-LEFT Measurement</label
+              >ARM</label
             >
             <input
               type="text"
@@ -362,7 +218,7 @@
               role="alert"
               *ngIf="suit_sl_left.errors && measurment.submitted"
             >
-              Please enter SL-LEFT Measurement
+              Please enter ARM Measurement
             </div>
           </div>
         </div>
@@ -370,7 +226,7 @@
         <div class="col-md-2">
           <div class="mb-3 form-group">
             <label for="suit_sl_right" class="form-label"
-              >SL-RIGHT Measurement</label
+              >FORE ARM</label
             >
             <input
               type="text"
@@ -384,7 +240,7 @@
               role="alert"
               *ngIf="suit_sl_right.errors && measurment.submitted"
             >
-              Please enter SL-Right Measurement
+              Please enter FORE ARM Measurement
             </div>
           </div>
         </div>
@@ -392,7 +248,7 @@
         <div class="col-md-2">
           <div class="mb-3 form-group">
             <label for="suit_upper_ch" class="form-label"
-              >U-CH Measurement</label
+              >UPPER CHEST</label
             >
             <input
               type="text"
@@ -414,7 +270,7 @@
         <div class="col-md-2">
           <div class="mb-3 form-group">
             <label for="suit_lower_ch" class="form-label"
-              >L-CH Measurement</label
+              >LOWER CHEST</label
             >
             <input
               type="text"
@@ -435,22 +291,100 @@
 
         <div class="col-md-2">
           <div class="mb-3 form-group">
-            <label for="suit_left_cuff" class="form-label"
-              >L.CUFF MEASUREMENT</label
-            >
+            <label for="suit_st" class="form-label">STOMACH</label>
             <input
               type="text"
               class="form-control"
-              name="suit_left_cuff"
-              [(ngModel)]="form.suit_left_cuff"
-              #suit_left_cuff="ngModel"
+              name="suit_st"
+              [(ngModel)]="form.suit_st"
+              #suit_st="ngModel"
             />
             <div
               class="alert alert-danger mt-2"
               role="alert"
-              *ngIf="suit_left_cuff.errors && measurment.submitted"
+              *ngIf="suit_st.errors && measurment.submitted"
             >
-              Please enter Left Cuff Measurement
+              Please enter ST Measurement
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-2">
+          <div class="mb-3 form-group">
+            <label for="suit_h" class="form-label">HIP</label>
+            <input
+              type="text"
+              class="form-control"
+              name="suit_h"
+              [(ngModel)]="form.suit_h"
+              #suit_h="ngModel"
+            />
+            <div
+              class="alert alert-danger mt-2"
+              role="alert"
+              *ngIf="suit_h.errors && measurment.submitted"
+            >
+              Please enter H Measurement
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-md-2">
+          <div class="mb-3 form-group">
+            <label for="suit_n" class="form-label">NECK</label>
+            <input
+              type="text"
+              class="form-control"
+              name="suit_n"
+              [(ngModel)]="form.suit_n"
+              #suit_n="ngModel"
+            />
+            <div
+              class="alert alert-danger mt-2"
+              role="alert"
+              *ngIf="suit_n.errors && measurment.submitted"
+            >
+              Please enter N Measurement
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-2">
+          <div class="mb-3 form-group">
+            <label for="suit_cf" class="form-label">ACROSS FRONT</label>
+            <input
+              type="text"
+              class="form-control"
+              name="suit_cf"
+              [(ngModel)]="form.suit_cf"
+              #suit_cf="ngModel"
+            />
+            <div
+              class="alert alert-danger mt-2"
+              role="alert"
+              *ngIf="suit_cf.errors && measurment.submitted"
+            >
+              Please enter CF Measurement
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="mb-3 form-group">
+            <label for="suit_cb" class="form-label">ACROSS BACK</label>
+            <input
+              type="text"
+              class="form-control"
+              name="suit_cb"
+              [(ngModel)]="form.suit_cb"
+              #suit_cb="ngModel"
+            />
+            <div
+              class="alert alert-danger mt-2"
+              role="alert"
+              *ngIf="suit_cb.errors && measurment.submitted"
+            >
+              Please enter CB Measurement
             </div>
           </div>
         </div>
@@ -458,7 +392,7 @@
         <div class="col-md-2">
           <div class="mb-3 form-group">
             <label for="suit_right_cuff" class="form-label"
-              >R.CUFF MEASUREMENT</label
+              >CUFF</label
             >
             <input
               type="text"
@@ -472,18 +406,39 @@
               role="alert"
               *ngIf="suit_right_cuff.errors && measurment.submitted"
             >
-              Please enter Right Cuff Measurement
+              Please enter Cuff Measurement
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-md-2">
+          <div class="mb-3 form-group">
+            <label for="suit_bicep" class="form-label">ALL ROUND BICEP</label>
+            <input
+              type="text"
+              class="form-control"
+              name="suit_bicep"
+              [(ngModel)]="form.suit_bicep"
+              #suit_bicep="ngModel"
+            />
+            <div
+              class="alert alert-danger mt-2"
+              role="alert"
+              *ngIf="suit_bicep.errors && measurment.submitted"
+            >
+              Please enter BICEP Measurement
             </div>
           </div>
         </div>
       </div> </mat-tab
-    ><!---------------------END POINT OF SUIT/SHERWANI/JODHPURI/BLAZER/BANDI---------------------------------------------->
-    <!----------STARTING OF SHIRT/KURTA------------------------->
+    ><!---------------------------END POINT OF SUIT/SHERWANI/JODHPURI/BLAZER/BANDI---------------------------------------------->
+<!-----------------------------------------------------------------STARTING OF SHIRT/KURTA------------------------->
     <mat-tab label="SHIRT/KURTA">
       <div class="row mt-3">
         <div class="col-md-2">
           <div class="mb-3 form-group">
-            <label for="shirt_l" class="form-label">L Measurement</label>
+            <label for="shirt_l" class="form-label">LENGTH</label>
             <input
               type="text"
               class="form-control"
@@ -500,9 +455,10 @@
             </div>
           </div>
         </div>
+
         <div class="col-md-2">
           <div class="mb-3 form-group">
-            <label for="shirt_kl" class="form-label">K.L Measurement</label>
+            <label for="shirt_kl" class="form-label">KNEE LENGTH</label>
             <input
               type="text"
               class="form-control"
@@ -519,9 +475,10 @@
             </div>
           </div>
         </div>
+
         <div class="col-md-2">
           <div class="mb-3 form-group">
-            <label for="shirt_sl" class="form-label">S.H Measurement</label>
+            <label for="shirt_sl" class="form-label">SHOULDER</label>
             <input
               type="text"
               class="form-control"
@@ -538,68 +495,12 @@
             </div>
           </div>
         </div>
-        <div class="col-md-2">
-          <div class="mb-3 form-group">
-            <label for="shirt_arm" class="form-label">ARM Measurement</label>
-            <input
-              type="text"
-              class="form-control"
-              name="shirt_arm"
-              [(ngModel)]="form.shirt_arm"
-              #shirt_arm="ngModel"
-            />
-            <div
-              class="alert alert-danger mt-2"
-              role="alert"
-              *ngIf="shirt_arm.errors && measurment.submitted"
-            >
-              Please enter ARM Measurement
-            </div>
-          </div>
-        </div>
-        <div class="col-md-2">
-          <div class="mb-3 form-group">
-            <label for="shirt_farm" class="form-label">F.ARM Measurement</label>
-            <input
-              type="text"
-              class="form-control"
-              name="shirt_farm"
-              [(ngModel)]="form.shirt_farm"
-              #shirt_farm="ngModel"
-            />
-            <div
-              class="alert alert-danger mt-2"
-              role="alert"
-              *ngIf="shirt_farm.errors && measurment.submitted"
-            >
-              Please enter F.ARM Measurement
-            </div>
-          </div>
-        </div>
-        <div class="col-md-2">
-          <div class="mb-3 form-group">
-            <label for="shirt_cuff" class="form-label">CUFF Measurement</label>
-            <input
-              type="text"
-              class="form-control"
-              name="shirt_cuff"
-              [(ngModel)]="form.shirt_cuff"
-              #shirt_cuff="ngModel"
-            />
-            <div
-              class="alert alert-danger mt-2"
-              role="alert"
-              *ngIf="shirt_cuff.errors && measurment.submitted"
-            >
-              Please enter CUFF Measurement
-            </div>
-          </div>
-        </div>
+
 
         <div class="col-md-2">
           <div class="mb-3 form-group">
             <label for="shirt_sl_left" class="form-label"
-              >SL-LEFT Measurement</label
+              >SLEEVE LENGTH LEFT</label
             >
             <input
               type="text"
@@ -620,30 +521,8 @@
 
         <div class="col-md-2">
           <div class="mb-3 form-group">
-            <label for="shirt_sl_right" class="form-label"
-              >SL-RIGHT Measurement</label
-            >
-            <input
-              type="text"
-              class="form-control"
-              name="shirt_sl_right"
-              [(ngModel)]="form.shirt_sl_right"
-              #shirt_sl_right="ngModel"
-            />
-            <div
-              class="alert alert-danger mt-2"
-              role="alert"
-              *ngIf="shirt_sl_right.errors && measurment.submitted"
-            >
-              Please enter SL-Right Measurement
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-2">
-          <div class="mb-3 form-group">
             <label for="shirt_upper_ch" class="form-label"
-              >U-CH Measurement</label
+              >UPPER CHEST</label
             >
             <input
               type="text"
@@ -665,7 +544,7 @@
         <div class="col-md-2">
           <div class="mb-3 form-group">
             <label for="shirt_lower_ch" class="form-label"
-              >L-CH Measurement</label
+              >LOWER CHEST</label
             >
             <input
               type="text"
@@ -686,8 +565,68 @@
 
         <div class="col-md-2">
           <div class="mb-3 form-group">
+            <label for="" class="form-label">STOMACH</label>
+            <input
+              type="text"
+              class="form-control"
+              name="shirt_st"
+              [(ngModel)]="form.shirt_st"
+              #shirt_st="ngModel"
+            />
+            <div
+              class="alert alert-danger mt-2"
+              role="alert"
+              *ngIf="shirt_st.errors && measurment.submitted"
+            >
+              Please enter ST Measurement
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-2">
+          <div class="mb-3 form-group">
+            <label for="" class="form-label">HIP</label>
+            <input
+              type="text"
+              class="form-control"
+              name="shirt_hp"
+              [(ngModel)]="form.shirt_hp"
+              #shirt_hp="ngModel"
+            />
+            <div
+              class="alert alert-danger mt-2"
+              role="alert"
+              *ngIf="shirt_hp.errors && measurment.submitted"
+            >
+              Please enter HP Measurement
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-2">
+          <div class="mb-3 form-group">
+            <label for="" class="form-label">NECK</label>
+            <input
+              type="text"
+              class="form-control"
+              name="shirt_n"
+              [(ngModel)]="form.shirt_n"
+              #shirt_n="ngModel"
+            />
+            <div
+              class="alert alert-danger mt-2"
+              role="alert"
+              *ngIf="shirt_n.errors && measurment.submitted"
+            >
+              Please enter N Measurement
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-2">
+          <div class="mb-3 form-group">
             <label for="shirt_left_cuff" class="form-label"
-              >CB MEASUREMENT</label
+              >ACROSS BACK</label
             >
             <input
               type="text"
@@ -709,7 +648,7 @@
         <div class="col-md-2">
           <div class="mb-3 form-group">
             <label for="shirt_right_cuff" class="form-label"
-              >CF MEASUREMENT</label
+              >ACROSS FRONT</label
             >
             <input
               type="text"
@@ -730,64 +669,64 @@
 
         <div class="col-md-2">
           <div class="mb-3 form-group">
-            <label for="" class="form-label">HP Measurement</label>
+            <label for="shirt_arm" class="form-label">ARM</label>
             <input
               type="text"
               class="form-control"
-              name="shirt_hp"
-              [(ngModel)]="form.shirt_hp"
-              #shirt_hp="ngModel"
+              name="shirt_arm"
+              [(ngModel)]="form.shirt_arm"
+              #shirt_arm="ngModel"
             />
             <div
               class="alert alert-danger mt-2"
               role="alert"
-              *ngIf="shirt_hp.errors && measurment.submitted"
+              *ngIf="shirt_arm.errors && measurment.submitted"
             >
-              Please enter HP Measurement
+              Please enter ARM Measurement
             </div>
           </div>
         </div>
 
         <div class="col-md-2">
           <div class="mb-3 form-group">
-            <label for="" class="form-label">ST Measurement</label>
+            <label for="shirt_farm" class="form-label">FORE ARM</label>
             <input
               type="text"
               class="form-control"
-              name="shirt_st"
-              [(ngModel)]="form.shirt_st"
-              #shirt_st="ngModel"
+              name="shirt_farm"
+              [(ngModel)]="form.shirt_farm"
+              #shirt_farm="ngModel"
             />
             <div
               class="alert alert-danger mt-2"
               role="alert"
-              *ngIf="shirt_st.errors && measurment.submitted"
+              *ngIf="shirt_farm.errors && measurment.submitted"
             >
-              Please enter ST Measurement
+              Please enter F.ARM Measurement
             </div>
           </div>
         </div>
 
         <div class="col-md-2">
           <div class="mb-3 form-group">
-            <label for="" class="form-label">N Measurement</label>
+            <label for="shirt_cuff" class="form-label">CUFF</label>
             <input
               type="text"
               class="form-control"
-              name="shirt_n"
-              [(ngModel)]="form.shirt_n"
-              #shirt_n="ngModel"
+              name="shirt_cuff"
+              [(ngModel)]="form.shirt_cuff"
+              #shirt_cuff="ngModel"
             />
             <div
               class="alert alert-danger mt-2"
               role="alert"
-              *ngIf="shirt_n.errors && measurment.submitted"
+              *ngIf="shirt_cuff.errors && measurment.submitted"
             >
-              Please enter N Measurement
+              Please enter CUFF Measurement
             </div>
           </div>
         </div>
-
+        
       </div> </mat-tab
     ><!-----------------ENDING OF SHIRT/KURTA------------------------------------>
     <!-----------------STARTING POINT OF TROUSER------------------------------------>
@@ -795,7 +734,7 @@
       <div class="row mt-4">
         <div class="col-md-2">
           <div class="mb-3 form-group">
-            <label for="trouser_l" class="form-label">L Measurement</label>
+            <label for="trouser_l" class="form-label">LENGTH</label>
             <input
               type="text"
               class="form-control"
@@ -814,7 +753,7 @@
         </div>
         <div class="col-md-2">
           <div class="mb-3 form-group">
-            <label for="trouser_w" class="form-label">W Measurement</label>
+            <label for="trouser_w" class="form-label">WAIST</label>
             <input
               type="text"
               class="form-control"
@@ -833,7 +772,7 @@
         </div>
         <div class="col-md-2">
           <div class="mb-3 form-group">
-            <label for="trouser_h" class="form-label">H Measurement</label>
+            <label for="trouser_h" class="form-label">HIP</label>
             <input
               type="text"
               class="form-control"
@@ -852,7 +791,7 @@
         </div>
         <div class="col-md-2">
           <div class="mb-3 form-group">
-            <label for="trouser_fth" class="form-label">F.TH Measurement</label>
+            <label for="trouser_fth" class="form-label">FIX THIGH</label>
             <input
               type="text"
               class="form-control"
@@ -871,7 +810,7 @@
         </div>
         <div class="col-md-2">
           <div class="mb-3 form-group">
-            <label for="trouser_kn" class="form-label">KN Measurement</label>
+            <label for="trouser_kn" class="form-label">KNEE</label>
             <input
               type="text"
               class="form-control"
@@ -890,7 +829,7 @@
         </div>
         <div class="col-md-2">
           <div class="mb-3 form-group">
-            <label for="trouser_b" class="form-label">B Measurement</label>
+            <label for="trouser_b" class="form-label">BOTTOM</label>
             <input
               type="text"
               class="form-control"
@@ -909,7 +848,7 @@
         </div>
         <div class="col-md-2">
           <div class="mb-3 form-group">
-            <label for="trouser_hl" class="form-label">H.L Measurement</label>
+            <label for="trouser_hl" class="form-label">HALF LENGTH</label>
             <input
               type="text"
               class="form-control"
@@ -928,7 +867,7 @@
         </div>
         <div class="col-md-2">
           <div class="mb-3 form-group">
-            <label for="trouser_bal" class="form-label">BAL Measurement</label>
+            <label for="trouser_bal" class="form-label">BALANCE</label>
             <input
               type="text"
               class="form-control"
@@ -1343,25 +1282,33 @@
     <div class="col-md-12">
       <div class="form-group">
         <label for="remark" class="form-label">Remark</label>
-        <input
+        <!--<input
           type="text"
           class="form-control"
           name="remark"
           [(ngModel)]="form.remark"
           #remark="ngModel"
-        />
-        <!-- <div class="alert alert-danger mt-2" role="alert" *ngIf="title.errors && measurment.submitted">
-                    Please enter Measurement Name
-                </div> -->
+        />-->
+        <textarea class="form-control" name="remark" [(ngModel)]="form.remark" #remark="ngModel"></textarea>
       </div>
     </div>
   </div>
 
   <div class="text-center mt-4">
     <div class="button-group">
-      <button type="submit" mat-raised-button class="btn-int-success">
+      <!--<button type="submit" mat-raised-button class="btn-int-success">
         Update
+      </button>-->
+      <button type="button" (click)="createMeasurement()" mat-raised-button class="btn-int-success">
+        create
       </button>
+      <!--<button type="button" (click)="updateMeasurement()" mat-raised-button class="btn-int-success">
+        Update
+      </button>-->
+
+      <button type="button" (click)="updateMeasurement('cart')" mat-raised-button class="btn-int-success">Update & Go to Cart</button>
+
+      <button type="button" (click)="updateMeasurement('customers')" mat-raised-button class="btn-int-success">Update & Go to Customers</button>
     </div>
   </div>
 </form>

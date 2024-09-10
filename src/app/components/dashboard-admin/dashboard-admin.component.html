@@ -21,65 +21,7 @@
 <div class="az-content-body">
 
   <div class="card card-dashboard-seven">
-    <!-- <div class="card-header">
-      <div class="row row-sm">
-        <div class="col-6 col-md-4 col-xl">
-          <div class="media">
-            <div><i class="icon ion-ios-calendar"></i></div>
-            <div class="media-body">
-              <label>Start Date</label>
-              <div class="date">
-                <span>Sept 01, 2018</span> <a href="#" (click)="$event.preventDefault()"><i class="icon ion-md-arrow-dropdown"></i></a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-6 col-md-4 col-xl">
-          <div class="media">
-            <div><i class="icon ion-ios-calendar"></i></div>
-            <div class="media-body">
-              <label>End Date</label>
-              <div class="date">
-                <span>Sept 30, 2018</span> <a href="#" (click)="$event.preventDefault()"><i class="icon ion-md-arrow-dropdown"></i></a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-6 col-md-4 col-xl mg-t-15 mg-md-t-0">
-          <div class="media">
-            <div><i class="icon ion-logo-usd"></i></div>
-            <div class="media-body">
-              <label>Sales Measure</label>
-              <div class="date">
-                <span>Revenue</span> <a href="#" (click)="$event.preventDefault()"><i class="icon ion-md-arrow-dropdown"></i></a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-6 col-md-4 col-xl mg-t-15 mg-xl-t-0">
-          <div class="media">
-            <div><i class="icon ion-md-person"></i></div>
-            <div class="media-body">
-              <label>Customer Type</label>
-              <div class="date">
-                <span>All Customers</span> <a href="#" (click)="$event.preventDefault()"><i class="icon ion-md-arrow-dropdown"></i></a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4 col-xl mg-t-15 mg-xl-t-0">
-          <div class="media">
-            <div><i class="icon ion-md-stats"></i></div>
-            <div class="media-body">
-              <label>Transaction Type</label>
-              <div class="date">
-                <span>All Transactions</span> <a href="#" (click)="$event.preventDefault()"><i class="icon ion-md-arrow-dropdown"></i></a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> -->
+    
     <div class="card-body card-dashboard-seven">
       <div class="row row-sm">
         <div class="col">
@@ -229,7 +171,6 @@
               <tbody>
                 <tr class="cursorPointer" *ngFor="let visit of visits;let i=index;" [routerLink]="['/customer',visit?.id]">
                     <td>
-                      <!-- <img class="az-img-user" src="assets/images/{{visit?.image}}" alt=""> -->
                       <img class="az-img-user" *ngIf="visit?.images != null" src="{{SERVER_PATH}}/storage/{{visit?.images}}" alt="">
                       <img class="az-img-user" *ngIf="visit?.images == null" src="assets/images/blank-profile-picture.png" alt="">
                     </td>

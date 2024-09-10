@@ -1,3 +1,4 @@
+import { CustomerService } from './../../services/customer.service';
 import { Component, OnInit } from '@angular/core';
 import { HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { Location } from '@angular/common';
@@ -21,6 +22,9 @@ dialogConfig.autoFocus = true;
 })
 export class AddmeasurmentsComponent implements OnInit {
   customerId: string;
+  // public customerId:string|number = this.authenticationService.getCustomerId();
+
+  customerPhone: any = "";
   cartId: any;
   orderId: any = this.route.snapshot.paramMap.get('orderId');
   frontMeasurementImgUrl: any;
@@ -83,7 +87,7 @@ export class AddmeasurmentsComponent implements OnInit {
     other: null,
     shape_type: null,
     fit_type: null,
-    title: this.orderId ? 'PCO0'+this.orderId : null,
+    title: this.orderId ? 'PCO0'+this.orderId : this.customerPhone,
     trouser_calf_round:null,
     trouser_crotch_length: null,
     suit_sl_left: null,
@@ -98,7 +102,10 @@ export class AddmeasurmentsComponent implements OnInit {
     suit_right_cuff: null,
     shirt_left_cuff: null,
     shirt_right_cuff: null,
-    remark: null
+    remark: null,
+    master_name: null,
+    meas_taken_by: null
+
   };
 
   constructor(
@@ -109,21 +116,33 @@ export class AddmeasurmentsComponent implements OnInit {
     private router: Router,
     private dialog:MatDialog,
     private location: Location,
-
+    private customerService: CustomerService
     ) { }
 
 
   ngOnInit(): void {
     this.cartId = this.route.snapshot.paramMap.get('cartId');
-    // this.orderId = this.route.snapshot.paramMap.get('orderId');
-    // alert(this.cartId);
     this.customerId = this.authenticationService.getCustomerId();
+    this.getCustomer();
+
+  }
+
+
+  getCustomer() {
+    this.customerService.showCustomer(this.customerId).subscribe(
+      (res:any)=>{
+          this.customerPhone = res.data.customer.phone;
+          if(!this.orderId)
+            this.form.title = this.customerPhone;
+      }
+    )
   }
 
   onSubmit(): void {
-    const {title, remark, suit_fl, suit_bl, suit_suitl, suit_knl, suit_wl, suit_sh, suit_nsh, suit_sl, suit_st, suit_h, suit_cf, suit_cb, suit_bicep, suit_hb, suit_hf, suit_n, shirt_l, shirt_kl, shirt_sl, shirt_arm, shirt_farm, shirt_cuff, trouser_l, trouser_w, trouser_h, trouser_fth, trouser_kn, trouser_b, trouser_hl, trouser_bal,  backshape, stomach, shoulder, button, lapel, vent, pocket, jodhpuri, type, pleat, pocket_type, back_pocket, shape, cut_way, collar_type, placket, cuff_type, other, shape_type, fit_type, trouser_calf_round, trouser_crotch_length, suit_sl_left, suit_sl_right, suit_upper_ch, suit_lower_ch, shirt_sl_left, shirt_sl_right, shirt_upper_ch, shirt_lower_ch, suit_left_cuff, suit_right_cuff, shirt_left_cuff, shirt_right_cuff,shirt_hp, shirt_st, shirt_n,trouser_uround } = this.form;
+    const {title, remark, suit_fl, suit_bl, suit_suitl, suit_knl, suit_wl, suit_sh, suit_nsh, suit_sl, suit_st, suit_h, suit_cf, suit_cb, suit_bicep, suit_hb, suit_hf, suit_n, shirt_l, shirt_kl, shirt_sl, shirt_arm, shirt_farm, shirt_cuff, trouser_l, trouser_w, trouser_h, trouser_fth, trouser_kn, trouser_b, trouser_hl, trouser_bal,  backshape, stomach, shoulder, button, lapel, vent, pocket, jodhpuri, type, pleat, pocket_type, back_pocket, shape, cut_way, collar_type, placket, cuff_type, other, shape_type, fit_type, trouser_calf_round, trouser_crotch_length, suit_sl_left, suit_sl_right, suit_upper_ch, suit_lower_ch, shirt_sl_left, shirt_sl_right, shirt_upper_ch, shirt_lower_ch, suit_left_cuff, suit_right_cuff, shirt_left_cuff, shirt_right_cuff,shirt_hp, shirt_st, shirt_n,trouser_uround, master_name, meas_taken_by } = this.form;
 
-    this.measurmentService.storeMeasurment(this.customerId,this.cartId, title, remark, suit_fl, suit_bl, suit_suitl, suit_knl, suit_wl, suit_sh, suit_nsh, suit_sl, suit_st, suit_h, suit_cf, suit_cb, suit_bicep, suit_hb, suit_hf, suit_n, shirt_l, shirt_kl, shirt_sl, shirt_arm, shirt_farm, shirt_cuff, trouser_l, trouser_w, trouser_h, trouser_fth, trouser_kn, trouser_b, trouser_hl, trouser_bal, backshape, stomach, shoulder, button, lapel, vent, pocket, jodhpuri, type, pleat, pocket_type, back_pocket, shape, cut_way, collar_type, placket, cuff_type, other, shape_type, fit_type, trouser_calf_round, trouser_crotch_length, suit_sl_left, suit_sl_right, suit_upper_ch, suit_lower_ch, shirt_sl_left, shirt_sl_right, shirt_upper_ch, shirt_lower_ch, suit_left_cuff, suit_right_cuff, shirt_left_cuff, shirt_right_cuff,shirt_hp, shirt_st, shirt_n,trouser_uround, this.frontMeasurementImgBase64, this.backMeasurementImgBase64, this.sideMeasurementImgBase64).subscribe({
+
+    this.measurmentService.storeMeasurment(this.customerId,this.cartId, title, remark, suit_fl, suit_bl, suit_suitl, suit_knl, suit_wl, suit_sh, suit_nsh, suit_sl, suit_st, suit_h, suit_cf, suit_cb, suit_bicep, suit_hb, suit_hf, suit_n, shirt_l, shirt_kl, shirt_sl, shirt_arm, shirt_farm, shirt_cuff, trouser_l, trouser_w, trouser_h, trouser_fth, trouser_kn, trouser_b, trouser_hl, trouser_bal, backshape, stomach, shoulder, button, lapel, vent, pocket, jodhpuri, type, pleat, pocket_type, back_pocket, shape, cut_way, collar_type, placket, cuff_type, other, shape_type, fit_type, trouser_calf_round, trouser_crotch_length, suit_sl_left, suit_sl_right, suit_upper_ch, suit_lower_ch, shirt_sl_left, shirt_sl_right, shirt_upper_ch, shirt_lower_ch, suit_left_cuff, suit_right_cuff, shirt_left_cuff, shirt_right_cuff,shirt_hp, shirt_st, shirt_n,trouser_uround, master_name, meas_taken_by, this.frontMeasurementImgBase64, this.backMeasurementImgBase64, this.sideMeasurementImgBase64).subscribe({
       next: data => {
         console.log('FORM SUBMISSION', data)  ;
         if(data.success == false){
@@ -133,8 +152,10 @@ export class AddmeasurmentsComponent implements OnInit {
 
           if (this.orderId) {
             this.router.navigate(['/order-view', this.orderId]);
-          } else {
+          } else if (this.cartId) {
             this.router.navigate(['/cart']);
+          } else {
+            this.router.navigate(['/customer/'+ this.customerId + '/measurements']);
           }
 
         }
@@ -146,6 +167,7 @@ export class AddmeasurmentsComponent implements OnInit {
     });
 
   }
+
 
   captureMeasurement(position: any){
     dialogConfig.width ="60%";

@@ -30,7 +30,7 @@ public userId: any ;
          this.latestorders = res.data.latestorders;
          this.tailorOrderCount = res.data.tailorOrderCount;
          this.tailorTotalItemsCount = res.data.tailorTotalItemsCount;
-         console.log(res.data);
+        // console.log(res.data);
          this.visits = res.data.userId;
       }
     )

@@ -11,41 +11,41 @@ import { User } from '../models/users';
 })
 export class AuthenticationService {
 
-  public REST_API_SERVER:string = `${environment.REST_API_URL}/api/${environment.version}`;
+  public REST_API_SERVER: string = `${environment.REST_API_URL}/api/${environment.version}`;
 
-  public _customerSubject = new BehaviorSubject<string|number>(0);
+  public _customerSubject = new BehaviorSubject<string | number>(0);
 
   public customerSubject$ = this._customerSubject.asObservable();
 
-  constructor(private http:HttpClient,
-      private router:Router) { }
+  constructor(private http: HttpClient,
+    private router: Router) { }
 
-  public login(data:any):Observable<User[]>{
-    return this.http.post<User[]>(`${this.REST_API_SERVER}/login`,data);
+  public login(data: any): Observable<User[]> {
+    return this.http.post<User[]>(`${this.REST_API_SERVER}/login`, data);
   }
 
-  public forgotPassword(data:any):Observable<any>{
-    return this.http.post<any>(`${this.REST_API_SERVER}/forgotpassword`,data);
+  public forgotPassword(data: any): Observable<any> {
+    return this.http.post<any>(`${this.REST_API_SERVER}/forgotpassword`, data);
   }
 
-  public checkResetPasswordLinkValidOrNot(data:any):Observable<any>{
-    return this.http.post<any>(`${this.REST_API_SERVER}/checkresetpasswordlinkvalid`,data);
+  public checkResetPasswordLinkValidOrNot(data: any): Observable<any> {
+    return this.http.post<any>(`${this.REST_API_SERVER}/checkresetpasswordlinkvalid`, data);
   }
 
-  public resetPassword(data:any):Observable<any>{
-    return this.http.post<any>(`${this.REST_API_SERVER}/resetpassword`,data);
+  public resetPassword(data: any): Observable<any> {
+    return this.http.post<any>(`${this.REST_API_SERVER}/resetpassword`, data);
   }
 
-  public setToken(data:any):void{
+  public setToken(data: any): void {
     localStorage.setItem('access_token', data.access_token);
-    // this.setRole(data);
-    // this.setOrgId(data);
+
     this.setUserDetails(data.user);
     this.setPermissions(data.permissions);
-    // this.setUserName(data.name);
+    this.setStores(data.stores);
+
   }
 
-  public getToken():string {
+  public getToken(): string {
     return localStorage.getItem('access_token');
   }
 
@@ -54,7 +54,9 @@ export class AuthenticationService {
     return (authToken !== null) ? true : false;
   }
 
-  public logout():void {
+
+
+  public logout(): void {
     let removeToken = localStorage.removeItem('access_token');
     let user_details = localStorage.removeItem('user_details');
     let permissions = localStorage.removeItem('permissions');
@@ -65,23 +67,44 @@ export class AuthenticationService {
     // this.removeEventType();
     // this.removeWorkingOn();
     // if (removeToken == null && role ==null && org_id == null && user_details == null) {
-       this.router.navigate(['/login']);
+    this.router.navigate(['/login']);
     // }
   }
 
-  public setPermissions(permissions){
-    localStorage.setItem('permissions',JSON.stringify(permissions));
+  public setPermissions(permissions) {
+    localStorage.setItem('permissions', JSON.stringify(permissions));
   }
 
-  public getPermissions(){
-   return JSON.parse(localStorage.getItem('permissions'));
+  public getPermissions() {
+    return JSON.parse(localStorage.getItem('permissions'));
   }
 
-  public hasPermissions(){
+
+  // public setStores(data:any){
+  //    localStorage.setItem('stores',JSON.stringify(data.stores));
+
+  //  }
+
+  public setStores(data: any): void {
+    if (data) {
+      console.log('Stores data to store:', data);
+      localStorage.setItem('stores', JSON.stringify(data));
+    } else {
+      console.log('No stores data to store');
+    }
+  }
+
+
+  public getStores() {
+    const stores = localStorage.getItem('stores');
+    return stores ? JSON.parse(stores) : null;
+  }
+
+  public hasPermissions() {
 
     let roles = JSON.parse(localStorage.getItem('permissions'));
 
-    if (roles && Object.keys(roles).length){
+    if (roles && Object.keys(roles).length) {
       return Object.keys(roles)[0];
     }
 
@@ -89,136 +112,146 @@ export class AuthenticationService {
   }
 
 
-
-  public setRole(data){
-    localStorage.setItem('role',JSON.stringify(data.roles));
+  public setRole(data) {
+    localStorage.setItem('role', JSON.stringify(data.roles));
   }
 
-  public getRole(){
+  public getRole() {
     return localStorage.getItem('role');
   }
 
-  public hasRole(){
+  public hasRole() {
 
     let roles = JSON.parse(localStorage.getItem('role'));
 
-    if (roles && Object.keys(roles).length){
+    if (roles && Object.keys(roles).length) {
       return Object.keys(roles)[0];
     }
 
     return '0';
   }
 
-  public setOrgId(data){
-    localStorage.setItem('org_id',data.org_id);
+  public setOrgId(data) {
+    localStorage.setItem('org_id', data.org_id);
   }
 
-  public getOrgId(){
+  public getOrgId() {
     return localStorage.getItem('org_id');
   }
 
-  public setUserDetails(data){
+  public setUserDetails(data) {
 
     var user_details = {
-      user_id : data.id,
+      user_id: data.id,
       name: data.name,
       email: data.email,
-      role_id: data.role_id
+      role_id: data.role_id,
+      store_id: data.store_id
     };
 
-    localStorage.setItem('user_details',JSON.stringify(user_details));
-
+    localStorage.setItem('user_details', JSON.stringify(user_details));
+    console.log(localStorage.getItem('user_details'));
   }
 
-  public getUserDetails(){
+  public getUserDetails() {
     let user_details = JSON.parse(localStorage.getItem('user_details'));
     return user_details;
   }
 
-  public setUserName(UserName:string):void{
-    localStorage.setItem('user_name',UserName);
+  public setUserName(UserName: string): void {
+    localStorage.setItem('user_name', UserName);
   }
 
-  public getUserName():string{
+  public getUserName(): string {
     return localStorage.getItem('user_name');
   }
 
-  public removeUserName():void{
+  public removeUserName(): void {
     localStorage.removeItem('user_name');
   }
 
-  public setEventType(eventType:string):void{
-    localStorage.setItem('event_type',eventType);
+  public setEventType(eventType: string): void {
+    localStorage.setItem('event_type', eventType);
   }
 
-  public getEventType():string{
+  public getEventType(): string {
     return localStorage.getItem('event_type');
   }
 
-  public removeEventType():void{
+  public removeEventType(): void {
     localStorage.removeItem('event_type');
   }
 
-  public setWorkingOn(test:string){
-    localStorage.setItem('working_on',test);
+  public setWorkingOn(test: string) {
+    localStorage.setItem('working_on', test);
   }
 
-  public getWorkingOn(){
+  public getWorkingOn() {
     return localStorage.getItem('working_on');
   }
 
-  public removeWorkingOn(){
+  public removeWorkingOn() {
     localStorage.removeItem('working_on');
   }
 
-  public setCustomerSubject(id:string|number):void{
+  public setCustomerSubject(id: string | number): void {
     console.log(`on cutomer subject`);
     let customerId = (id != null) ? id.toString() : "";
     this._customerSubject.next(customerId);
     // localStorage.setItem('customerId',customerId);
   }
 
-  public getCustomerSubject(){
+  public getCustomerSubject() {
     return this.customerSubject$;
     // return localStorage.getItem('customerId');
   }
 
-  public removeCutomerSubject(){
+  public removeCutomerSubject() {
     this._customerSubject.unsubscribe();
   }
 
-  public setCustomerId(id:string|number):void{
+  public setCustomerId(id: string | number): void {
     let customerId = (id != null) ? id.toString() : "";
     console.log(`setcutomerid on localstorge.`)
-    localStorage.setItem('customerId',customerId);
+    localStorage.setItem('customerId', customerId);
     this.setCustomerSubject(customerId);
   }
 
-  public getCustomerId():string{
+  public getCustomerId(): string {
     return localStorage.getItem('customerId');
   }
 
-  public removeCustomerId():void{
+  public removeCustomerId(): void {
     localStorage.removeItem('customerId');
   }
 
-  public getRoleId():string{
+  public getRoleId(): string {
     let userDetails = this.getUserDetails();
-    return ( userDetails != null) ? userDetails.role_id : '';
+    return (userDetails != null) ? userDetails.role_id : '';
+  }
+
+  public setStoreId(storeId: number): void {
+    localStorage.setItem('store_id', storeId.toString());
+    console.log('Setting store_id:', storeId);
+  }
+  public getStoreId() {
+    var user_details = this.getUserDetails();
+    return user_details.store_id;
   }
 
 
-  public getMenuPermissions(){
+  public getMenuPermissions() {
     return {
-      'ROLE_MENUS': ['ROLE_CREATE','ROLE_UPDATE','ROLE_DELETE','ROLE_VIEW','ROLE_LIST'],
-      'USER_MENUS': ['USER_CREATE','USER_UPDATE','USER_DELETE','USER_VIEW','USER_LIST'],
-      'CUSTOMER_MENUS': ['CUSTOMER_CREATE','CUSTOMER_UPDATE','CUSTOMER_DELETE','CUSTOMER_VIEW','CUSTOMER_LIST'],
-      'PRODUCT_MENUS': ['PRODUCT_CREATE','PRODUCT_UPDATE','PRODUCT_DELETE','PRODUCT_VIEW','PRODUCT_LIST'],
-      'ORDER_MENUS': ['ORDER_LIST','ORDER_CREATE'],
+      'ROLE_MENUS': ['ROLE_CREATE', 'ROLE_UPDATE', 'ROLE_DELETE', 'ROLE_VIEW', 'ROLE_LIST'],
+      'USER_MENUS': ['USER_CREATE', 'USER_UPDATE', 'USER_DELETE', 'USER_VIEW', 'USER_LIST'],
+      'CUSTOMER_MENUS': ['CUSTOMER_CREATE', 'CUSTOMER_UPDATE', 'CUSTOMER_DELETE', 'CUSTOMER_VIEW', 'CUSTOMER_LIST'],
+      'PRODUCT_MENUS': ['PRODUCT_CREATE', 'PRODUCT_UPDATE', 'PRODUCT_DELETE', 'PRODUCT_VIEW', 'PRODUCT_LIST'],
+      'ORDER_MENUS': ['ORDER_LIST', 'ORDER_CREATE'],
       'TAILORMG_MENUS': ['TAILOR_MGMT'],
       'TAILORORDER_MENUS': ['TAILOR_ORDER']
     }
   }
+
 
 
 }

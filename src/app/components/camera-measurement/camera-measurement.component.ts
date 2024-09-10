@@ -79,12 +79,12 @@ export class CameraMeasurementComponent implements OnInit {
   }
 
   public takePicture(webcammmImage: WebcamImage): void {
-    console.info('received webcam image', webcammmImage);
+    //console.info('received webcam image', webcammmImage);
     this.webcamImage = webcammmImage;
   }
 
   public cameraWasSwitched(deviceId: string): void {
-    console.log('active device: ' + deviceId);
+    //console.log('active device: ' + deviceId);
     this.deviceId = deviceId;
   }
 

@@ -32,6 +32,8 @@ export class StyleComponent implements OnInit {
 
   ngOnInit(): void {
     this.getstyles();
+    this.orderId = this.route.snapshot.paramMap.get('orderId');
+
   }
 
   public style: any;
@@ -62,10 +64,6 @@ export class StyleComponent implements OnInit {
     this.styleService.getstyles(style_id).subscribe(
       (res: any) => {
         const style = res.data.styles;
-        this.order_item = res.data.order_items;
-        this.orderId = this.order_item.order_id;
-        console.log("order_items", this.order_item.order_id);
-        console.log('sds', style);
         this.form.button = style.button;
         this.form.lapel = style.lapel;
         this.form.vent = style.vent;
@@ -103,7 +101,7 @@ export class StyleComponent implements OnInit {
       let pdf = new jspdf('p', 'mm', 'a4'); // A4 size page of PDF
       var position = 0;
       pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);
-      pdf.save('new-file.pdf'); // Generated PDF
+      pdf.save('styles.pdf'); // Generated PDF
     });
   }
 

@@ -1,9 +1,9 @@
 <div class="az-sidebar">
   <div class="az-sidebar-header">
     <a href="javascript:void(0)" class="az-logo">
-      <!-- <div style="background-color: #000;padding: 10px 48px;
-        color: #fff;">P Cube</div> -->
-      <img width="150" src="assets/pcube_logo.png" alt="logo" />
+      <!--<div style="background-color: #000;padding: 10px 48px;
+        color: #fff;"></div>-->
+      <img width="200" [src]="imageUrl" alt="logo" />
     </a>
   </div>
   <!-- az-sidebar-header -->
@@ -26,6 +26,7 @@
           <i class="typcn typcn-clipboard"></i>Dashboard
         </a>
       </li>
+      
       <li class="nav-item" [ngClass]="{ active: customers.isActive }"
         *appPermissions="[MENU_PERMISSIONS?.CUSTOMER_MENUS]">
         <a routerLink="/customers" routerLinkActive="active" #customers="routerLinkActive" class="nav-link">

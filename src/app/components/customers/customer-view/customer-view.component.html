@@ -144,16 +144,20 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="button-group pull-right mg-l-10 mg-b-15">
-                        <button type="button" routerLink="/order-products"  class="btn-int-blue" mat-raised-button>Order items</button>
+                        <button type="button" routerLink="/order-products"  class="btn-int-blue" style="margin-right: 10px;" mat-raised-button>Order items</button>
+                        <button type="button" routerLink="/addmeasurement"  class="btn-int-blue"  color="primary" mat-raised-button>Add Measurement</button>
                     </div>
                 </div>
             </div>
+            
             <nav class="nav az-nav-line">
                 <a routerLink="overview" routerLinkActive="active" class="nav-link">Overview</a>
                 <a routerLink="visits" routerLinkActive="active" class="nav-link">Previous Visits</a>
                 <a routerLink="orders" routerLinkActive="active" class="nav-link">Previous Orders</a>
                 <a routerLink="measurements" routerLinkActive="active" class="nav-link">Measurements</a>
             </nav>
+            <br />
+
             <div class="az-profile-body">
                 <router-outlet></router-outlet>
             </div>

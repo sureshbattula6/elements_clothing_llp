@@ -56,7 +56,9 @@ export class ProductService {
     return this.http.post(`${this.REST_API_SERVER}/cart-price-update/${id}`,params);
   }
 
-
+  public deletecart( params):Observable<any>{
+    return this.http.post(`${this.REST_API_SERVER}/cart-delete`,params);
+  }
   public addLensToCart(params):Observable<any>{
     return this.http.post(`${this.REST_API_SERVER}/lenscart-store`,params);
   }
@@ -91,6 +93,10 @@ export class ProductService {
   public showOrder(id:number):Observable<any>{
     return this.http.put(`${this.REST_API_SERVER}/order-show/${id}`,id);
   }
+
+  public showOrderDetails(id:number):Observable<any>{
+    return this.http.put(`${this.REST_API_SERVER}/order-show-details/${id}`,id);
+  }
   public updateOrder(id:number,params):Observable<any>{
     return this.http.post(`${this.REST_API_SERVER}/order-update/${id}`,params);
   }
@@ -113,20 +119,32 @@ export class ProductService {
     return this.http.post(`${this.REST_API_SERVER}/update-cart-saleemployee/${cartId}`,params);
   }
 
+  public updateCartAdditionalOption(cartId:number, params:any):Observable<any> {
+    return this.http.post(`${this.REST_API_SERVER}/cart-additional-option/${cartId}`,params);
+  }
+
+  public updateAdditionalCostAppliedAll(customerId:number, params:any):Observable<any> {
+    return this.http.post(`${this.REST_API_SERVER}/cart-all-additional-option/${customerId}`,params);
+  }
+
   public updateOrderSalesEmployee(orderItemId:number, params:any):Observable<any> {
     return this.http.post(`${this.REST_API_SERVER}/update-orderitem-saleemployee/${orderItemId}`,params);
   }
 
-  public generateSalesInvoice(orderId:number):Observable<any>{
-    return this.http.get(`${this.REST_API_SERVER}/generate-salesinvoice-pdf/${orderId}`);
+  public UpdateInvioceRemarks(orderId:number, params:any):Observable<any> {
+    return this.http.post(`${this.REST_API_SERVER}/invoice-remarks-update/${orderId}`,params);
   }
 
-  public generateSalesOrder(orderId:number):Observable<any>{
-    return this.http.get(`${this.REST_API_SERVER}/generate-salesorders-pdf/${orderId}`);
+  public generateSalesInvoice(orderId:number, sendMessageStatus: any):Observable<any>{
+    return this.http.get(`${this.REST_API_SERVER}/generate-salesinvoice-pdf/${orderId}/${sendMessageStatus}`);
   }
 
-  public generateSaleOrderCopyOnly(orderId:number):Observable<any>{
-    return this.http.get(`${this.REST_API_SERVER}/generate-salesorders-pdf-only/${orderId}`);
+  public generateSalesOrder(orderId:number, sendMessageStatus: any):Observable<any>{
+    return this.http.get(`${this.REST_API_SERVER}/generate-salesorders-pdf/${orderId}/${sendMessageStatus}`);
+  }
+
+  public generateSaleOrderCopyOnly(orderId:number, sendMessageStatus: any):Observable<any>{
+    return this.http.get(`${this.REST_API_SERVER}/generate-salesorders-pdf-only/${orderId}/${sendMessageStatus}`);
   }
 
   // public cancelOrder(orderId: any): Observable<any> {
@@ -136,12 +154,20 @@ export class ProductService {
     return this.http.put(`${this.REST_API_SERVER}/cancel/${orderId}`,orderId);
   }
 
-  // public getcartProducts(id:number):Observable<any>{
-  //   return this.http.put(`${this.REST_API_SERVER}/cart-products/${id}`,id);
-  // }
 
   public updateProductStyles(customerId: any, params:any):Observable<any>{
     return this.http.post(`${this.REST_API_SERVER}/cart/update-related-product-style/${customerId}`,params);
   }
+
+  public Storecancelordermessage(params:any,orderId: number):Observable<any>{
+    return this.http.post(`${this.REST_API_SERVER}/cancel-order/${orderId}`,params);
+  }
+
+  public StorecompleteOrderMessage(params:any,orderId: number):Observable<any>{
+    return this.http.post(`${this.REST_API_SERVER}/complete-order/${orderId}`,params);
+  }
+
+
+
 
 }
